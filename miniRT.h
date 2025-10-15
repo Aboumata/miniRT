@@ -20,6 +20,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include "get_next_line/get_next_line.h"
+
 void parsing(char *arg);
 
 #endif
