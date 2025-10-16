@@ -6,21 +6,11 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:36:02 by abdahman          #+#    #+#             */
-/*   Updated: 2024/12/23 23:04:16 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:39:04 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
@@ -65,20 +55,20 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(char *str)
-{
-	char	*nstr;
-	int		i;
+// char	*ft_strdup_g(char *str)
+// {
+// 	char	*nstr;
+// 	int		i;
 
-	i = 0;
-	nstr = malloc(ft_strlen(str) + 1);
-	if (!nstr)
-		return (NULL);
-	while (str[i])
-	{
-		nstr[i] = str[i];
-		i++;
-	}
-	nstr[i] = '\0';
-	return (nstr);
-}
+// 	i = 0;
+// 	nstr = malloc(ft_strlen(str) + 1);
+// 	if (!nstr)
+// 		return (NULL);
+// 	while (str[i])
+// 	{
+// 		nstr[i] = str[i];
+// 		i++;
+// 	}
+// 	nstr[i] = '\0';
+// 	return (nstr);
+// }

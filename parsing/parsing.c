@@ -13,6 +13,20 @@
 
 #include "../includes/miniRT.h"
 
+void parse_sphere(t_scene *scene, char **token)
+{
+    t_sphere *sphere;
+
+    sphere = new_sphere(token);
+}
+
+void parse_sphere(t_scene *scene, char **token)
+{
+    t_sphere *sphere;
+
+    sphere = new_sphere(token);
+}
+
 void parse_line(t_scene *scene, char *line)
 {
 	char **token;

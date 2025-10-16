@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/19 12:40:49 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 13:02:38 by abdahman         ###   ########.fr       */
+/*   Created: 2025/10/16 17:08:02 by abdahman          #+#    #+#             */
+/*   Updated: 2025/10/16 17:54:43 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2147483647
-# endif
-# include <unistd.h>
-# include <stdlib.h>
-#include "../Libft/libft.h"
+#include "../includes/miniRT.h"
 
-char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *str, int c);
+void parse_line(t_scene *scene, char *line)
+{
+	char **token;
 
-#endif
+	token = ft_split(line, ' ');
+	if (ft_strcmp("sp", token[0]) == 0)
+		parse_sphere(scene, token);
+	else if (ft_strcmp("pl", token[0]))
+		parse_plan(scene, token);
+}
