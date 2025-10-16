@@ -28,7 +28,7 @@ t_vector3 parse_vec(char *token)
 
 int ft_atoi_c(char *str)
 {
-	long res = ft_atoi(str);
+	int res = ft_atoi(str);
 	if (res > 255)
 		res = 255;
 	else if (res < 0)
