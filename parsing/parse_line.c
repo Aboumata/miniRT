@@ -22,6 +22,7 @@ void parse_line(t_scene *scene, char *line)
 		parse_ambient(scene, token);
 	else if (ft_strcmp("sp", token[0]) == 0)
 		parse_sphere(scene, token);
-	// else if (ft_strcmp("pl", token[0]))
-	// 	parse_plan(scene, token);
+	else if (ft_strcmp("pl", token[0]))
+		parse_plan(scene, token);
 }
+//A C L PL CY
