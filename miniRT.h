@@ -20,22 +20,40 @@
 # include <string.h>
 # include <fcntl.h>
 # include "get_next_line/get_next_line.h"
-<<<<<<< HEAD
 # include "Libft/libft.h"
 
-typedef struct space
+typedef struct s_vector3
 {
-	t_camira *camira;
-=======
-# include "libft/libft.h"
+    double x;
+    double y;
+    double z;
+} t_vector3;
 
-typedef struct space
+typedef struct s_color
 {
-    t_camira *camira;
-    t_a
->>>>>>> origin/main
-};
+    int r;
+    int g;
+    int b;
+} t_color;
 
+typedef struct s_camera
+{
+    t_vector3 pos;
+    t_vector3 dir;
+    double    fov;
+} t_camera;
+
+typedef struct s_ambient
+{
+    double ratio;
+    t_color color;
+} t_ambient;
+
+typedef struct s_scene
+{
+    t_camera camera;
+    t_ambient ambient;
+} t_scene;
 
 void parsing(char *arg);
 
