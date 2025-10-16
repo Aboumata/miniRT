@@ -36,3 +36,5 @@ void parse_sphere(t_scene *scene, char **token)
 	sphere->color = parse_color(token[3]);
 	add_obj(scene, sphere, SP);
 }
+
+//A C L PL CY
