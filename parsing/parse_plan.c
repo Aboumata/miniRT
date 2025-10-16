@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   parse_plan.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/19 12:40:49 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 13:02:38 by abdahman         ###   ########.fr       */
+/*   Created: 2025/10/16 17:57:01 by abdahman          #+#    #+#             */
+/*   Updated: 2025/10/16 18:01:51 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2147483647
-# endif
-# include <unistd.h>
-# include <stdlib.h>
-#include "../Libft/libft.h"
+#include "../includes/miniRT.h"
 
-char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *str, int c);
+void parse_plan(t_scene *scene, char **token)
+{
+    t_planets *plan;
 
-#endif
+    if (count_tokens(token) != 4)
+        exit((perror("invalid scene\n"), 1));
+    plan = ft_malloc(sizeof(t_planets), &(scene->mem));
+    plan->point = parse_vec(token[1]);
+    plan->color = parse_color(token[3]);
+    plan->normal = 
+}
