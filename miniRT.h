@@ -20,12 +20,20 @@
 # include <string.h>
 # include <fcntl.h>
 # include "get_next_line/get_next_line.h"
+<<<<<<< HEAD
+# include "Libft/libft.h"
+
+typedef struct space
+{
+	t_camira *camira;
+=======
 # include "libft/libft.h"
 
 typedef struct space
 {
     t_camira *camira;
     t_a
+>>>>>>> origin/main
 };
 
 
