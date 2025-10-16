@@ -56,11 +56,11 @@ typedef struct s_camera
 	double    fov;
 } t_camera;
 
-typedef struct s_lights {
+typedef struct s_light {
 	t_vector3 pos;
 	double ratio;
 	t_color color;
-} t_lights;
+} t_light;
 
 typedef struct s_spheres {
 	t_vector3 center;
@@ -98,9 +98,9 @@ typedef struct s_object
 
 typedef struct s_scene
 {
-	t_camera *camera;
-	t_ambient *ambient;
-	t_lights *lights;
+	t_camera camera;
+	t_ambient ambient;
+	t_light light;
 	t_object *object;
 	t_mem	*mem;
 
@@ -122,5 +122,6 @@ void add_obj(t_scene *scene, void *ptr, t_obj_types type);
 void parse_line(t_scene *scene, char *line);
 void parse_plan(t_scene *scene, char **token);
 void parse_ambient(t_scene *scene, char **token);
+void free_split(char **split);
 
 #endif

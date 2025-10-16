@@ -14,7 +14,7 @@
 
 double ft_atof(char *str)
 {
-	double (res), frac = 0, div = 10;
+	double res = 0, frac = 0, div = 10;
 	int (i), sig = 1, dot_count = 0;
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')

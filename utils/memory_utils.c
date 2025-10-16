@@ -15,14 +15,20 @@
 void ft_free_all(t_mem **mem)
 {
 	t_mem *tmp;
+	t_mem *node;
+
+	if (!mem || !*mem)
+		return;
 
 	tmp = *mem;
 	while (tmp)
 	{
-		free(tmp->ptr);
+		node = tmp;
 		tmp = tmp->next;
-		write(1, "ft_free done\n", 13);
+		free(node->ptr);
+		free(node);
 	}
+	*mem = NULL;
 }
 
 void *ft_malloc(size_t size, t_mem **mem)
