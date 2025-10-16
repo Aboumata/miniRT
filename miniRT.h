@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:22:21 by aboumata          #+#    #+#             */
-/*   Updated: 2025/10/15 19:22:22 by aboumata         ###   ########.fr       */
+/*   Updated: 2025/10/16 10:52:53 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ typedef struct s_ambient
     double ratio;
     t_color color;
 } t_ambient;
+
+typedef struct s_sphere
+{
+    t_vector3 center;
+    double diameter;
+    t_color color;
+} t_sphere;
 
 typedef struct s_scene
 {
