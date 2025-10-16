@@ -12,14 +12,22 @@
 
 
 #ifndef MINIRT_MINIRT_H
-#define MINIRT_MINIRT_H
+# define MINIRT_MINIRT_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include "get_next_line/get_next_line.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <fcntl.h>
+# include "get_next_line/get_next_line.h"
+# include "libft/libft.h"
+
+typedef struct space
+{
+    t_camira *camira;
+    t_a
+};
+
 
 void parsing(char *arg);
 
