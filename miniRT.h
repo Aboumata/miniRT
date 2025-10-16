@@ -55,7 +55,7 @@ typedef struct s_scene
     t_ambient ambient;
 } t_scene;
 
-void parsing(char *arg);
+void parsing(t_scene *scene, char *arg);
 
 #endif
 
