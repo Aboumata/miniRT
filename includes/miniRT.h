@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:22:21 by aboumata          #+#    #+#             */
-/*   Updated: 2025/10/15 19:22:22 by aboumata         ###   ########.fr       */
+/*   Updated: 2025/10/16 11:19:38 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ typedef struct s_cylinders {
 
 typedef struct s_scene
 {
-    t_camera camera;
-    t_ambient ambient;
+    t_camera *camera;
+    t_ambient *ambient;
     t_lights *lights;
     t_cylinders *cylinders;
     t_planets *planets;
