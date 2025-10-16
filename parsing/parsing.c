@@ -13,29 +13,6 @@
 
 #include "../includes/miniRT.h"
 
-void parse_sphere(t_scene *scene, char **token)
-{
-    t_sphere *sphere;
-
-    sphere = new_sphere(token);
-}
-
-void parse_sphere(t_scene *scene, char **token)
-{
-    t_sphere *sphere;
-
-    sphere = new_sphere(token);
-}
-
-void parse_line(t_scene *scene, char *line)
-{
-	char **token;
-
-	token = ft_split(line, ' ');
-	if (ft_strcmp("sp", token[0]) != 0)
-		parse_sphere(scene, token);
-}
-
 void check_name(char *arg)
 {
     size_t len;
@@ -52,11 +29,12 @@ void check_file_content(t_scene *scene, char *arg) {
     fd = open(arg, O_RDONLY);
     if (fd < 0)
         exit((perror("file not exist.\n"), 1));
-
-    while ((line = get_next_line(fd)) != NULL)
+    line = get_next_line(fd);
+    while (line)
     {
         parse_line(scene, line);
         free(line);
+        line = get_next_line(fd);
     }
     close(fd);
 }

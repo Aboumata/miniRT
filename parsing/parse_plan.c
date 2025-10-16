@@ -14,12 +14,12 @@
 
 void parse_plan(t_scene *scene, char **token)
 {
-    t_planets *plan;
+    t_planes *plan;
 
     if (count_tokens(token) != 4)
         exit((perror("invalid scene\n"), 1));
-    plan = ft_malloc(sizeof(t_planets), &(scene->mem));
+    plan = ft_malloc(sizeof(t_planes), &(scene->mem));
     plan->point = parse_vec(token[1]);
     plan->color = parse_color(token[3]);
-    plan->normal = 
+    plan->normal = parse_vec(token);
 }
