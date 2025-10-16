@@ -13,7 +13,12 @@
 
 #include "../miniRT.h"
 
-void check_name(char *arg) {
+void parse_line(t_scene *scene, char *line) {
+
+}
+
+void check_name(char *arg)
+{
     size_t len;
 
     len = strlen(arg) - 3;
@@ -29,11 +34,13 @@ void check_file_content(t_scene *scene, char *arg) {
     fd = open(arg, O_RDONLY);
     if (fd < 0)
         exit((perror("file not exist.\n"), 1));
-    line = get_next_line(fd);
-    while (line) {
 
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        parse_line(scene, line);
+        free(line);
     }
-
+    close(fd);
 }
 
 void parsing(t_scene *scene, char *arg)
