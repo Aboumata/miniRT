@@ -14,6 +14,7 @@
 # define MINIRT_MINIRT_H
 
 # include <stdlib.h>
+# include <math.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -122,6 +123,7 @@ void add_obj(t_scene *scene, void *ptr, t_obj_types type);
 void parse_line(t_scene *scene, char *line);
 void parse_plan(t_scene *scene, char **token);
 void parse_ambient(t_scene *scene, char **token);
+void parse_camera(t_scene *scene, char **token);
 void free_split(char **split);
 
 #endif
