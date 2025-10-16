@@ -96,4 +96,3 @@ typedef struct s_scene
 void parsing(t_scene *scene, char *arg);
 
 #endif
-
