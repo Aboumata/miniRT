@@ -13,10 +13,12 @@
 #include "miniRT.h"
 
 int main(int ac, char **av) {
+
+    t_scene scene;
     if (ac != 2)
     {
         perror("There's are more than 2 arguments or less.");
         exit(1);
     }
-    parsing(av[1]);
+    parsing(&scene, av[1]);
 }
