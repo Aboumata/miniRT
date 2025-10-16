@@ -19,8 +19,8 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
-# include "get_next_line/get_next_line.h"
-# include "Libft/libft.h"
+#include "../get_next_line/get_next_line.h"
+#include "../Libft/libft.h"
 
 typedef struct s_vector3
 {

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../miniRT.h"
+#include "../includes/miniRT.h"
 
 void parse_line(t_scene *scene, char *line)
 {
