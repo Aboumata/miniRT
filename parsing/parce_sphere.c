@@ -12,6 +12,18 @@
 
 #include "../includes/miniRT.h"
 
+void free_split(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i]) {
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
 int count_tokens(char **token)
 {
 	int len;

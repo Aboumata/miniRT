@@ -31,5 +31,4 @@ void add_obj(t_scene *scene, void *ptr, t_obj_types type)
 		printf("  Color: R=%d, G=%d, B=%d\n", 
 			sphere->color.r, sphere->color.g, sphere->color.b);
 	}
-	return ;
 }

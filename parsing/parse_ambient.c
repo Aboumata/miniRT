@@ -15,12 +15,11 @@
 
 void parse_ambient(t_scene *scene, char **token)
 {
-    scene->has_ambient++;
-    if (count_tokens(token) != 3 || scene->has_ambient > 1)
+    if (count_tokens(token) != 3 || scene->has_ambient > 0)
         exit((perror("invalid scene\n"), 1));
-    scene->ambient = ft_malloc(sizeof(t_ambient), &(scene->mem));
-    scene->ambient->ratio = ft_atof(token[1]);
-    if (scene->ambient->ratio < 0.0 || scene->ambient->ratio > 1.0)
+    scene->has_ambient++;
+    scene->ambient.ratio = ft_atof(token[1]);
+    if (scene->ambient.ratio < 0.0 || scene->ambient.ratio > 1.0)
          exit((perror("invalid scene\n"), 1));
-    scene->ambient->color = parse_color(token[2]);
+    scene->ambient.color = parse_color(token[2]);
 }
