@@ -23,7 +23,6 @@ void ft_free_all(t_mem **mem)
 		tmp = tmp->next;
 		write(1, "ft_free done\n", 13);
 	}
-	return ;
 }
 
 void *ft_malloc(size_t size, t_mem **mem)

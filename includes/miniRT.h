@@ -72,7 +72,7 @@ typedef struct s_planes {
 	t_vector3 point;
 	t_vector3 normal;
 	t_color color;
-} t_planets;
+} t_planes;
 
 typedef struct s_ambient
 {
@@ -120,5 +120,7 @@ double ft_atof(char *str);
 t_color parse_color(char *token);
 void add_obj(t_scene *scene, void *ptr, t_obj_types type);
 void parse_line(t_scene *scene, char *line);
+void parse_plan(t_scene *scene, char **token);
+void parse_ambient(t_scene *scene, char **token);
 
 #endif
