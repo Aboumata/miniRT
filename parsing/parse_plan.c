@@ -21,5 +21,6 @@ void parse_plan(t_scene *scene, char **token)
     plan = ft_malloc(sizeof(t_planes), &(scene->mem));
     plan->point = parse_vec(token[1]);
     plan->color = parse_color(token[3]);
-    plan->normal = parse_vec(token);
+    plan->normal = parse_vec(token[2]);
+    add_obj(scene, plan, PL);
 }

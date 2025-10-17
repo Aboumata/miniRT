@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cylinder.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
+/*   Updated: 2025/10/17 22:41:30 by aboumata         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "../includes/miniRT.h"
+
+void parse_cylinder (t_scene *scene, char **token)
+{
+    t_cylinders *cylinder;
+    if (count_tokens(token) != 6)
+        exit((perror("invalid scene\n"), 1));
+    cylinder = ft_malloc(sizeof(t_cylinders), &(scene->mem));
+    cylinder->center = parse_vec(token[1]);
+    cylinder->diameter = ft_atof(token[3]);
+    cylinder->hight = ft_atof(token[4]);
+    cylinder->color = parse_color(token[5]);
+    cylinder->dir = parse_vec(token[2]);
+    if (!is_normalized(cylinder->dir))
+        exit((perror("invalid scene\n"), 1));
+    add_obj(scene, cylinder, CY);
+}

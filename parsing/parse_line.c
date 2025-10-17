@@ -22,11 +22,13 @@ void parse_line(t_scene *scene, char *line)
 		parse_ambient(scene, token);
 	else if (ft_strcmp("C", token[0]) == 0)
 		parse_camera(scene, token);
-	else if (ft_strcmp("L", token[0]) == 0)
+	else if (ft_strcmp("L", token[0]) == 0 || ft_strcmp("l", token[0]))
 		parse_light(scene, token);
 	else if (ft_strcmp("sp", token[0]) == 0)
 		parse_sphere(scene, token);
 	else if (ft_strcmp("pl", token[0]) == 0)
 		parse_plan(scene, token);
+	else if (ft_strcmp("cy", token[0]) == 0)
+		parse_cylinder(scene, token);
 }
 //PL CY
