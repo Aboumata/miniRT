@@ -15,7 +15,7 @@
 int is_normalized (t_vector3 vec)
 {
     double length;
-    length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z + vec.z);
+    length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
     if (length <  0.999 || length > 1.001)
         return 0;
     return 1;
