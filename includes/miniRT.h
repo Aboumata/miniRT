@@ -14,6 +14,7 @@
 # define MINIRT_MINIRT_H
 
 # include <stdlib.h>
+#include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -26,7 +27,7 @@ typedef enum e_obj_types
 {
 	SP,
 	CY,
-	pl
+	PL,
 } t_obj_types;
 
 typedef struct s_mem
@@ -125,6 +126,7 @@ void parse_plan(t_scene *scene, char **token);
 void parse_ambient(t_scene *scene, char **token);
 void parse_camera(t_scene *scene, char **token);
 void parse_light (t_scene *scene, char **token);
+void parse_cylinder (t_scene *scene, char **token);
 void free_split(char **split);
 int is_normalized (t_vector3 vec);
 
