@@ -6,7 +6,7 @@ SRC = main.c \
 	\
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	\
-	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c
+	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c\
 
 OBJ = $(SRC:.c=.o)
 
