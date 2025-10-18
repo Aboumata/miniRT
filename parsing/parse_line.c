@@ -30,5 +30,6 @@ void parse_line(t_scene *scene, char *line)
 		parse_plan(scene, token);
 	else if (ft_strcmp("cy", token[0]) == 0)
 		parse_cylinder(scene, token);
+	free_split(token);
 }
 //PL CY
