@@ -21,7 +21,7 @@ void parse_line(t_scene *scene, char *line)
 	token = change_whitespace_and_split(line);
 	if (!token || !token[0])
 		return;
-	else if (ft_strcmp("A", token[0]) == 0)
+	if (ft_strcmp("A", token[0]) == 0)
 		parse_ambient(scene, token);
 	else if (ft_strcmp("C", token[0]) == 0)
 		parse_camera(scene, token);
