@@ -34,7 +34,7 @@ int ft_atoi_c(char *str)
 {
 	int res = ft_atoi(str);
 	if (res > 255 || res < 0)
-		exit((perror("Your out og range of RGB\n"), 1));
+		exit((perror("You're out og range of RGB\n"), 1));
 	return (res);
 }
 

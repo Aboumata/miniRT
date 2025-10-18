@@ -16,6 +16,9 @@ void parse_line(t_scene *scene, char *line)
 {
 	char **token;
 
+	if (!line || line[0] == '\n' || line[0] == '\0')
+		return;
+
 	token = ft_split(line, ' ');
 
 	if (ft_strcmp("A", token[0]) == 0)
@@ -32,4 +35,3 @@ void parse_line(t_scene *scene, char *line)
 		parse_cylinder(scene, token);
 	free_split(token);
 }
-//PL CY

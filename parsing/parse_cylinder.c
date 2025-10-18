@@ -20,7 +20,7 @@ void parse_cylinder (t_scene *scene, char **token)
     cylinder = ft_malloc(sizeof(t_cylinders), &(scene->mem));
     cylinder->center = parse_vec(token[1]);
     cylinder->diameter = ft_atof(token[3]);
-    cylinder->hight = ft_atof(token[4]);
+    cylinder->height = ft_atof(token[4]);
     cylinder->color = parse_color(token[5]);
     cylinder->dir = parse_vec(token[2]);
     if (!is_normalized(cylinder->dir))
