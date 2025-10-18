@@ -71,26 +71,13 @@ char **tokenize_line(char *line)
     int token_count;
 
     if (!line || line[0] == '\0' || line[0] == '\n')
-    {
-        tokens = malloc(sizeof(char*));
-        if (!tokens)
-            return (NULL);
-        tokens[0] = NULL;
-        return tokens;
-    }
+        return (NULL);
     token_count = count_tokens_of_line(line);
     if (token_count == 0)
-    {
-        tokens = malloc(sizeof(char*));
-        if (!tokens)
-            return (NULL);
-        tokens[0] = NULL;
-        return tokens;
-    }
+        return (NULL);
     tokens = malloc(sizeof(char *) * (token_count + 1));
     if (!tokens)
         return (NULL);
-
     index = 0;
     current = line;
     while (*current != '\0')
@@ -100,7 +87,8 @@ char **tokenize_line(char *line)
             break;
         length = get_token_length(current);
         tokens[index] = ft_substr(current, 0, length);
-        if (!tokens[index]) {
+        if (!tokens[index])
+        {
             while (index > 0)
                 free(tokens[--index]);
             free(tokens);
