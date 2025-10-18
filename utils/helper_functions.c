@@ -21,7 +21,7 @@ int is_normalized (t_vector3 vec)
     return 1;
 }
 
-void free_split(char **split)
+void free_tokenizer(char **split)
 {
     int i;
 
