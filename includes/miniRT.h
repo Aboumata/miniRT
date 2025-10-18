@@ -27,7 +27,7 @@ typedef enum e_obj_types
 {
 	SP,
 	CY,
-	PL,
+	PL
 } t_obj_types;
 
 typedef struct s_mem
@@ -87,7 +87,7 @@ typedef struct s_cylinders {
 	t_vector3 center;
 	t_vector3 dir;
 	double diameter;
-	double hight;
+	double height;
 	t_color color;
 } t_cylinders;
 
