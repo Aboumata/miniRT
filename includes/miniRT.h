@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/18 12:29:06 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 18:41:00 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_light {
 	t_vector3 pos;
 	double ratio;
 	t_color color;
+	struct s_light *next;
 } t_light;
 
 typedef struct s_spheres {
@@ -102,13 +103,12 @@ typedef struct s_scene
 {
 	t_camera camera;
 	t_ambient ambient;
-	t_light light;
+	t_light *light;
 	t_object *object;
 	t_mem	*mem;
 
 	int has_ambient;
 	int has_camera;
-	int has_light;
 } t_scene;
 
 void parsing(t_scene *scene, char *arg);

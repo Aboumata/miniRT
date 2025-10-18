@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:30:37 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 10:54:18 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 19:03:37 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void parsing(t_scene *scene, char *arg)
 {
     check_name(arg);
     check_file_content(scene, arg);
-    if (!scene->has_ambient || !scene->has_camera || !scene->has_light)
+    if (!scene->has_ambient || !scene->has_camera)
         exit((perror("Missing required elements"), 1));
 }
