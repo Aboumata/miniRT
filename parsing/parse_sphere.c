@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parce_sphere.c                                     :+:      :+:    :+:   */
+/*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,28 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-void free_split(char **split)
-{
-	int i;
-
-	i = 0;
-	while (split[i]) {
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
-
-int count_tokens(char **token)
-{
-	int len;
-
-	len = 0;
-	while (token[len])
-		len++;
-	return (len);
-}
 
 void parse_sphere(t_scene *scene, char **token)
 {
