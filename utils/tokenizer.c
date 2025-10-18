@@ -47,7 +47,7 @@ static int count_tokens_of_line(char *line)
 
     count = 0;
     current = line;
-    while (*current != 0)
+    while (*current != '\0')
     {
         current = skip_whitespace(current);
         if (*current == '\0')
