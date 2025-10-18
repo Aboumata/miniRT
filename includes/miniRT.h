@@ -129,5 +129,6 @@ void parse_light (t_scene *scene, char **token);
 void parse_cylinder (t_scene *scene, char **token);
 void free_split(char **split);
 int is_normalized (t_vector3 vec);
+char **tokenize_line(char *line);
 
 #endif
