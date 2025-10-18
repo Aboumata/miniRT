@@ -19,14 +19,14 @@ t_vector3 parse_vec(char *token)
 
 	position = ft_split(token, ',');
 	if (count_tokens(position) != 3) {
-		free_split(position);
+		free_tokenizer(position);
 		exit((perror("Error: invalid position\n"), 1));
 	}
 
 	point.x = ft_atof(position[0]);
 	point.y = ft_atof(position[1]);
 	point.z = ft_atof(position[2]);
-	free_split(position);
+	free_tokenizer(position);
 	return (point);
 }
 
@@ -46,12 +46,12 @@ t_color parse_color(char *token)
 	rgb = ft_split(token, ',');
 	if (count_tokens(rgb) != 3)
 	{
-		free_split(rgb);
+		free_tokenizer(rgb);
 		exit((perror("Error: invalid rgb\n"), 1));
 	}
 	color.r = ft_atoi_c(rgb[0]);
 	color.g = ft_atoi_c(rgb[1]);
 	color.b = ft_atoi_c(rgb[2]);
-	free_split(rgb);
+	free_tokenizer(rgb);
 	return (color);
 }

@@ -127,7 +127,7 @@ void parse_ambient(t_scene *scene, char **token);
 void parse_camera(t_scene *scene, char **token);
 void parse_light (t_scene *scene, char **token);
 void parse_cylinder (t_scene *scene, char **token);
-void free_split(char **split);
+void free_tokenizer(char **split);
 int is_normalized (t_vector3 vec);
 char **tokenize_line(char *line);
 
