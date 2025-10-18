@@ -35,7 +35,7 @@ double ft_atof(char *str)
 		else if (str[i] == '.' && dot_count < 1)
 			dot_count++;              
 		else
-			exit((perror("invalid scene."), 1));
+			exit((perror("Error: not a number"), 1));
 		i++;
 	}
 	return sig * (res + frac);

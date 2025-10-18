@@ -20,7 +20,7 @@ t_vector3 parse_vec(char *token)
 	position = ft_split(token, ',');
 	if (count_tokens(position) != 3) {
 		free_split(position);
-		exit((perror("invalid scene\n"), 1));
+		exit((perror("Error: invalid position\n"), 1));
 	}
 
 	point.x = ft_atof(position[0]);
@@ -34,7 +34,7 @@ int ft_atoi_c(char *str)
 {
 	int res = ft_atoi(str);
 	if (res > 255 || res < 0)
-		exit((perror("You're out og range of RGB\n"), 1));
+		exit((perror("Error: You're out og range of RGB\n"), 1));
 	return (res);
 }
 
@@ -47,7 +47,7 @@ t_color parse_color(char *token)
 	if (count_tokens(rgb) != 3)
 	{
 		free_split(rgb);
-		exit((perror("invalid scene\n"), 1));
+		exit((perror("Error: invalid rgb\n"), 1));
 	}
 	color.r = ft_atoi_c(rgb[0]);
 	color.g = ft_atoi_c(rgb[1]);
