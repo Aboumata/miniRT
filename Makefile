@@ -2,11 +2,11 @@ NAME = miniRT
 
 SRC = main.c \
 	parsing/parsing.c parsing/parse_sphere.c parsing/parse_line.c parsing/parse_camera.c parsing/parse_cylinder.c\
-	parsing/parse_colors_vectors.c parsing/parse_plan.c parsing/parse_ambient.c parsing/parse_light.c parsing/tokenizer.c\
+	parsing/parse_colors_vectors.c parsing/parse_plan.c parsing/parse_ambient.c parsing/parse_light.c \
 	\
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	\
-	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c\
+	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -14,13 +14,15 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
+Other_Flags = -lm
+
 libft = Libft/libft.a
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make -C Libft/
-	$(CC) $(CFLAGS) $(OBJ) $(libft) -o $(NAME)
+	$(CC) $(CFLAGS) $(Other_Flags) $(OBJ) $(libft) -o $(NAME)
 
 clean :
 	make clean -C Libft/

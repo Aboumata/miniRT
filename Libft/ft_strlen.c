@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 17:52:30 by abdahman          #+#    #+#             */
-/*   Updated: 2024/11/02 17:54:48 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:54:31 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s && s[i] != '\0')
 	{
 		i++;
 	}

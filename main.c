@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:24 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 18:56:27 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:26:20 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int main(int ac, char **av) {
 		exit(1);
 	}
 	ft_bzero(&scene, sizeof(t_scene));
-	write (1, "good\n", 5);
 	parsing(&scene, av[1]);
+	write (1, "good\n", 5);
 }

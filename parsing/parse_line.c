@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:08:02 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 17:54:43 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:59:42 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ void parse_line(t_scene *scene, char *line)
 
 	if (!line || line[0] == '\n' || line[0] == '\0')
 		return;
-
-	token = tokenize_line(line);
-	if (!token)
+	token = change_whitspace_and_split(line);
+	if (!token || !token[0])
 		return;
-
-	if (ft_strcmp("A", token[0]) == 0)
+	else if (ft_strcmp("A", token[0]) == 0)
 		parse_ambient(scene, token);
 	else if (ft_strcmp("C", token[0]) == 0)
 		parse_camera(scene, token);
@@ -35,5 +33,7 @@ void parse_line(t_scene *scene, char *line)
 		parse_plan(scene, token);
 	else if (ft_strcmp("cy", token[0]) == 0)
 		parse_cylinder(scene, token);
+	else
+		exit((perror("Error: invalid object"), 1));
 	free_split(token);
 }

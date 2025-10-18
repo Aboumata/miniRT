@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 09:44:42 by aboumata          #+#    #+#             */
-/*   Updated: 2025/10/17 09:44:43 by aboumata         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:33:14 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int is_normalized (t_vector3 vec)
     return 1;
 }
 
-void free_tokenizer(char **split)
+void free_split(char **split)
 {
     int i;
 

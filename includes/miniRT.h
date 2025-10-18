@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 17:38:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:29:06 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ void parse_cylinder (t_scene *scene, char **token);
 void free_split(char **split);
 int is_normalized (t_vector3 vec);
 char **tokenize_line(char *line);
+char **change_whitspace_and_split(char *str);
 
 #endif
