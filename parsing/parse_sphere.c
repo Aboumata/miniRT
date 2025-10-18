@@ -17,14 +17,12 @@ void parse_sphere(t_scene *scene, char **token)
 	t_spheres *sphere;
 
 	if (count_tokens(token) != 4)
-		exit((perror("invalid scene\n"), 1));
+		exit((perror("Error: invalid sphere\n"), 1));
 	sphere = ft_malloc(sizeof(t_spheres), &(scene->mem));
 	sphere->center = parse_vec(token[1]);
 	sphere->diameter = ft_atof(token[2]);
 	if (sphere->diameter < 0)
-		sphere->diameter *= -1;
+		exit((perror("Error: diameter should be positif"), 1));
 	sphere->color = parse_color(token[3]);
 	add_obj(scene, sphere, SP);
 }
-
-//A C L PL CY

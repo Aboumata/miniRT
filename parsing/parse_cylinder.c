@@ -16,7 +16,7 @@ void parse_cylinder (t_scene *scene, char **token)
 {
     t_cylinders *cylinder;
     if (count_tokens(token) != 6)
-        exit((perror("invalid scene\n"), 1));
+        exit((perror("invalid cylinder\n"), 1));
     cylinder = ft_malloc(sizeof(t_cylinders), &(scene->mem));
     cylinder->center = parse_vec(token[1]);
     cylinder->diameter = ft_atof(token[3]);
@@ -24,6 +24,6 @@ void parse_cylinder (t_scene *scene, char **token)
     cylinder->color = parse_color(token[5]);
     cylinder->dir = parse_vec(token[2]);
     if (!is_normalized(cylinder->dir))
-        exit((perror("invalid scene\n"), 1));
+        exit((perror("Error: cylinder direction not normalized\n"), 1));
     add_obj(scene, cylinder, CY);
 }
