@@ -19,7 +19,9 @@ void parse_line(t_scene *scene, char *line)
 	if (!line || line[0] == '\n' || line[0] == '\0')
 		return;
 
-	token = ft_split(line, ' ');
+	token = tokenize_line(line);
+	if (!token)
+		return;
 
 	if (ft_strcmp("A", token[0]) == 0)
 		parse_ambient(scene, token);
