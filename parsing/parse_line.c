@@ -18,7 +18,7 @@ void parse_line(t_scene *scene, char *line)
 
 	if (!line || line[0] == '\n' || line[0] == '\0')
 		return;
-	token = change_whitspace_and_split(line);
+	token = change_whitespace_and_split(line);
 	if (!token || !token[0])
 		return;
 	else if (ft_strcmp("A", token[0]) == 0)

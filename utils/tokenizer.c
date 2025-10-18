@@ -101,7 +101,7 @@ static int is_whitespace(char c)
 // 	return (tokens);
 // }
 
-char **change_whitspace_and_split(char *str)
+char **change_whitespace_and_split(char *str)
 {
 	int i;
 
