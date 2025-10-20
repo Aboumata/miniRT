@@ -22,7 +22,7 @@ void parse_sphere(t_scene *scene, char **token)
 	sphere->center = parse_vec(token[1]);
 	sphere->diameter = ft_atof(token[2]);
 	if (sphere->diameter < 0)
-		exit((perror("Error: diameter should be positif"), 1));
+		exit((perror("Error: diameter should be positive\n"), 1));
 	sphere->color = parse_color(token[3]);
 	add_obj(scene, sphere, SP);
 }

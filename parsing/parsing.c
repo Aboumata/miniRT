@@ -22,7 +22,8 @@ void check_name(char *arg)
         exit((perror("invalid file name.\n"), 1));
 }
 
-void check_file_content(t_scene *scene, char *arg) {
+void check_file_content(t_scene *scene, char *arg)
+{
     int fd;
     char *line;
 

@@ -12,7 +12,8 @@
 
 #include "../includes/miniRT.h"
 
-void parse_light (t_scene *scene, char **token) {
+void parse_light (t_scene *scene, char **token)
+{
     t_light **head;
     t_light *light;
 

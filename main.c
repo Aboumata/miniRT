@@ -12,7 +12,8 @@
 
 #include "includes/miniRT.h"
 
-int main(int ac, char **av) {
+int main(int ac, char **av)
+{
 	t_scene scene;
 
 	if (ac != 2)
