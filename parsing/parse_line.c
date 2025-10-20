@@ -12,15 +12,15 @@
 
 #include "../includes/miniRT.h"
 
-void parse_line(t_scene *scene, char *line)
+void	parse_line(t_scene *scene, char *line)
 {
-	char **token;
+	char	**token;
 
 	if (!line || line[0] == '\n' || line[0] == '\0')
-		return;
+		return ;
 	token = change_whitespace_and_split(line);
 	if (!token || !token[0])
-		return;
+		return ;
 	if (ft_strcmp("A", token[0]) == 0)
 		parse_ambient(scene, token);
 	else if (ft_strcmp("C", token[0]) == 0)

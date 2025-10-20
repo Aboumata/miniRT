@@ -12,9 +12,9 @@
 
 #include "includes/miniRT.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_scene scene;
+	t_scene	scene;
 
 	if (ac != 2)
 	{
@@ -23,5 +23,5 @@ int main(int ac, char **av)
 	}
 	ft_bzero(&scene, sizeof(t_scene));
 	parsing(&scene, av[1]);
-	write (1, "good\n", 5);
+	write(1, "good\n", 5);
 }

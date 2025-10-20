@@ -12,9 +12,9 @@
 
 #include "../includes/miniRT.h"
 
-void parse_sphere(t_scene *scene, char **token)
+void	parse_sphere(t_scene *scene, char **token)
 {
-	t_spheres *sphere;
+	t_spheres	*sphere;
 
 	if (count_tokens(token) != 4)
 		exit((perror("Error: invalid sphere\n"), 1));

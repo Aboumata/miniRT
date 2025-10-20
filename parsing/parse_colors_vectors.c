@@ -12,10 +12,10 @@
 
 #include "../includes/miniRT.h"
 
-t_vector3 parse_vec(char *token)
+t_vector3	parse_vec(char *token)
 {
-	t_vector3 point;
-	char **position;
+	t_vector3	point;
+	char		**position;
 
 	position = ft_split(token, ',');
 	if (count_tokens(position) != 3)
@@ -23,7 +23,6 @@ t_vector3 parse_vec(char *token)
 		free_split(position);
 		exit((perror("Error: invalid position\n"), 1));
 	}
-
 	point.x = ft_atof(position[0]);
 	point.y = ft_atof(position[1]);
 	point.z = ft_atof(position[2]);
@@ -31,18 +30,20 @@ t_vector3 parse_vec(char *token)
 	return (point);
 }
 
-int ft_atoi_c(char *str)
+int	ft_atoi_c(char *str)
 {
-	int res = ft_atoi(str);
+	int	res;
+
+	res = ft_atoi(str);
 	if (res > 255 || res < 0)
 		exit((perror("Error: You're out range of RGB\n"), 1));
 	return (res);
 }
 
-t_color parse_color(char *token)
+t_color	parse_color(char *token)
 {
-	t_color color;
-	char **rgb;
+	t_color	color;
+	char	**rgb;
 
 	rgb = ft_split(token, ',');
 	if (count_tokens(rgb) != 3)

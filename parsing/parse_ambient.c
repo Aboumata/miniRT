@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/miniRT.h"
 
-void parse_ambient(t_scene *scene, char **token)
+void	parse_ambient(t_scene *scene, char **token)
 {
-    if (count_tokens(token) != 3 || scene->has_ambient > 0)
-        exit((perror("Error: invalid ambient\n"), 1));
-    scene->has_ambient++;
-    scene->ambient.ratio = ft_atof(token[1]);
-    if (scene->ambient.ratio < 0.0 || scene->ambient.ratio > 1.0)
-         exit((perror("Error : Invalid ambient ratio\n"), 1));
-    scene->ambient.color = parse_color(token[2]);
+	if (count_tokens(token) != 3 || scene->has_ambient > 0)
+		exit((perror("Error: invalid ambient\n"), 1));
+	scene->has_ambient++;
+	scene->ambient.ratio = ft_atof(token[1]);
+	if (scene->ambient.ratio < 0.0 || scene->ambient.ratio > 1.0)
+		exit((perror("Error : Invalid ambient ratio\n"), 1));
+	scene->ambient.color = parse_color(token[2]);
 }
