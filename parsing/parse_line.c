@@ -33,6 +33,8 @@ void	parse_line(t_scene *scene, char *line)
 		parse_plan(scene, token);
 	else if (ft_strcmp("cy", token[0]) == 0)
 		parse_cylinder(scene, token);
+	else if (ft_strcmp("co", token[0]) == 0)
+		parse_cone(scene, token);
 	else
 		exit((perror("Error: invalid object"), 1));
 	free_split(token);
