@@ -3,7 +3,7 @@ NAME = miniRT
 SRC = main.c \
 	parsing/parsing.c parsing/parse_sphere.c parsing/parse_line.c parsing/parse_camera.c parsing/parse_cylinder.c\
 	parsing/parse_colors_vectors.c parsing/parse_plan.c parsing/parse_ambient.c parsing/parse_light.c \
-	parsing/parse_cone.c \
+	parsing/parse_cone.c parsing/parse_triangle.c\
 	\
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	\

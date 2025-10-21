@@ -28,7 +28,8 @@ typedef enum e_obj_types
 	SP,
 	CY,
 	PL,
-	CONE
+	CONE,
+	TRIANGLE
 }					t_obj_types;
 
 typedef struct s_mem
@@ -88,6 +89,13 @@ typedef struct s_cone {
 	t_color color;
 } t_cone;
 
+typedef struct s_triangle {
+	t_vector3 p1;
+	t_vector3 p2;
+	t_vector3 p3;
+	t_color color;
+} t_triangle;
+
 typedef struct s_ambient
 {
 	double			ratio;
@@ -139,6 +147,7 @@ void				parse_camera(t_scene *scene, char **token);
 void				parse_light(t_scene *scene, char **token);
 void				parse_cylinder(t_scene *scene, char **token);
 void				parse_cone(t_scene *scene, char **token);
+void				parse_triangle(t_scene *scene, char **token);
 void				free_split(char **split);
 int					is_normalized(t_vector3 vec);
 char				**change_whitespace_and_split(char *str);
