@@ -27,7 +27,8 @@ typedef enum e_obj_types
 {
 	SP,
 	CY,
-	PL
+	PL,
+	CONE
 }					t_obj_types;
 
 typedef struct s_mem
@@ -79,6 +80,14 @@ typedef struct s_planes
 	t_color			color;
 }					t_planes;
 
+typedef struct s_cone {
+	t_vector3 center;
+	t_vector3 dir;
+	double diameter;
+	double height;
+	t_color color;
+} t_cone;
+
 typedef struct s_ambient
 {
 	double			ratio;
@@ -129,6 +138,7 @@ void				parse_ambient(t_scene *scene, char **token);
 void				parse_camera(t_scene *scene, char **token);
 void				parse_light(t_scene *scene, char **token);
 void				parse_cylinder(t_scene *scene, char **token);
+void				parse_cone(t_scene *scene, char **token);
 void				free_split(char **split);
 int					is_normalized(t_vector3 vec);
 char				**change_whitespace_and_split(char *str);
