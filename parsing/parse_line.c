@@ -37,8 +37,9 @@ void	parse_line(t_scene *scene, char *line)
 		parse_cone(scene, token);
 	else if (ft_strcmp("tr", token[0]) == 0)
 		parse_triangle(scene, token);
+	else if (ft_strcmp("di", token[0]) == 0)
+		parse_disk(scene, token);
 	else
 		exit((perror("Error: invalid object"), 1));
 	free_split(token);
 }
-
