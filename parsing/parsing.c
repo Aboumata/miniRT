@@ -44,5 +44,5 @@ void	parsing(t_scene *scene, char *arg)
 	check_name(arg);
 	check_file_content(scene, arg);
 	if (!scene->has_ambient || !scene->has_camera)
-		exit((perror("Missing required elements"), 1));
+		exit((perror("Missing required elements\n"), 1));
 }

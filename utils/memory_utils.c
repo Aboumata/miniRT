@@ -45,6 +45,5 @@ void *ft_malloc(size_t size, t_mem **mem)
 	node->ptr = ptr;
 	node->next = *mem;
 	*mem = node;
-	write(1, "ft_malloc success\n", 18);
 	return (ptr);
 }
