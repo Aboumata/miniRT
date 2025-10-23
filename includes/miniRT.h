@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_MINIRT_H
-# define MINIRT_MINIRT_H
+#ifndef MINIRT_H
+# define MINIRT_H
 
 # include "../Libft/libft.h"
 # include "../get_next_line/get_next_line.h"
@@ -82,27 +82,30 @@ typedef struct s_planes
 	t_color			color;
 }					t_planes;
 
-typedef struct s_cone {
-	t_vector3 center;
-	t_vector3 dir;
-	double diameter;
-	double height;
-	t_color color;
-} t_cone;
+typedef struct s_cone
+{
+	t_vector3		center;
+	t_vector3		dir;
+	double			diameter;
+	double			height;
+	t_color			color;
+}					t_cone;
 
-typedef struct s_triangle {
-	t_vector3 p1;
-	t_vector3 p2;
-	t_vector3 p3;
-	t_color color;
-} t_triangle;
+typedef struct s_triangle
+{
+	t_vector3		p1;
+	t_vector3		p2;
+	t_vector3		p3;
+	t_color			color;
+}					t_triangle;
 
-typedef struct s_disk {
-	t_vector3 center;
-	t_vector3 normal;
-	double diameter;
-	t_color color;
-} t_disk;
+typedef struct s_disk
+{
+	t_vector3		center;
+	t_vector3		normal;
+	double			diameter;
+	t_color			color;
+}					t_disk;
 
 typedef struct s_ambient
 {
@@ -137,6 +140,14 @@ typedef struct s_scene
 	int				has_ambient;
 	int				has_camera;
 }					t_scene;
+
+typedef struct s_atof
+{
+	double			res;
+	double			frac;
+	double			div;
+	int				dot_count;
+}					t_atof;
 
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);

@@ -12,14 +12,13 @@
 
 #include "../includes/miniRT.h"
 
-void ft_free_all(t_mem **mem)
+void	ft_free_all(t_mem **mem)
 {
-	t_mem *tmp;
-	t_mem *node;
+	t_mem	*tmp;
+	t_mem	*node;
 
 	if (!mem || !*mem)
-		return;
-
+		return ;
 	tmp = *mem;
 	while (tmp)
 	{
@@ -31,16 +30,16 @@ void ft_free_all(t_mem **mem)
 	*mem = NULL;
 }
 
-void *ft_malloc(size_t size, t_mem **mem)
+void	*ft_malloc(size_t size, t_mem **mem)
 {
-	void *ptr;
-	t_mem *node;
+	void	*ptr;
+	t_mem	*node;
 
 	ptr = malloc(size);
 	if (!ptr)
 		exit((perror("malloc filed."), 1));
 	node = malloc(sizeof(t_mem));
-	if (!node)	
+	if (!node)
 		exit((perror("malloc filed."), 1));
 	node->ptr = ptr;
 	node->next = *mem;
