@@ -12,10 +12,13 @@
 
 #include "../includes/miniRT.h"
 
-void add_obj(t_scene *scene, void *ptr, t_obj_types type)
+void	add_obj(t_scene *scene, void *ptr, t_obj_types type)
 {
-	t_object **head = &(scene->object);
-	t_object *node = ft_malloc(sizeof(t_object), &(scene->mem));
+	t_object	**head;
+	t_object	*node;
+
+	head = &(scene->object);
+	node = ft_malloc(sizeof(t_object), &(scene->mem));
 	node->obj = ptr;
 	node->type = type;
 	node->next = *head;
