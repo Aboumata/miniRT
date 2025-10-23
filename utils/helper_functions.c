@@ -12,34 +12,35 @@
 
 #include "../includes/miniRT.h"
 
-int is_normalized (t_vector3 vec)
+int	is_normalized(t_vector3 vec)
 {
-    double length;
-    length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-    if (length <  0.999 || length > 1.001)
-        return 0;
-    return 1;
+	double	length;
+
+	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+	if (length < 0.999 || length > 1.001)
+		return (0);
+	return (1);
 }
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (split[i])
-    {
-        free(split[i]);
-        i++;
-    }
-    free(split);
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
 
-int count_tokens(char **token)
+int	count_tokens(char **token)
 {
-    int len;
+	int	len;
 
-    len = 0;
-    while (token[len])
-        len++;
-    return (len);
+	len = 0;
+	while (token[len])
+		len++;
+	return (len);
 }
