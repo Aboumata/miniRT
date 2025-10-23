@@ -12,6 +12,30 @@
 
 #include "../includes/miniRT.h"
 
+static void	dispatch_parser(t_scene *scene, char **token, char *key)
+{
+	if (ft_strcmp("A", key) == 0)
+		parse_ambient(scene, token);
+	else if (ft_strcmp("C", key) == 0)
+		parse_camera(scene, token);
+	else if (ft_strcmp("L", key) == 0 || ft_strcmp("l", key) == 0)
+		parse_light(scene, token);
+	else if (ft_strcmp("sp", key) == 0)
+		parse_sphere(scene, token);
+	else if (ft_strcmp("pl", key) == 0)
+		parse_plan(scene, token);
+	else if (ft_strcmp("cy", key) == 0)
+		parse_cylinder(scene, token);
+	else if (ft_strcmp("co", key) == 0)
+		parse_cone(scene, token);
+	else if (ft_strcmp("tr", key) == 0)
+		parse_triangle(scene, token);
+	else if (ft_strcmp("di", key) == 0)
+		parse_disk(scene, token);
+	else
+		exit((perror("Error: invalid object"), 1));
+}
+
 void	parse_line(t_scene *scene, char *line)
 {
 	char	**token;
@@ -21,25 +45,6 @@ void	parse_line(t_scene *scene, char *line)
 	token = change_whitespace_and_split(line);
 	if (!token || !token[0])
 		return ;
-	if (ft_strcmp("A", token[0]) == 0)
-		parse_ambient(scene, token);
-	else if (ft_strcmp("C", token[0]) == 0)
-		parse_camera(scene, token);
-	else if (ft_strcmp("L", token[0]) == 0 || ft_strcmp("l", token[0]) == 0)
-		parse_light(scene, token);
-	else if (ft_strcmp("sp", token[0]) == 0)
-		parse_sphere(scene, token);
-	else if (ft_strcmp("pl", token[0]) == 0)
-		parse_plan(scene, token);
-	else if (ft_strcmp("cy", token[0]) == 0)
-		parse_cylinder(scene, token);
-	else if (ft_strcmp("co", token[0]) == 0)
-		parse_cone(scene, token);
-	else if (ft_strcmp("tr", token[0]) == 0)
-		parse_triangle(scene, token);
-	else if (ft_strcmp("di", token[0]) == 0)
-		parse_disk(scene, token);
-	else
-		exit((perror("Error: invalid object"), 1));
+	dispatch_parser(scene, token, token[0]);
 	free_split(token);
 }

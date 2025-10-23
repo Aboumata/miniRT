@@ -12,11 +12,11 @@
 
 #include "../includes/miniRT.h"
 
-static int is_whitespace(char c)
+static int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\r')
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
 // static char *skip_whitespace(char *str)
@@ -51,7 +51,7 @@ static int is_whitespace(char c)
 // 	{
 // 		current = skip_whitespace(current);
 // 		if (*current == '\0')
-// 			break;
+// 			break ;
 // 		len = get_token_length(current);
 // 		if (len > 0)
 // 		{
@@ -71,10 +71,10 @@ static int is_whitespace(char c)
 // 	int token_count;
 
 // 	if (!line || line[0] == '\0' || line[0] == '\n')
-// 		return NULL;
+// 		return (NULL);
 // 	token_count = count_tokens_of_line(line);
 // 	if (token_count == 0)
-// 		return NULL;
+// 		return (NULL);
 // 	tokens = malloc(sizeof(char *) * (token_count + 1));
 // 	if (!tokens)
 // 		return (NULL);
@@ -84,7 +84,7 @@ static int is_whitespace(char c)
 // 	{
 // 		current = skip_whitespace(current);
 // 		if (*current == '\0')
-// 			break;
+// 			break ;
 // 		length = get_token_length(current);
 // 		tokens[index] = ft_substr(current, 0, length);
 // 		if (!tokens[index])
@@ -101,9 +101,9 @@ static int is_whitespace(char c)
 // 	return (tokens);
 // }
 
-char **change_whitespace_and_split(char *str)
+char	**change_whitespace_and_split(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str && str[i])
@@ -112,5 +112,5 @@ char **change_whitespace_and_split(char *str)
 			str[i] = ' ';
 		i++;
 	}
-	return(ft_split(str, ' '));
+	return (ft_split(str, ' '));
 }
