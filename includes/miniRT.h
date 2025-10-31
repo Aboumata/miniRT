@@ -23,6 +23,9 @@
 # include <string.h>
 # include <unistd.h>
 
+# define WIDTH 800
+# define HEIGHT 600
+
 typedef enum e_obj_types
 {
 	SP,
@@ -140,6 +143,23 @@ typedef struct s_scene
 	int				has_ambient;
 	int				has_camera;
 }					t_scene;
+
+typedef struct s_mlx
+{
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			*addr;
+	int				hpp;
+	int				line_len;
+	int				endian;
+}					t_mlx;
+
+typedef struct s_data
+{
+	t_scene			*scene;
+	t_mlx			mlx;
+}					t_data;
 
 typedef struct s_atof
 {
