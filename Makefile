@@ -1,40 +1,36 @@
 NAME = miniRT
 
 SRC = main.c \
-	parsing/parsing.c parsing/parse_sphere.c parsing/parse_line.c parsing/parse_camera.c parsing/parse_cylinder.c\
+	parsing/parsing.c parsing/parse_sphere.c parsing/parse_line.c parsing/parse_camera.c parsing/parse_cylinder.c \
 	parsing/parse_colors_vectors.c parsing/parse_plan.c parsing/parse_ambient.c parsing/parse_light.c \
-	parsing/parse_cone.c parsing/parse_triangle.c parsing/parse_disk.c\
-	\
+	parsing/parse_cone.c parsing/parse_triangle.c parsing/parse_disk.c \
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
-	\
-	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c\
-	\
-	srcs/render.c\
+	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c \
+	srcs/render.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -I/usr/local/include
 
-Other_Flags = -lm
+LIBFT = Libft/libft.a
+MLX_FLAGS = -L/usr/local/lib -lmlx_Linux -lXext -lX11 -lm -lz
 
-libft = Libft/libft.a
+all: $(NAME)
 
-all : $(NAME)
-
-$(NAME) : $(OBJ)
+$(NAME): $(OBJ)
 	make -C Libft/
-	$(CC) $(CFLAGS) $(Other_Flags) $(OBJ) $(libft) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
-clean :
+clean:
 	make clean -C Libft/
 	rm -rf $(OBJ)
 
-fclean : clean
+fclean: clean
 	make fclean -C Libft/
 	rm -rf $(NAME)
 
-re : fclean all
+re: fclean all
 
 .PHONY: all clean fclean re

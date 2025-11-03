@@ -15,7 +15,7 @@
 
 # include "../Libft/libft.h"
 # include "../get_next_line/get_next_line.h"
-# include "../minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -150,7 +150,7 @@ typedef struct s_mlx
 	void			*win;
 	void			*img;
 	char			*addr;
-	int				hpp;
+	int				bpp;
 	int				line_len;
 	int				endian;
 }					t_mlx;
@@ -191,5 +191,7 @@ void				parse_disk(t_scene *scene, char **token);
 void				free_split(char **split);
 int					is_normalized(t_vector3 vec);
 char				**change_whitespace_and_split(char *str);
+void				cleanup_mlx(t_data *data);
+int					initialize_mlx(t_data *data);
 
 #endif
