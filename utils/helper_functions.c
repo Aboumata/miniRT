@@ -44,3 +44,19 @@ int	count_tokens(char **token)
 		len++;
 	return (len);
 }
+
+void	cleanup_mlx(t_data *data)
+{
+	if (data->mlx.img != NULL)
+	{
+		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
+		data->mlx.img = NULL;
+	}
+	if (data->mlx.win != NULL)
+	{
+		mlx_destroy_window(data->mlx.mlx, data->mlx.win);
+		data->mlx.win = NULL;
+	}
+	if (data->mlx.mlx != NULL)
+		data->mlx.mlx = NULL;
+}

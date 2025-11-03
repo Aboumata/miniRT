@@ -15,13 +15,22 @@
 int	main(int ac, char **av)
 {
 	t_scene	scene;
+	t_data	data;
 
 	if (ac != 2)
 	{
-		perror("There's are more than 2 arguments or less.");
+		write(2, "There's are more than 2 arguments or less.", 42);
 		exit(1);
 	}
 	ft_bzero(&scene, sizeof(t_scene));
 	parsing(&scene, av[1]);
-	write(1, "good\n", 5);
+	data.scene = &scene;
+	if (initialize_mlx(&data) == -1)
+	{
+		ft_free_all(&scene.mem);
+		return (1);
+	}
+	printf("MLX initialized successfully!\n");
+	cleanup_mlx(&data);
+	ft_free_all(&scene.mem);
 }
