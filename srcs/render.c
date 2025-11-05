@@ -19,8 +19,6 @@ void	test_render(t_data *data)
 	int	r;
 	int	g;
 	int	b;
-	int	color;
-
 
 	y = 0;
 	while (y < HEIGHT)
@@ -31,8 +29,7 @@ void	test_render(t_data *data)
 			r = (x * 255) / WIDTH;
 			g = (y * 255) / HEIGHT;
 			b = 128;
-			color = create_color(r, g, b);
-			put_pixel(data, x, y, color);
+			put_pixel(data, x, y, create_color(r, g, b));
 			x++;
 		}
 		y++;
