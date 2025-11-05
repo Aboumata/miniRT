@@ -12,3 +12,12 @@
 
 #include "../includes/miniRT.h"
 
+void	render(t_data *data)
+{
+
+}
+
+void test_render(t_data *data)
+{
+
+}

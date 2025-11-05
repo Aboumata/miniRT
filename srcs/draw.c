@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/miniRT.h"
+#include "../includes/miniRT.h"
 
-int create_color (int r, int g, int b)
+int	create_color(int r, int g, int b)
 {
-    return ((r << 16) | (g << 8) | b);
+	return ((r << 16) | (g << 8) | b);
 }
 
-void put_pixel(t_data *data, int x, int y, int color)
+void	put_pixel(t_data *data, int x, int y, int color)
 {
-    int offset;
-    int *pixels;
+	int	offset;
+	int	*pixels;
 
-    if ((x < 0 || x >= WIDTH) || (y < 0 || y >= HEIGHT))
-            return;
-    pixels = (int*)data->mlx.addr;
-    offset = y * (data->mlx.line_len / 4) + x;
-    pixels[offset] = color;
+	if ((x < 0 || x >= WIDTH) || (y < 0 || y >= HEIGHT))
+		return ;
+	pixels = (int *)data->mlx.addr;
+	offset = y * (data->mlx.line_len / 4) + x;
+	pixels[offset] = color;
 }
