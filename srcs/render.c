@@ -12,12 +12,35 @@
 
 #include "../includes/miniRT.h"
 
-void	render(t_data *data)
+void	test_render(t_data *data)
 {
+	int	x;
+	int	y;
+	int	r;
+	int	g;
+	int	b;
+	int	color;
 
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			r = (x * 255) / WIDTH;
+			g = (y * 255) / HEIGHT;
+			b = 128;
+			color = create_color(r, g, b);
+			put_pixel(data, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
-void test_render(t_data *data)
+void	render(t_data *data)
 {
-
+	test_render(data);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }

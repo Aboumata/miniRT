@@ -30,7 +30,8 @@ int	main(int ac, char **av)
 		ft_free_all(&scene.mem);
 		return (1);
 	}
-	printf("MLX initialized successfully!\n");
-	cleanup_mlx(&data);
-	ft_free_all(&scene.mem);
+	render(&data);
+	setup_hooks(&data);
+	mlx_loop(data.mlx.mlx);
+	return (0);
 }

@@ -198,5 +198,7 @@ void				put_pixel(t_data *data, int x, int y, int color);
 int					handle_key(int keycode , t_data *data);
 int					handle_close(t_data *data);
 void				setup_hooks(t_data *data);
+void				test_render(t_data *data);
+void				render(t_data *data);
 
 #endif
