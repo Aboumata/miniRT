@@ -193,5 +193,10 @@ int					is_normalized(t_vector3 vec);
 char				**change_whitespace_and_split(char *str);
 void				cleanup_mlx(t_data *data);
 int					initialize_mlx(t_data *data);
+int					create_color (int r, int g, int b);
+void				put_pixel(t_data *data, int x, int y, int color);
+int					handle_key(int keycode , t_data *data);
+int					handle_close(t_data *data);
+void				setup_hooks(t_data *data);
 
 #endif
