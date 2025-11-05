@@ -23,10 +23,7 @@ void put_pixel(t_data *data, int x, int y, int color)
     int *pixels;
 
     if ((x < 0 || x >= WIDTH) || (y < 0 || y >= HEIGHT))
-    {
-            write(2, "Don't draw, out of bounds", 25);
             return;
-    }
     pixels = (int*)data->mlx.addr;
     offset = y * (data->mlx.line_len / 4) + x;
     pixels[offset] = color;
