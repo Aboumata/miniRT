@@ -19,14 +19,15 @@ int create_color (int r, int g, int b)
 
 void put_pixel(t_data *data, int x, int y, int color)
 {
-    int byte_offset;
+    int offset;
+    int *pixels;
 
-    if ((x < 0 || x >= WIDTH) && (y < 0 || y >= HEIGHT))
+    if ((x < 0 || x >= WIDTH) || (y < 0 || y >= HEIGHT))
     {
-            write(1, "Don't draw, out of bounds", 25);
+            write(2, "Don't draw, out of bounds", 25);
             return;
     }
-    byte_offset = y * data->mlx.line_len + x * (data->mlx.bpp / 8);
-    ((int *)data->mlx.addr)[byte_offset / 4] = color;
-
+    pixels = (int*)data->mlx.addr;
+    offset = y * (data->mlx.line_len / 4) + x;
+    pixels[offset] = color;
 }
