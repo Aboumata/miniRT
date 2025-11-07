@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINIRT_H
+#ifndef MINIRT_H
 # define MINIRT_H
 
 # include "../Libft/libft.h"
@@ -166,22 +166,22 @@ typedef struct s_atof
 
 typedef struct s_ray
 {
-	t_vector3 origin;
-	t_vector3 direction;
-} t_ray;
+	t_vector3		origin;
+	t_vector3		direction;
+}					t_ray;
 
 typedef struct s_camera_data
 {
-	t_vector3 forward;
-	t_vector3 right;
-	t_vector3 up;
+	t_vector3		forward;
+	t_vector3		right;
+	t_vector3		up;
 
-	double viewport_width;
-	double viewport_height;
+	double			viewport_width;
+	double			viewport_height;
 
-	t_vector3 viewport_center;
-	t_vector3 top_left;
-} t_camera_data;
+	t_vector3		viewport_center;
+	t_vector3		top_left;
+}					t_camera_data;
 
 typedef struct s_data
 {
@@ -214,12 +214,20 @@ int					is_normalized(t_vector3 vec);
 char				**change_whitespace_and_split(char *str);
 void				cleanup_mlx(t_data *data);
 int					initialize_mlx(t_data *data);
-int					create_color (int r, int g, int b);
+int					create_color(int r, int g, int b);
 void				put_pixel(t_data *data, int x, int y, int color);
-int					handle_key(int keycode , t_data *data);
+int					handle_key(int keycode, t_data *data);
 int					handle_close(t_data *data);
 void				setup_hooks(t_data *data);
 void				test_render(t_data *data);
 void				render(t_data *data);
+t_vector3			vec_add(t_vector3 a, t_vector3 b);
+t_vector3			vec_sub(t_vector3 a, t_vector3 b);
+t_vector3			vec_scale(t_vector3 v, double scalar);
+double				vec_length(t_vector3 v);
+t_vector3			vec_normalize(t_vector3 v);
+double				vec_dot(t_vector3 a, t_vector3 b);
+t_vector3			vec_cross(t_vector3 a, t_vector3 b);
+void				test_vectors(void);
 
 #endif
