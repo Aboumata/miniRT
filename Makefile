@@ -6,7 +6,7 @@ SRC = main.c \
 	parsing/parse_cone.c parsing/parse_triangle.c parsing/parse_disk.c \
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c \
-	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c\
+	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c srcs/vector_math.c\
 
 OBJ = $(SRC:.c=.o)
 

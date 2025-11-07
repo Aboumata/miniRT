@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
+# ifndef MINIRT_H
 # define MINIRT_H
 
 # include "../Libft/libft.h"
@@ -25,6 +25,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define PI 3.14159265359
 
 typedef enum e_obj_types
 {
@@ -155,12 +156,6 @@ typedef struct s_mlx
 	int				endian;
 }					t_mlx;
 
-typedef struct s_data
-{
-	t_scene			*scene;
-	t_mlx			mlx;
-}					t_data;
-
 typedef struct s_atof
 {
 	double			res;
@@ -168,6 +163,32 @@ typedef struct s_atof
 	double			div;
 	int				dot_count;
 }					t_atof;
+
+typedef struct s_ray
+{
+	t_vector3 origin;
+	t_vector3 direction;
+} t_ray;
+
+typedef struct s_camera_data
+{
+	t_vector3 forward;
+	t_vector3 right;
+	t_vector3 up;
+
+	double viewport_width;
+	double viewport_height;
+
+	t_vector3 viewport_center;
+	t_vector3 top_left;
+} t_camera_data;
+
+typedef struct s_data
+{
+	t_scene			*scene;
+	t_mlx			mlx;
+	t_camera_data	cam;
+}					t_data;
 
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);
