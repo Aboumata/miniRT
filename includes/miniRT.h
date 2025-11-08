@@ -229,5 +229,7 @@ t_vector3			vec_normalize(t_vector3 v);
 double				vec_dot(t_vector3 a, t_vector3 b);
 t_vector3			vec_cross(t_vector3 a, t_vector3 b);
 void				test_vectors(void);
+void				setup_camera(t_data *data);
+void				print_camera_info(t_data *data);
 
 #endif
