@@ -7,6 +7,8 @@ SRC = main.c \
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c \
 	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c srcs/vector_math.c srcs/camera.c\
+	srcs/hit.c srcs/cylinder_intersect.c srcs/intersect.c srcs/sphere_intersect.c srcs/plane_intersect.c\
+	srcs/lighting.c
 
 OBJ = $(SRC:.c=.o)
 
