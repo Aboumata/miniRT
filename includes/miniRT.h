@@ -231,5 +231,9 @@ t_vector3			vec_cross(t_vector3 a, t_vector3 b);
 void				test_vectors(void);
 void				setup_camera(t_data *data);
 void				print_camera_info(t_data *data);
+t_ray				create_ray(t_data *data, int x, int y);
+t_vector3			ray_at(t_ray ray, double t);
+void				print_ray_info(t_ray ray, int x, int y);
+void				test_rays(t_data *data);
 
 #endif

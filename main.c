@@ -19,12 +19,14 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		write(2, "There's are more than 2 arguments or less.", 42);
+		write(2, "There are two arguments or more/fewer.", 38);
 		exit(1);
 	}
 	ft_bzero(&scene, sizeof(t_scene));
 	parsing(&scene, av[1]);
 	data.scene = &scene;
+	setup_camera(&data);
+	test_rays(&data);
 	if (initialize_mlx(&data) == -1)
 	{
 		ft_free_all(&scene.mem);
