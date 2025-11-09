@@ -41,3 +41,21 @@ void	setup_camera(t_data *data)
 	data->cam.top_left = vec_sub(vec_add(data->cam.viewport_center, up_offset),
 			left_offset);
 }
+
+// void	print_camera_info(t_data *data)
+// {
+// 	printf("\n=== Camera Setup Info ===\n\n");
+// 	printf("Forward: (%f, %f, %f)\n", data->cam.forward.x, data->cam.forward.y,
+// 		data->cam.forward.z);
+// 	printf("Right: (%f, %f, %f)\n", data->cam.right.x, data->cam.right.y,
+// 		data->cam.right.z);
+// 	printf("Up: (%f, %f, %f)\n", data->cam.up.x, data->cam.up.y,
+// 		data->cam.up.z);
+// 	printf("\nViewport Width: %f\n", data->cam.viewport_width);
+// 	printf("Viewport Height: %f\n", data->cam.viewport_height);
+// 	printf("\nViewport Center: (%f, %f, %f)\n", data->cam.viewport_center.x,
+// 		data->cam.viewport_center.y, data->cam.viewport_center.z);
+// 	printf("Top-Left: (%f, %f, %f)\n", data->cam.top_left.x,
+// 		data->cam.top_left.y, data->cam.top_left.z);
+// 	printf("\n=== End Camera Info ===\n\n");
+// }

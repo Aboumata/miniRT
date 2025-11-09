@@ -40,32 +40,32 @@ t_ray create_ray(t_data *data, int x, int y)
     return (ray);
 }
 
-void	print_ray_info(t_ray ray, int x, int y)
-{
-    printf("Pixel (%d, %d):\n", x, y);
-    printf("  Origin: (%.2f, %.2f, %.2f)\n",
-           ray.origin.x, ray.origin.y, ray.origin.z);
-    printf("  Direction: (%.2f, %.2f, %.2f)\n",
-           ray.direction.x, ray.direction.y, ray.direction.z);
-    printf("  Direction length: %.3f\n", vec_length(ray.direction));
-    printf("\n");
-}
-
-void	test_rays(t_data *data)
-{
-    t_ray	ray;
-
-    printf("=== Testing Ray Generation ===\n\n");
-
-    ray = create_ray(data, 0, 0);
-    print_ray_info(ray, 0, 0);
-
-    ray = create_ray(data, WIDTH - 1, 0);
-    print_ray_info(ray, WIDTH - 1, 0);
-
-    ray = create_ray(data, WIDTH / 2, HEIGHT / 2);
-    print_ray_info(ray, WIDTH / 2, HEIGHT / 2);
-
-    ray = create_ray(data, 0, HEIGHT - 1);
-    print_ray_info(ray, 0, HEIGHT - 1);
-}
+// void	print_ray_info(t_ray ray, int x, int y)
+// {
+//     printf("Pixel (%d, %d):\n", x, y);
+//     printf("  Origin: (%.2f, %.2f, %.2f)\n",
+//            ray.origin.x, ray.origin.y, ray.origin.z);
+//     printf("  Direction: (%.2f, %.2f, %.2f)\n",
+//            ray.direction.x, ray.direction.y, ray.direction.z);
+//     printf("  Direction length: %.3f\n", vec_length(ray.direction));
+//     printf("\n");
+// }
+//
+// void	test_rays(t_data *data)
+// {
+//     t_ray	ray;
+//
+//     printf("=== Testing Ray Generation ===\n\n");
+//
+//     ray = create_ray(data, 0, 0);
+//     print_ray_info(ray, 0, 0);
+//
+//     ray = create_ray(data, WIDTH - 1, 0);
+//     print_ray_info(ray, WIDTH - 1, 0);
+//
+//     ray = create_ray(data, WIDTH / 2, HEIGHT / 2);
+//     print_ray_info(ray, WIDTH / 2, HEIGHT / 2);
+//
+//     ray = create_ray(data, 0, HEIGHT - 1);
+//     print_ray_info(ray, 0, HEIGHT - 1);
+// }

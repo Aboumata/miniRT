@@ -26,7 +26,8 @@ int	main(int ac, char **av)
 	parsing(&scene, av[1]);
 	data.scene = &scene;
 	setup_camera(&data);
-	test_rays(&data);
+	// test_rays(&data);
+	// exit(0);
 	if (initialize_mlx(&data) == -1)
 	{
 		ft_free_all(&scene.mem);
