@@ -26,6 +26,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define PI 3.14159265359
+# define EPSILON 0.0001
 
 typedef enum e_obj_types
 {
