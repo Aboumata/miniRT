@@ -191,6 +191,17 @@ typedef struct s_data
 	t_camera_data	cam;
 }					t_data;
 
+typedef struct s_hit
+{
+	int				hit;
+	double			t;
+	t_vector3		point;
+	t_vector3		normal;
+	t_color			color;
+	void			*object;
+	t_obj_types		type;
+}					t_hit;
+
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);
 int					new_sphere(t_object **obj, char **token);
