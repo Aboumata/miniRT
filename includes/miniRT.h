@@ -247,5 +247,8 @@ t_ray				create_ray(t_data *data, int x, int y);
 t_vector3			ray_at(t_ray ray, double t);
 void				print_ray_info(t_ray ray, int x, int y);
 void				test_rays(t_data *data);
-
+void				init_hit(t_hit *hit);
+int					is_closer_hit(t_hit *current, double new_t);
+void				update_hit(t_hit *hit, double t, t_vector3 point,
+						t_vector3 normal, t_color color);
 #endif
