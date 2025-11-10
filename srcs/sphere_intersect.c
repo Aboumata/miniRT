@@ -52,42 +52,42 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	return (1);
 }
 
-void	test_sphere_intersection(t_data *data) //just test the function if they are working
-{
-	t_ray		ray;
-	t_hit		hit;
-	t_object	*obj;
-	t_spheres	*sp;
-
-	printf("\n=== Testing Sphere Intersection ===\n\n");
-	ray = create_ray(data, WIDTH / 2, HEIGHT / 2);
-	printf("Testing center pixel ray:\n");
-	printf("  Origin: (%.2f, %.2f, %.2f)\n", ray.origin.x, ray.origin.y,
-		ray.origin.z);
-	printf("  Direction: (%.2f, %.2f, %.2f)\n\n", ray.direction.x,
-		ray.direction.y, ray.direction.z);
-	obj = data->scene->object;
-	while (obj)
-	{
-		if (obj->type == SP)
-		{
-			sp = (t_spheres *)obj->obj;
-			printf("Testing sphere:\n");
-			printf("  Center: (%.2f, %.2f, %.2f)\n", sp->center.x, sp->center.y,
-				sp->center.z);
-			printf("  Radius: %.2f\n", sp->diameter / 2.0);
-			init_hit(&hit);
-			if (intersect_sphere(ray, sp, &hit))
-			{
-				printf("  ✓ HIT! Distance: %.2f\n", hit.t);
-				printf("  Hit point: (%.2f, %.2f, %.2f)\n", hit.point.x,
-					hit.point.y, hit.point.z);
-				printf("  Normal: (%.2f, %.2f, %.2f)\n\n", hit.normal.x,
-					hit.normal.y, hit.normal.z);
-			}
-			else
-				printf("  ✗ MISS\n\n");
-		}
-		obj = obj->next;
-	}
-}
+// void	test_sphere_intersection(t_data *data) //just test the function if they are working
+// {
+// 	t_ray		ray;
+// 	t_hit		hit;
+// 	t_object	*obj;
+// 	t_spheres	*sp;
+//
+// 	printf("\n=== Testing Sphere Intersection ===\n\n");
+// 	ray = create_ray(data, WIDTH / 2, HEIGHT / 2);
+// 	printf("Testing center pixel ray:\n");
+// 	printf("  Origin: (%.2f, %.2f, %.2f)\n", ray.origin.x, ray.origin.y,
+// 		ray.origin.z);
+// 	printf("  Direction: (%.2f, %.2f, %.2f)\n\n", ray.direction.x,
+// 		ray.direction.y, ray.direction.z);
+// 	obj = data->scene->object;
+// 	while (obj)
+// 	{
+// 		if (obj->type == SP)
+// 		{
+// 			sp = (t_spheres *)obj->obj;
+// 			printf("Testing sphere:\n");
+// 			printf("  Center: (%.2f, %.2f, %.2f)\n", sp->center.x, sp->center.y,
+// 				sp->center.z);
+// 			printf("  Radius: %.2f\n", sp->diameter / 2.0);
+// 			init_hit(&hit);
+// 			if (intersect_sphere(ray, sp, &hit))
+// 			{
+// 				printf("  ✓ HIT! Distance: %.2f\n", hit.t);
+// 				printf("  Hit point: (%.2f, %.2f, %.2f)\n", hit.point.x,
+// 					hit.point.y, hit.point.z);
+// 				printf("  Normal: (%.2f, %.2f, %.2f)\n\n", hit.normal.x,
+// 					hit.normal.y, hit.normal.z);
+// 			}
+// 			else
+// 				printf("  ✗ MISS\n\n");
+// 		}
+// 		obj = obj->next;
+// 	}
+// }

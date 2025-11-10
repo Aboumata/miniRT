@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
+# ifndef MINIRT_H
 # define MINIRT_H
 
 # include "../Libft/libft.h"
