@@ -12,32 +12,61 @@
 
 #include "../includes/miniRT.h"
 
-void	test_render(t_data *data)
+static int	get_pixel_color(t_hit *hit)
 {
-	int	x;
-	int	y;
-	int	r;
-	int	g;
-	int	b;
+	if (hit->hit)
+		return (create_color(hit->color.r, hit->color.g, hit->color.b));
 
+	return (create_color(0, 0, 0));
+}
+
+static void	trace_spheres(t_ray ray, t_scene *scene, t_hit *hit)
+{
+	t_object	*obj;
+	t_spheres	*sphere;
+
+	obj = scene->object;
+	while (obj)
+	{
+		if (obj->type == SP)
+		{
+			sphere = (t_spheres *)obj->obj;
+			intersect_sphere(ray, sphere, hit);
+		}
+		obj = obj->next;
+	}
+}
+
+void	render(t_data *data)
+{
+	int		x;
+	int		y;
+	t_ray	ray;
+	t_hit	hit;
+	int		color;
+
+	printf("Rendering...\n");
 	y = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			r = (x * 255) / WIDTH;
-			g = (y * 255) / HEIGHT;
-			b = 128;
-			put_pixel(data, x, y, create_color(r, g, b));
+			ray = create_ray(data, x, y);
+
+			init_hit(&hit);
+
+			trace_spheres(ray, data->scene, &hit);
+
+			color = get_pixel_color(&hit);
+
+			put_pixel(data, x, y, color);
+
 			x++;
 		}
 		y++;
 	}
-}
-
-void	render(t_data *data)
-{
-	test_render(data);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+	printf("Done! Putting image to window...\n");
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win,
+		data->mlx.img, 0, 0);
 }
