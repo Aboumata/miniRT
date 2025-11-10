@@ -251,4 +251,6 @@ void				init_hit(t_hit *hit);
 int					is_closer_hit(t_hit *current, double new_t);
 void				update_hit(t_hit *hit, double t, t_vector3 point,
 						t_vector3 normal, t_color color);
+int					intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit);
+void				test_sphere_intersection(t_data *data);
 #endif

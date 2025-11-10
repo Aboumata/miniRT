@@ -27,6 +27,7 @@ int	main(int ac, char **av)
 	data.scene = &scene;
 	setup_camera(&data);
 	// test_rays(&data);
+	// test_sphere_intersection(&data);
 	// exit(0);
 	if (initialize_mlx(&data) == -1)
 	{
