@@ -16,7 +16,6 @@ static int	get_pixel_color(t_hit *hit)
 {
 	if (hit->hit)
 		return (create_color(hit->color.r, hit->color.g, hit->color.b));
-
 	return (create_color(0, 0, 0));
 }
 
@@ -53,20 +52,14 @@ void	render(t_data *data)
 		while (x < WIDTH)
 		{
 			ray = create_ray(data, x, y);
-
 			init_hit(&hit);
-
 			trace_spheres(ray, data->scene, &hit);
-
 			color = get_pixel_color(&hit);
-
 			put_pixel(data, x, y, color);
-
 			x++;
 		}
 		y++;
 	}
 	printf("Done! Putting image to window...\n");
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win,
-		data->mlx.img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }
