@@ -52,7 +52,8 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	return (1);
 }
 
-// void	test_sphere_intersection(t_data *data) //just test the function if they are working
+// void	test_sphere_intersection(t_data *data)
+		//just test the function if they are working
 // {
 // 	t_ray		ray;
 // 	t_hit		hit;

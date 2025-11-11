@@ -14,13 +14,13 @@
 
 static int	get_pixel_color(t_hit *hit, t_scene *scene)
 {
-	t_color lit_color;
+	t_color	lit_color;
+
 	if (hit->hit)
 	{
 		lit_color = calculate_lighting(hit, scene);
 		return (create_color(lit_color.r, lit_color.g, lit_color.b));
 	}
-
 	return (create_color(0, 0, 0));
 }
 

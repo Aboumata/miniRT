@@ -42,7 +42,8 @@ void	setup_camera(t_data *data)
 			left_offset);
 }
 
-// void	print_camera_info(t_data *data) //just test the function if they are working
+// void	print_camera_info(t_data *data)
+		//just test the function if they are working
 // {
 // 	printf("\n=== Camera Setup Info ===\n\n");
 // 	printf("Forward: (%f, %f, %f)\n", data->cam.forward.x, data->cam.forward.y,

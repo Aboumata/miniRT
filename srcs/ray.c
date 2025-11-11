@@ -39,7 +39,8 @@ t_ray	create_ray(t_data *data, int x, int y)
 	return (ray);
 }
 
-// void	print_ray_info(t_ray ray, int x, int y) //just test the function if they are working
+// void	print_ray_info(t_ray ray, int x, int y)
+		//just test the function if they are working
 // {
 //     printf("Pixel (%d, %d):\n", x, y);
 //     printf("  Origin: (%.2f, %.2f, %.2f)\n",
