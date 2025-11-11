@@ -12,10 +12,15 @@
 
 #include "../includes/miniRT.h"
 
-static int	get_pixel_color(t_hit *hit)
+static int	get_pixel_color(t_hit *hit, t_scene *scene)
 {
+	t_color lit_color;
 	if (hit->hit)
-		return (create_color(hit->color.r, hit->color.g, hit->color.b));
+	{
+		lit_color = calculate_lighting(hit, scene);
+		return (create_color(lit_color.r, lit_color.g, lit_color.b));
+	}
+
 	return (create_color(0, 0, 0));
 }
 
@@ -54,7 +59,7 @@ void	render(t_data *data)
 			ray = create_ray(data, x, y);
 			init_hit(&hit);
 			trace_spheres(ray, data->scene, &hit);
-			color = get_pixel_color(&hit);
+			color = get_pixel_color(&hit, data->scene);
 			put_pixel(data, x, y, color);
 			x++;
 		}
