@@ -254,4 +254,6 @@ void				update_hit(t_hit *hit, double t, t_vector3 point,
 int					intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit);
 void				test_sphere_intersection(t_data *data);
 t_color				calculate_lighting(t_hit *hit, t_scene *scene);
+int					is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
+						t_scene *scene);
 #endif

@@ -20,7 +20,6 @@ int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 	double		light_distance;
 	t_hit		shadow_hti;
 	t_object	*obj;
-	t_spheres	*sphere;
 
 	to_light = vec_sub(light_pos, point);
 	light_distance = vec_length(to_light);
@@ -32,12 +31,52 @@ int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 		init_hit(&shadow_hti);
 		if (obj->type == SP)
 		{
-			sphere = (t_spheres *)obj->obj;
-			if (intersect_sphere(shadow_ray, sphere, &shadow_hti))
+			if (intersect_sphere(shadow_ray, (t_spheres *)obj->obj,
+					&shadow_hti))
 				if (shadow_hti.t < light_distance)
 					return (1);
 		}
 		obj = obj->next;
 	}
 	return (0);
+}
+
+void	test_shadow(t_data *data)
+{
+	t_vector3	test_point;
+	t_vector3	test_normal;
+	t_light		*light;
+	int			in_shadow;
+
+	printf("\n=== Testing Shadow Rays ===\n\n");
+
+	test_point.x = 0;
+	test_point.y = 0;
+	test_point.z = 5;
+
+	test_normal.x = 0;
+	test_normal.y = 1;
+	test_normal.z = 0;
+
+	printf("Test point: (%.2f, %.2f, %.2f)\n",
+		test_point.x, test_point.y, test_point.z);
+	printf("Normal: (%.2f, %.2f, %.2f)\n\n",
+		test_normal.x, test_normal.y, test_normal.z);
+
+	light = data->scene->light;
+	while (light)
+	{
+		printf("Testing light at (%.2f, %.2f, %.2f):\n",
+			light->pos.x, light->pos.y, light->pos.z);
+
+		in_shadow = is_in_shadow(test_point, test_normal,
+			light->pos, data->scene);
+
+		if (in_shadow)
+			printf("  ✗ IN SHADOW\n\n");
+		else
+			printf("  ✓ LIT\n\n");
+
+		light = light->next;
+	}
 }
