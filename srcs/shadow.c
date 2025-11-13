@@ -15,11 +15,12 @@
 int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 		t_scene *scene)
 {
-	t_ray shadow_ray;
-	t_vector3 to_light;
-	double light_distance;
-	t_hit shadow_hti;
-	t_object *obj;
+	t_ray		shadow_ray;
+	t_vector3	to_light;
+	double		light_distance;
+	t_hit		shadow_hti;
+	t_object	*obj;
+	t_spheres	*sphere;
 
 	to_light = vec_sub(light_pos, point);
 	light_distance = vec_length(to_light);
@@ -31,7 +32,6 @@ int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 		init_hit(&shadow_hti);
 		if (obj->type == SP)
 		{
-			t_spheres *sphere;
 			sphere = (t_spheres *)obj->obj;
 			if (intersect_sphere(shadow_ray, sphere, &shadow_hti))
 				if (shadow_hti.t < light_distance)
