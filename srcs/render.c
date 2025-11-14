@@ -27,16 +27,14 @@ static int	get_pixel_color(t_hit *hit, t_scene *scene)
 static void	trace_spheres(t_ray ray, t_scene *scene, t_hit *hit)
 {
 	t_object	*obj;
-	t_spheres	*sphere;
 
 	obj = scene->object;
 	while (obj)
 	{
 		if (obj->type == SP)
-		{
-			sphere = (t_spheres *)obj->obj;
-			intersect_sphere(ray, sphere, hit);
-		}
+			intersect_sphere(ray, (t_spheres *)obj->obj, hit);
+		else if (obj->type == PL)
+			intersect_plane(ray, (t_planes *)obj->obj, hit);
 		obj = obj->next;
 	}
 }
