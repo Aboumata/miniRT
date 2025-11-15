@@ -24,7 +24,7 @@ static int	get_pixel_color(t_hit *hit, t_scene *scene)
 	return (create_color(0, 0, 0));
 }
 
-static void	trace_spheres(t_ray ray, t_scene *scene, t_hit *hit)
+static void	trace_objects(t_ray ray, t_scene *scene, t_hit *hit)
 {
 	t_object	*obj;
 
@@ -56,7 +56,7 @@ void	render(t_data *data)
 		{
 			ray = create_ray(data, x, y);
 			init_hit(&hit);
-			trace_spheres(ray, data->scene, &hit);
+			trace_objects(ray, data->scene, &hit);
 			color = get_pixel_color(&hit, data->scene);
 			put_pixel(data, x, y, color);
 			x++;
