@@ -68,9 +68,8 @@ static t_color	calculate_diffuse(t_hit *hit, t_light *light, t_scene *scene)
 
 	to_light = vec_sub(light->pos, hit->point);
 	distance = vec_length(to_light);
-	(void) distance;
+	(void)distance;
 	light_dir = vec_normalize(to_light);
-
 	if (is_in_shadow(hit->point, hit->normal, light->pos, scene))
 	{
 		black.r = 0;
