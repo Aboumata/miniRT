@@ -257,4 +257,5 @@ t_color				calculate_lighting(t_hit *hit, t_scene *scene);
 int					is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 						t_scene *scene);
 int					intersect_plane(t_ray ray, t_planes *plane, t_hit *hit);
+int					intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit);
 #endif

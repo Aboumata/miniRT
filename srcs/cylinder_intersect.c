@@ -141,3 +141,71 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
 
 	return (found_hit);
 }
+
+static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
+				t_hit *hit)
+{
+	t_vector3	oc;
+	t_vector3	oc_perp;
+	t_vector3	dir_perp;
+	double		a;
+	double		b;
+	double		c;
+	double		discriminant;
+	double		t;
+	double		radius;
+	double		oc_dot_dir;
+	double		dir_dot_dir;
+	t_vector3	hit_point;
+	t_vector3	to_hit;
+	double		height_on_dir;
+	double		half_height;
+	t_vector3	normal;
+
+	oc = vec_sub(ray.origin, cylinder->center);
+	radius = cylinder->diameter / 2.0;
+	half_height = cylinder->height / 2.0;
+
+	oc_dot_dir = vec_dot(oc, cylinder->dir);
+	oc_perp = vec_sub(oc, vec_scale(cylinder->dir, oc_dot_dir));
+
+	dir_dot_dir = vec_dot(ray.direction, cylinder->dir);
+	dir_perp = vec_sub(ray.direction, vec_scale(cylinder->dir, dir_dot_dir));
+
+	a = vec_dot(dir_perp, dir_perp);
+	b = 2.0 * vec_dot(oc_perp, dir_perp);
+	c = vec_dot(oc_perp, oc_perp) - (radius * radius);
+
+	discriminant = b * b - 4 * a * c;
+	if (discriminant < 0)
+		return (0);
+
+	t = (-b - sqrt(discriminant)) / (2.0 * a);
+	if (!is_closer_hit(hit, t))
+		return (0);
+
+	hit_point = ray_at(ray, t);
+	to_hit = vec_sub(hit_point, cylinder->center);
+	height_on_dir = vec_dot(to_hit, cylinder->dir);
+
+	if (height_on_dir < -half_height || height_on_dir > half_height)
+		return (0);
+
+	normal = cylinder_body_normal(hit_point, cylinder);
+	update_hit(hit, t, hit_point, normal, cylinder->color);
+	hit->object = cylinder;
+	hit->type = CY;
+
+	return (1);
+}
+
+int intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit)
+{
+	int body_hit;
+	int cap_hit;
+
+	body_hit = intersect_cylinder_body(ray, cylinder, hit);
+	cap_hit = intersect_cylinder_caps(ray, cylinder, hit);
+
+	return (body_hit || cap_hit);
+}
