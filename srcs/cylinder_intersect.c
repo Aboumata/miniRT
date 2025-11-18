@@ -59,29 +59,85 @@
 static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 		t_cylinders *cylinder)
 {
-	t_vector3 v;
-	t_vector3 projection;
-	t_vector3 normal;
-	double proj_length;
+	t_vector3	v;
+	t_vector3	projection;
+	t_vector3	normal;
+	double		proj_length;
 
 	v = vec_sub(hit_point, cylinder->center);
 	proj_length = vec_dot(v, cylinder->dir);
 	projection = vec_scale(cylinder->dir, proj_length);
 	normal = vec_sub(v, projection);
 	normal = vec_normalize(normal);
-
 	return (normal);
 }
 
-static int intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder, t_hit *hit)
+static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
+				t_hit *hit)
 {
-	double half_height;
-	double denom;
-	t_vector3 top_center;
+	t_vector3	cap_center;
+	t_vector3	to_cap;
+	t_vector3	to_hit;
+	t_vector3	hit_point;
+	t_vector3	normal;
+	double		half_height;
+	double		denom;
+	double		t;
+	double		radius;
+	double		dist_sq;
+	int			found_hit;
 
-
+	found_hit = 0;
 	half_height = cylinder->height / 2.0;
-	top_center = vec_add(cylinder->center, vec_scale(cylinder->dir, half_height));
+	radius = cylinder->diameter / 2.0;
+	denom = vec_dot(ray.direction, cylinder->dir);
 
+	if (fabs(denom) > EPSILON)
+	{
+		cap_center = vec_add(cylinder->center,
+			vec_scale(cylinder->dir, half_height));
+		to_cap = vec_sub(cap_center, ray.origin);
+		t = vec_dot(to_cap, cylinder->dir) / denom;
 
+		if (is_closer_hit(hit, t))
+		{
+			hit_point = ray_at(ray, t);
+			to_hit = vec_sub(hit_point, cap_center);
+			dist_sq = vec_dot(to_hit, to_hit);
+
+			if (dist_sq <= radius * radius)
+			{
+				normal = cylinder->dir;
+				update_hit(hit, t, hit_point, normal, cylinder->color);
+				hit->object = cylinder;
+				hit->type = CY;
+				found_hit = 1;
+			}
+		}
+	}
+	if (fabs(denom) > EPSILON)
+	{
+		cap_center = vec_sub(cylinder->center,
+			vec_scale(cylinder->dir, half_height));
+		to_cap = vec_sub(cap_center, ray.origin);
+		t = vec_dot(to_cap, cylinder->dir) / denom;
+
+		if (is_closer_hit(hit, t))
+		{
+			hit_point = ray_at(ray, t);
+			to_hit = vec_sub(hit_point, cap_center);
+			dist_sq = vec_dot(to_hit, to_hit);
+
+			if (dist_sq <= radius * radius)
+			{
+				normal = vec_scale(cylinder->dir, -1.0);
+				update_hit(hit, t, hit_point, normal, cylinder->color);
+				hit->object = cylinder;
+				hit->type = CY;
+				found_hit = 1;
+			}
+		}
+	}
+
+	return (found_hit);
 }
