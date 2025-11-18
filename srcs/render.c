@@ -35,6 +35,8 @@ static void	trace_objects(t_ray ray, t_scene *scene, t_hit *hit)
 			intersect_sphere(ray, (t_spheres *)obj->obj, hit);
 		else if (obj->type == PL)
 			intersect_plane(ray, (t_planes *)obj->obj, hit);
+		else if (obj->type == CY)
+			intersect_cylinder(ray, (t_cylinders *)obj->obj, hit);
 		obj = obj->next;
 	}
 }

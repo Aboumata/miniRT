@@ -44,6 +44,14 @@ int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 					return (1);
 			}
 		}
+		else if (obj->type == CY)
+		{
+			if (intersect_cylinder(shadow_ray, (t_cylinders *)obj->obj, &shadow_hti))
+			{
+				if (shadow_hti.t < light_distance)
+					return (1);
+			}
+		}
 		obj = obj->next;
 	}
 	return (0);
