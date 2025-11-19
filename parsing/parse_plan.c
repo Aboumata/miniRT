@@ -14,21 +14,29 @@
 
 void	parse_plan(t_scene *scene, char **token)
 {
-	t_planes	*plan;
+	t_planes	*plane;
 
-	if (count_tokens(token) != 4)
+	if (count_tokens(token) != 4 && count_tokens(token) != 5)
 	{
 		write(2, "Error: invalid plan\n", 20);
 		exit(1);
 	}
-	plan = ft_malloc(sizeof(t_planes), &(scene->mem));
-	plan->point = parse_vec(token[1]);
-	plan->color = parse_color(token[3]);
-	plan->normal = parse_vec(token[2]);
-	if (!is_normalized(plan->normal))
+	plane = ft_malloc(sizeof(t_planes), &(scene->mem));
+	plane->point = parse_vec(token[1]);
+	plane->color = parse_color(token[3]);
+	plane->normal = parse_vec(token[2]);
+	if (!is_normalized(plane->normal))
 	{
 		write(2, "Error: plan not normalized\n", 27);
 		exit(1);
 	}
-	add_obj(scene, plan, PL);
+	if (count_tokens(token) == 5)
+	{
+		plane->shininess = ft_atof(token[4]);
+		if (plane->shininess < 0)
+			exit((perror("Error: shininess should be non-negative\n"), 1));
+	}
+	else
+		plane->shininess = 0.0;
+	add_obj(scene, plane, PL);
 }
