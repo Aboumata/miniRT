@@ -111,6 +111,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
 				update_hit(hit, t, hit_point, normal, cylinder->color);
 				hit->object = cylinder;
 				hit->type = CY;
+				hit->shininess = cylinder->shininess;
 				found_hit = 1;
 			}
 		}
@@ -134,6 +135,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
 				update_hit(hit, t, hit_point, normal, cylinder->color);
 				hit->object = cylinder;
 				hit->type = CY;
+				hit->shininess = cylinder->shininess;
 				found_hit = 1;
 			}
 		}
@@ -195,6 +197,7 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	update_hit(hit, t, hit_point, normal, cylinder->color);
 	hit->object = cylinder;
 	hit->type = CY;
+	hit->shininess = cylinder->shininess;
 
 	return (1);
 }
