@@ -58,5 +58,6 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	update_hit(hit, t, hit_point, normal, plane->color);
 	hit->object = plane;
 	hit->type = PL;
+	hit->shininess = plane->shininess;
 	return (1);
 }
