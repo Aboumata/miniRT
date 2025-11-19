@@ -76,6 +76,17 @@ t_vector3	vec_cross(t_vector3 a, t_vector3 b)
 	return (result);
 }
 
+t_vector3	vec_reflect(t_vector3 v, t_vector3 n)
+{
+	t_vector3 reflection;
+	double		dot;
+
+	//formula: reflect = v - 2(v.n)n
+	dot = vec_dot(v, n);
+	reflection = vec_sub(v, vec_scale(n, 2.0 * dot));
+	return (reflection);
+}
+
 // void test_vectors(void)
 // {
 //     t_vector3 a;
