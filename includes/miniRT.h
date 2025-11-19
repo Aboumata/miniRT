@@ -78,6 +78,7 @@ typedef struct s_spheres
 	t_vector3		center;
 	double			diameter;
 	t_color			color;
+	double			shininess;
 }					t_spheres;
 
 typedef struct s_planes
@@ -85,6 +86,7 @@ typedef struct s_planes
 	t_vector3		point;
 	t_vector3		normal;
 	t_color			color;
+	double			shininess;
 }					t_planes;
 
 typedef struct s_cone
@@ -125,6 +127,7 @@ typedef struct s_cylinders
 	double			diameter;
 	double			height;
 	t_color			color;
+	double			shininess;
 }					t_cylinders;
 
 typedef struct s_object
@@ -200,6 +203,7 @@ typedef struct s_hit
 	t_color			color;
 	void			*object;
 	t_obj_types		type;
+	double			shininess;
 }					t_hit;
 
 void				parsing(t_scene *scene, char *arg);
@@ -240,6 +244,7 @@ double				vec_length(t_vector3 v);
 t_vector3			vec_normalize(t_vector3 v);
 double				vec_dot(t_vector3 a, t_vector3 b);
 t_vector3			vec_cross(t_vector3 a, t_vector3 b);
+t_vector3			vec_reflect(t_vector3 v, t_vector3 n);
 void				test_vectors(void);
 void				setup_camera(t_data *data);
 void				print_camera_info(t_data *data);
