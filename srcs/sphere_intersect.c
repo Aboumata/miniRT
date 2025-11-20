@@ -50,7 +50,7 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	hit->object = sphere;
 	hit->type = SP;
 	hit->shininess = sphere->shininess;
-	printf("Sphere shininess stored: %f\n", sphere->shininess);
+	//printf("Sphere shininess stored: %f\n", sphere->shininess);
 	return (1);
 }
 

@@ -100,16 +100,16 @@ static t_color calculate_specular(t_hit *hit, t_light *light, t_vector3 view_dir
 	reflect_dir = vec_reflect(light_dir, hit->normal);
 	spec_dot = vec_dot(reflect_dir, view_dir);
 
-	static int printed = 0;
-	if (!printed && hit->type == SP) {
-	    printf("\n=== SPECULAR DEBUG ===\n");
-	    printf("Shininess: %f\n", hit->shininess);
-	    printf("Light dir: (%f, %f, %f)\n", light_dir.x, light_dir.y, light_dir.z);
-	    printf("View dir: (%f, %f, %f)\n", view_dir.x, view_dir.y, view_dir.z);
-	    printf("Reflect dir: (%f, %f, %f)\n", reflect_dir.x, reflect_dir.y, reflect_dir.z);
-	    printf("Spec dot: %f\n", spec_dot);
-	    printed = 1;
-	}
+	// static int printed = 0;
+	// if (!printed && hit->type == SP) {
+	//     printf("\n=== SPECULAR DEBUG ===\n");
+	//     printf("Shininess: %f\n", hit->shininess);
+	//     printf("Light dir: (%f, %f, %f)\n", light_dir.x, light_dir.y, light_dir.z);
+	//     printf("View dir: (%f, %f, %f)\n", view_dir.x, view_dir.y, view_dir.z);
+	//     printf("Reflect dir: (%f, %f, %f)\n", reflect_dir.x, reflect_dir.y, reflect_dir.z);
+	//     printf("Spec dot: %f\n", spec_dot);
+	//     printed = 1;
+	// }
 
 	if (spec_dot < 0)
 		spec_dot = 0;
@@ -117,7 +117,7 @@ static t_color calculate_specular(t_hit *hit, t_light *light, t_vector3 view_dir
 	spec_intensity = pow(spec_dot, hit->shininess);
 	spec_intensity *= light->ratio;
 
-	printf("Spec intensity: %f\n", spec_intensity);
+	//printf("Spec intensity: %f\n", spec_intensity);
 
 	result.r = (int)(255 * spec_intensity);
 	result.g = (int)(255 * spec_intensity);
