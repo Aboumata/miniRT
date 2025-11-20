@@ -40,7 +40,7 @@ void	parse_line(t_scene *scene, char *line)
 {
 	char	**token;
 
-	if (!line || line[0] == '\n' || line[0] == '\0')
+	if (!line || line[0] == '\n' || line[0] == '\0' || line[0] == '#')
 		return ;
 	token = change_whitespace_and_split(line);
 	if (!token || !token[0])
