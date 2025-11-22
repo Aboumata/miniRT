@@ -97,13 +97,13 @@ static t_color calculate_specular(t_hit *hit, t_light *light, t_vector3 view_dir
 	to_light = vec_sub(light->pos, hit->point);
 	light_dir = vec_normalize(to_light);
 
-	reflect_dir = vec_reflect(light_dir, hit->normal);
+	reflect_dir = vec_reflect(vec_scale(light_dir, -1), hit->normal);
 	spec_dot = vec_dot(reflect_dir, view_dir);
 
 	if (spec_dot < 0)
 		spec_dot = 0;
 	spec_intensity = pow(spec_dot, hit->shininess);
-	spec_intensity *= 2.0;
+	spec_intensity *= light->ratio;
 	if (spec_intensity > 1.0)
 		spec_intensity = 1.0;
 
