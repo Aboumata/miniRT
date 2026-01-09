@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 22:36:09 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/12 22:36:11 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/09 10:23:02 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,22 @@ int	is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 		else if (obj->type == CY)
 		{
 			if (intersect_cylinder(shadow_ray, (t_cylinders *)obj->obj, &shadow_hti))
+			{
+				if (shadow_hti.t < light_distance)
+					return (1);
+			}
+		}
+		else if (obj->type == DISK)
+		{
+			if (intersect_disk(shadow_ray, (t_disk *)obj->obj, &shadow_hti))
+			{
+				if (shadow_hti.t < light_distance)
+					return (1);
+			}
+		}
+		else if (obj->type == TRIANGLE)
+		{
+			if (intersect_triangle(shadow_ray, (t_triangle *)obj->obj, &shadow_hti))
 			{
 				if (shadow_hti.t < light_distance)
 					return (1);

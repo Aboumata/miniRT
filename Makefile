@@ -8,18 +8,19 @@ SRC = main.c \
 	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c \
 	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c srcs/vector_math.c srcs/camera.c\
 	srcs/hit.c srcs/cylinder_intersect.c srcs/intersect.c srcs/sphere_intersect.c srcs/plane_intersect.c\
-	srcs/lighting.c srcs/shadow.c \
+	srcs/lighting.c srcs/shadow.c srcs/disk_intersect.c srcs/triangle_intersect.c srcs/cone_intersect.c\
 
 OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -I/usr/local/include
+CFLAGS = -Wall -Wextra -Werror -g -I/usr/local/include 
 
 LIBFT = Libft/libft.a
 MLX_FLAGS = -L/usr/local/lib -lmlx_Linux -lXext -lX11 -lm -lz
 
 all: $(NAME)
+	make clean
 
 $(NAME): $(OBJ)
 	make -C Libft/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 23:56:48 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/07 23:56:50 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/07 10:25:32 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	setup_camera(t_data *data)
 	fov_rad = data->scene->camera.fov * (PI / 180.0);
 	cam_pos = data->scene->camera.pos;
 	data->cam.forward = data->scene->camera.dir;
-	data->cam.right = vec_normalize(vec_cross(world_up, data->cam.forward));
-	data->cam.up = vec_normalize(vec_cross(data->cam.forward, data->cam.right));
+	data->cam.right = vec_normalize(vec_cross(data->cam.forward, world_up));
+	data->cam.up = vec_normalize(vec_cross(data->cam.right, data->cam.forward));
 	data->cam.viewport_height = 2.0 * distance * tan(fov_rad / 2.0);
 	data->cam.viewport_width = data->cam.viewport_height * aspect;
 	data->cam.viewport_center = vec_add(cam_pos, vec_scale(data->cam.forward,

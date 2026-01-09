@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:36 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/09 21:33:37 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/09 11:24:26 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,54 @@
  *
  */
 
-static t_vector3	plane_normal(t_planes *plane, t_ray ray)
+t_color	update_color(int r, int g, int b, t_color color)
 {
-	t_vector3	normal;
+	color.r = r;
+	color.g = g;
+	color.b	= b;
+	return (color);
+}
+ 
+void	Checkerboard(t_vector3 hit_p, t_planes *pl)
+{
+	float	size;
+	int		x;
+	int		y;
+	int		z;
 
-	normal = plane->normal;
-	if (vec_dot(ray.direction, plane->normal) > 0)
-		normal = vec_scale(plane->normal, -1);
-	return (normal);
+	if (!pl->Checkerboard)
+		return ;
+	size = 1 / 10.0;
+	x = floor(hit_p.x) * size;
+	z = floor(hit_p.z) * size;
+	y = floor(hit_p.y) * size;
+	if ((x + y + z) % 2 == 0)	
+		pl->color = update_color(255, 255, 255, pl->color);
+	else
+		pl->color = update_color(0, 0, 0, pl->color);
+	
 }
 
 int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 {
-	double		denom;
-	double		numer;
-	double		t;
 	t_vector3	to_plane;
 	t_vector3	hit_point;
 	t_vector3	normal;
 
-	denom = vec_dot(ray.direction, plane->normal);
+	double (denom), numer, t;
+	normal = plane->normal;
+	denom = vec_dot(ray.direction, normal);
 	if (fabs(denom) < EPSILON)
 		return (0);
+	if (denom > 0)
+		normal = vec_scale(normal, -1);
 	to_plane = vec_sub(plane->point, ray.origin);
 	numer = vec_dot(to_plane, plane->normal);
 	t = numer / denom;
-	if (!is_closer_hit(hit, t))
+	if (t < EPSILON || t > hit->t)
 		return (0);
-	hit_point = vec_add(ray.origin, vec_scale(ray.direction, t));
-	normal = plane_normal(plane, ray);
+	hit_point = ray_at(ray, t);
+	Checkerboard(hit_point, plane);
 	update_hit(hit, t, hit_point, normal, plane->color);
 	hit->object = plane;
 	hit->type = PL;

@@ -1,20 +1,8 @@
-# Specular Test Scene
-# Light is above and in front - highlights should appear on TOP of spheres
-
 A 0.1 255,255,255
-
-C 0,0,-20 0,0,1 60
-
-L 0,10,-10 0.8 255,255,255
-
-# Matte sphere (no shininess) - left
-sp -4,0,0 3 255,0,0
-
-# Low shininess (broad highlight) - center
-sp 0,0,0 3 0,255,0 10
-
-# High shininess (sharp highlight) - right
-sp 4,0,0 3 0,0,255 100
-
-# Floor plane
-pl 0,-2,0 0,1,0 150,150,150
+C 0,5,20 0,0,-1 45
+l -15,20,15 0.9 255,255,255 
+pl 0,0,0 0,1,0 120,120,120 cb
+sp 0,5,0 8.0 255,210,0 30
+sp -1.8,7.0,3.5 1.0 10,10,10
+sp 1.8,7.0,3.5 1.0 10,10,10
+cy 0,3.0,3.8 1,0,0 0.5 4.0 10,10,10

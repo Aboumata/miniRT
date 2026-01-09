@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/18 18:41:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 09:54:49 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@
 # include <string.h>
 # include <unistd.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1280
+# define HEIGHT 720
 # define PI 3.14159265359
 # define EPSILON 0.0001
+# define N_EPSILON -0.0001
 
 typedef enum e_obj_types
 {
@@ -87,6 +88,7 @@ typedef struct s_planes
 	t_vector3		normal;
 	t_color			color;
 	double			shininess;
+	int				Checkerboard;
 }					t_planes;
 
 typedef struct s_cone
@@ -263,4 +265,8 @@ int					is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
 						t_scene *scene);
 int					intersect_plane(t_ray ray, t_planes *plane, t_hit *hit);
 int					intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit);
+int					intersect_disk(t_ray ray, t_disk *disk, t_hit *hit);
+int					intersect_triangle(t_ray ray, t_triangle *triangle, t_hit *hit);
+int				intersect_cone(t_ray ray, t_cone *cone, t_hit *hit);
+
 #endif

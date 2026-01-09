@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/09 21:32:49 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/09 09:54:10 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,21 @@ static t_vector3	sphere_normal(t_vector3 hit_point, t_vector3 center)
 	return (normal);
 }
 
+int	help(double t, double sqrt_d, double half_b, double a)
+{
+	t = (-half_b - sqrt_d) / a;
+	if (t < EPSILON)
+		t = (-half_b + sqrt_d) / a;
+	return (t);
+}
+
 int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 {
 	t_vector3	oc;
-	double		a;
-	double		half_b;
-	double		c;
-	double		discriminant;
-	double		t;
-	double		radius;
 	t_vector3	hit_point;
 	t_vector3	normal;
 
+	double (a), sqrt_d, radius, t = 0.0, half_b, c, discriminant;
 	oc = vec_sub(ray.origin, sphere->center);
 	a = vec_dot(ray.direction, ray.direction);
 	half_b = vec_dot(oc, ray.direction);
@@ -41,8 +44,9 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)
 		return (0);
-	t = (-half_b - sqrt(discriminant)) / a;
-	if (!is_closer_hit(hit, t))
+	sqrt_d = sqrt(discriminant);
+	t = help(t, sqrt_d, half_b, a);
+	if (t < EPSILON || t > hit->t)
 		return (0);
 	hit_point = ray_at(ray, t);
 	normal = sphere_normal(hit_point, sphere->center);
@@ -50,10 +54,10 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	hit->object = sphere;
 	hit->type = SP;
 	hit->shininess = sphere->shininess;
-	//printf("Sphere shininess stored: %f\n", sphere->shininess);
 	return (1);
 }
 
+//printf("Sphere shininess stored: %f\n", sphere->shininess);
 // void	test_sphere_intersection(t_data *data)
 // just test the function if they are working
 // {

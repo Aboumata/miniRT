@@ -27,6 +27,7 @@ void	init_hit(t_hit *hit)
 	hit->color.b = 0;
 	hit->object = NULL;
 	hit->type = SP;
+	hit->shininess = 0.0;
 }
 
 int	is_closer_hit(t_hit *current, double new_t)

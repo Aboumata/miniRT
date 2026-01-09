@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:50:19 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/18 12:38:25 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 10:02:49 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ double	ft_atof(char *str)
 		else if (str[i] == '.' && data.dot_count < 1)
 			data.dot_count++;
 		else
-			exit((perror("Error: invalid number"), 1));
+			exit((perror("Error: invalid number"), 1)); 
 		i++;
 	}
 	return (sig * (data.res + data.frac));
