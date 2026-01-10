@@ -25,7 +25,6 @@
 # define HEIGHT 720
 # define PI 3.14159265359
 # define EPSILON 0.0001
-# define N_EPSILON -0.0001
 
 typedef enum e_obj_types
 {
@@ -212,6 +211,8 @@ int					new_sphere(t_object **obj, char **token);
 t_vector3			parse_vec(char *token);
 int					count_tokens(char **token);
 void				ft_free_all(t_mem **mem);
+void				free_scene(t_scene *scene);
+void				cleanup_all(t_data *data);
 void				*ft_malloc(size_t size, t_mem **mem);
 double				ft_atof(char *str);
 t_color				parse_color(char *token);

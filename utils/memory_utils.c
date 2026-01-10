@@ -30,6 +30,15 @@ void	ft_free_all(t_mem **mem)
 	*mem = NULL;
 }
 
+void	cleanup_all(t_data *data)
+{
+	if (!data)
+		return ;
+	cleanup_mlx(data);
+	if (data->scene)
+		ft_free_all(&data->scene->mem);
+}
+
 void	*ft_malloc(size_t size, t_mem **mem)
 {
 	void	*ptr;

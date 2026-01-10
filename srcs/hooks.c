@@ -14,10 +14,9 @@
 
 int	handle_key(int keycode, t_data *data)
 {
-	if (keycode == 65307)
+	if (keycode == 65307 || keycode == 53)
 	{
-		cleanup_mlx(data);
-		ft_free_all(&data->scene->mem);
+		cleanup_all(data);
 		exit(0);
 	}
 	return (0);
@@ -25,8 +24,7 @@ int	handle_key(int keycode, t_data *data)
 
 int	handle_close(t_data *data)
 {
-	cleanup_mlx(data);
-	ft_free_all(&data->scene->mem);
+	cleanup_all(data);
 	exit(0);
 }
 

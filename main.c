@@ -34,5 +34,7 @@ int	main(int ac, char **av)
 	render(&data);
 	setup_hooks(&data);
 	mlx_loop(data.mlx.mlx);
+	cleanup_mlx(&data);
+	ft_free_all(&scene.mem);
 	return (0);
 }

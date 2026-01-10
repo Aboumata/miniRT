@@ -57,6 +57,8 @@ void	cleanup_mlx(t_data *data)
 		mlx_destroy_window(data->mlx.mlx, data->mlx.win);
 		data->mlx.win = NULL;
 	}
-	if (data->mlx.mlx != NULL)
+	if (data->mlx.mlx != NULL) {
+		free(data->mlx.mlx);
 		data->mlx.mlx = NULL;
+	}
 }
