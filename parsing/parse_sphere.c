@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:46:20 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:57 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:37:28 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 void	parse_sphere(t_scene *scene, char **token)
 {
 	t_spheres	*sphere;
+	int			check;
 
+	check = 0;
 	if (count_tokens(token) != 4 && count_tokens(token) != 5)
-		exit((perror("Error: invalid sphere\n"), 1));
+		ft_perror("Error: invalid sphere\n", token);
 	sphere = ft_malloc(sizeof(t_spheres), &(scene->mem));
-	sphere->center = parse_vec(token[1]);
-	sphere->diameter = ft_atof(token[2]);
+	sphere->center = parse_vec(token, 1);
+	sphere->diameter = ft_atof(token[2], &check);
 	if (sphere->diameter < 0)
-		exit((perror("Error: diameter should be positive\n"), 1));
-	sphere->color = parse_color(token[3]);
+		ft_perror("Error: diameter should be positive\n", token);
+	sphere->color = parse_color(token, 3);
 	if (count_tokens(token) == 5)
 	{
-		sphere->shininess = ft_atof(token[4]);
+		sphere->shininess = ft_atof(token[4], &check);
 		if (sphere->shininess < 0)
-			exit((perror("Error: shininess should be non-negative\n"), 1));
+			ft_perror("Error: shininess should be non-negative\n", token);
 	}
 	else
 		sphere->shininess = 0.0;

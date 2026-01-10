@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:57:01 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 19:24:37 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:41:03 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static void	ft_continue(t_planes *plane, char **token, int c)
 			plane->checkerboard = 1;
 		else
 		{
-			plane->shininess = ft_atof(token[4]);
+			plane->shininess = ft_atof(token[4], NULL);
 			if (plane->shininess < 0)
-				exit((perror("Error: shininess should be non-negative"), 1));
+				ft_perror("Error: shininess should be non-negative", token);
 		}
 	}
 	if (c == 6)
 	{
 		if (ft_strcmp(token[5], "cb"))
-			exit((perror("Error: invalid flag"), 1));
+			ft_perror("Error: invalid flag", token);
 		plane->checkerboard = 1;
 	}
 }
@@ -42,16 +42,16 @@ void	parse_plan(t_scene *scene, char **token)
 	if (c < 4 || c > 6)
 	{
 		write(2, "Error: invalid plan\n", 20);
-		exit(1);
+		exit((free_split(token), 1));
 	}
 	plane = ft_malloc(sizeof(t_planes), &(scene->mem));
-	plane->point = parse_vec(token[1]);
-	plane->normal = parse_vec(token[2]);
-	plane->color = parse_color(token[3]);
+	plane->point = parse_vec(token, 1);
+	plane->normal = parse_vec(token, 2);
+	plane->color = parse_color(token, 3);
 	if (!is_normalized(plane->normal))
 	{
 		write(2, "Error: plan not normalized\n", 27);
-		exit(1);
+		exit((free_split(token), 1));
 	}
 	plane->shininess = 0.0;
 	plane->checkerboard = 0;

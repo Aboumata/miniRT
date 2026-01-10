@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:24 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 19:25:36 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:08:13 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ int	main(int ac, char **av)
 	render(&data);
 	setup_hooks(&data);
 	mlx_loop(data.mlx.mlx);
+<<<<<<< Updated upstream
 	cleanup_mlx(&data);
 	ft_free_all(&scene.mem);
+=======
+	ft_free_all(&data.scene->mem);
+>>>>>>> Stashed changes
 	return (0);
 }

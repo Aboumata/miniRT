@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 19:28:14 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:32:52 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,14 +208,14 @@ typedef struct s_hit
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);
 int					new_sphere(t_object **obj, char **token);
-t_vector3			parse_vec(char *token);
+t_vector3			parse_vec(char **token, int indx);
 int					count_tokens(char **token);
 void				ft_free_all(t_mem **mem);
 void				free_scene(t_scene *scene);
 void				cleanup_all(t_data *data);
 void				*ft_malloc(size_t size, t_mem **mem);
-double				ft_atof(char *str);
-t_color				parse_color(char *token);
+double				ft_atof(char *str, int *check);
+t_color				parse_color(char **token, int indx);
 void				add_obj(t_scene *scene, void *ptr, t_obj_types type);
 void				parse_line(t_scene *scene, char *line);
 void				parse_plan(t_scene *scene, char **token);
@@ -273,5 +273,6 @@ t_color				color_multiply(t_color a, t_color b);
 t_color				color_scale(t_color color, double ratio);
 t_color				color_add(t_color a, t_color b);
 t_color				calculate_ambient(t_ambient ambient, t_color obj_color);
+void				ft_perror(char *mess, char **token);
 
 #endif
