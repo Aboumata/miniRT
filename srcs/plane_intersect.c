@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:36 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 11:24:26 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:34:46 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,27 @@ t_color	update_color(int r, int g, int b, t_color color)
 {
 	color.r = r;
 	color.g = g;
-	color.b	= b;
+	color.b = b;
 	return (color);
 }
- 
-void	Checkerboard(t_vector3 hit_p, t_planes *pl)
+
+void	checkerboard(t_vector3 hit_p, t_planes *pl)
 {
 	float	size;
 	int		x;
 	int		y;
 	int		z;
 
-	if (!pl->Checkerboard)
+	if (!pl->checkerboard)
 		return ;
 	size = 1 / 10.0;
 	x = floor(hit_p.x) * size;
 	z = floor(hit_p.z) * size;
 	y = floor(hit_p.y) * size;
-	if ((x + y + z) % 2 == 0)	
+	if ((x + y + z) % 2 == 0)
 		pl->color = update_color(255, 255, 255, pl->color);
 	else
 		pl->color = update_color(0, 0, 0, pl->color);
-	
 }
 
 int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
@@ -73,7 +72,7 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	if (t < EPSILON || t > hit->t)
 		return (0);
 	hit_point = ray_at(ray, t);
-	Checkerboard(hit_point, plane);
+	checkerboard(hit_point, plane);
 	update_hit(hit, t, hit_point, normal, plane->color);
 	hit->object = plane;
 	hit->type = PL;

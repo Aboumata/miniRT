@@ -6,13 +6,12 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 09:54:49 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 19:28:14 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINIRT_H
+#ifndef MINIRT_H
 # define MINIRT_H
-
 # include "../Libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 # include "mlx.h"
@@ -22,7 +21,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
 # define WIDTH 1280
 # define HEIGHT 720
 # define PI 3.14159265359
@@ -88,7 +86,7 @@ typedef struct s_planes
 	t_vector3		normal;
 	t_color			color;
 	double			shininess;
-	int				Checkerboard;
+	int				checkerboard;
 }					t_planes;
 
 typedef struct s_cone
@@ -261,12 +259,18 @@ void				update_hit(t_hit *hit, double t, t_vector3 point,
 int					intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit);
 void				test_sphere_intersection(t_data *data);
 t_color				calculate_lighting(t_hit *hit, t_scene *scene);
-int					is_in_shadow(t_vector3 point, t_vector3 normal, t_vector3 light_pos,
-						t_scene *scene);
+int					is_in_shadow(t_vector3 point, t_vector3 normal,
+						t_vector3 light_pos, t_scene *scene);
 int					intersect_plane(t_ray ray, t_planes *plane, t_hit *hit);
-int					intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit);
+int					intersect_cylinder(t_ray ray, t_cylinders *cylinder,
+						t_hit *hit);
 int					intersect_disk(t_ray ray, t_disk *disk, t_hit *hit);
-int					intersect_triangle(t_ray ray, t_triangle *triangle, t_hit *hit);
-int				intersect_cone(t_ray ray, t_cone *cone, t_hit *hit);
+int					intersect_triangle(t_ray ray, t_triangle *triangle,
+						t_hit *hit);
+int					intersect_cone(t_ray ray, t_cone *cone, t_hit *hit);
+t_color				color_multiply(t_color a, t_color b);
+t_color				color_scale(t_color color, double ratio);
+t_color				color_add(t_color a, t_color b);
+t_color				calculate_ambient(t_ambient ambient, t_color obj_color);
 
 #endif

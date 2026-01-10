@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 22:46:48 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/06 22:46:49 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:35:17 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ t_ray	create_ray(t_data *data, int x, int y)
 	t_vector3	horizontal_offset;
 	t_vector3	vertical_offset;
 	t_ray		ray;
-	double		u;
-	double		v;
 
+	double (u), v;
 	u = (double)x / (double)WIDTH;
 	v = (double)y / (double)HEIGHT;
 	horizontal_offset = vec_scale(data->cam.right, u

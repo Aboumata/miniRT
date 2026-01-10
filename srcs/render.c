@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 02:58:21 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 09:55:35 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:36:42 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static void	trace_objects(t_ray ray, t_scene *scene, t_hit *hit)
 			intersect_cylinder(ray, (t_cylinders *)obj->obj, hit);
 		else if (obj->type == DISK)
 			intersect_disk(ray, (t_disk *)obj->obj, hit);
-		else if(obj->type == TRIANGLE)
+		else if (obj->type == TRIANGLE)
 			intersect_triangle(ray, (t_triangle *)obj->obj, hit);
-		// else if (obj->type == CONE)
-		// 	intersect_cone(ray, (t_cone *)obj->obj, hit);
+		else if (obj->type == CONE)
+			intersect_cone(ray, (t_cone *)obj->obj, hit);
 		obj = obj->next;
 	}
 }

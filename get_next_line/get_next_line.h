@@ -6,18 +6,16 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:40:49 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 13:02:38 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 19:33:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2147483647
-# endif
 # include <unistd.h>
 # include <stdlib.h>
-#include "../Libft/libft.h"
+# include "../Libft/libft.h"
+# define BUFFER_SIZE 100
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(const char *s1, const char *s2);

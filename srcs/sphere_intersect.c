@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 09:54:10 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:27:29 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_vector3	sphere_normal(t_vector3 hit_point, t_vector3 center)
 	return (normal);
 }
 
-int	help(double t, double sqrt_d, double half_b, double a)
+double	help(double t, double sqrt_d, double half_b, double a)
 {
 	t = (-half_b - sqrt_d) / a;
 	if (t < EPSILON)

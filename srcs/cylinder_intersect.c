@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_intersect.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/09 21:33:16 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/09 19:24:07 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 	return (normal);
 }
 
-static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
+static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 				t_hit *hit)
 {
 	t_vector3	cap_center;
@@ -80,67 +80,51 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cylinder,
 	t_vector3	to_hit;
 	t_vector3	hit_point;
 	t_vector3	normal;
-	double		half_height;
-	double		denom;
-	double		t;
-	double		radius;
-	double		dist_sq;
-	int			found_hit;
 
-	found_hit = 0;
-	half_height = cylinder->height / 2.0;
-	radius = cylinder->diameter / 2.0;
-	denom = vec_dot(ray.direction, cylinder->dir);
-
+	double (t), found_hit = 0.0, radius = cy->diameter / 2.0, dist_sq,
+	half_height = cy->height / 2.0, denom = vec_dot(ray.direction, cy->dir);
 	if (fabs(denom) > EPSILON)
 	{
-		cap_center = vec_add(cylinder->center,
-			vec_scale(cylinder->dir, half_height));
+		cap_center = vec_add(cy->center, vec_scale(cy->dir, half_height));
 		to_cap = vec_sub(cap_center, ray.origin);
-		t = vec_dot(to_cap, cylinder->dir) / denom;
-
+		t = vec_dot(to_cap, cy->dir) / denom;
 		if (is_closer_hit(hit, t))
 		{
 			hit_point = ray_at(ray, t);
 			to_hit = vec_sub(hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
-
 			if (dist_sq <= radius * radius)
 			{
-				normal = cylinder->dir;
-				update_hit(hit, t, hit_point, normal, cylinder->color);
-				hit->object = cylinder;
+				normal = cy->dir;
+				update_hit(hit, t, hit_point, normal, cy->color);
+				hit->object = cy;
 				hit->type = CY;
-				hit->shininess = cylinder->shininess;
+				hit->shininess = cy->shininess;
 				found_hit = 1;
 			}
 		}
 	}
 	if (fabs(denom) > EPSILON)
 	{
-		cap_center = vec_sub(cylinder->center,
-			vec_scale(cylinder->dir, half_height));
+		cap_center = vec_sub(cy->center, vec_scale(cy->dir, half_height));
 		to_cap = vec_sub(cap_center, ray.origin);
-		t = vec_dot(to_cap, cylinder->dir) / denom;
-
+		t = vec_dot(to_cap, cy->dir) / denom;
 		if (is_closer_hit(hit, t))
 		{
 			hit_point = ray_at(ray, t);
 			to_hit = vec_sub(hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
-
 			if (dist_sq <= radius * radius)
 			{
-				normal = vec_scale(cylinder->dir, -1.0);
-				update_hit(hit, t, hit_point, normal, cylinder->color);
-				hit->object = cylinder;
+				normal = vec_scale(cy->dir, -1.0);
+				update_hit(hit, t, hit_point, normal, cy->color);
+				hit->object = cy;
 				hit->type = CY;
-				hit->shininess = cylinder->shininess;
+				hit->shininess = cy->shininess;
 				found_hit = 1;
 			}
 		}
 	}
-
 	return (found_hit);
 }
 
@@ -184,13 +168,12 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	return (1);
 }
 
-int intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit)
+int	intersect_cylinder(t_ray ray, t_cylinders *cylinder, t_hit *hit)
 {
-	int body_hit;
-	int cap_hit;
+	int	body_hit;
+	int	cap_hit;
 
 	body_hit = intersect_cylinder_body(ray, cylinder, hit);
 	cap_hit = intersect_cylinder_caps(ray, cylinder, hit);
-
 	return (body_hit || cap_hit);
 }

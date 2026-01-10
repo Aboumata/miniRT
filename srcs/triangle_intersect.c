@@ -6,14 +6,14 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 15:04:46 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 09:59:58 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:49:16 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static int	ft_continue(double t, t_hit *hit, t_ray ray, t_triangle *triangle,
-					t_vector3 edgs[2])
+int	ft_continue(double t, t_hit *hit, t_ray ray, t_triangle *triangle,
+			t_vector3 edgs[2])
 {
 	t_vector3	hit_point;
 	t_vector3	normal;
@@ -28,6 +28,7 @@ static int	ft_continue(double t, t_hit *hit, t_ray ray, t_triangle *triangle,
 	hit->type = TRIANGLE;
 	return (1);
 }
+
 int	intersect_triangle(t_ray ray, t_triangle *triangle, t_hit *hit)
 {
 	t_vector3	edgs[2];

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 23:56:48 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/07 10:25:32 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:17:56 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void	setup_camera(t_data *data)
 	t_vector3	cam_pos;
 	t_vector3	left_offset;
 	t_vector3	up_offset;
-	double		distance;
-	double		fov_rad;
-	double		aspect;
 
+	double (distance), fov_rad, aspect;
 	distance = 1.0;
 	world_up.x = 0;
 	world_up.y = 1;

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:24 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/18 12:26:20 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/09 19:25:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int	main(int ac, char **av)
 	parsing(&scene, av[1]);
 	data.scene = &scene;
 	setup_camera(&data);
-	// test_rays(&data);
-	// test_sphere_intersection(&data);
-	// exit(0);
 	if (initialize_mlx(&data) == -1)
 	{
 		ft_free_all(&scene.mem);
