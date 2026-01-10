@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 10:32:37 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 18:20:06 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 15:19:08 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	intersect_disk(t_ray ray, t_disk *disk, t_hit *hit)
 	t_vector3	hit_point;
 	t_vector3	p_to_center;
 
-	double (numer), denom = vec_dot(ray.direction, normal), t, r;
+	double (numer), denom, t, r;
 	normal = disk->normal;
+	denom = vec_dot(ray.direction, normal);
 	if (fabs(denom) < EPSILON)
 		return (0);
 	if (denom > 0)
@@ -37,6 +38,5 @@ int	intersect_disk(t_ray ray, t_disk *disk, t_hit *hit)
 		return (0);
 	update_hit(hit, t, hit_point, normal, disk->color);
 	hit->object = disk;
-	hit->type = DISK;
-	return (1);
+	return (hit->type = DISK, 1);
 }

@@ -9,6 +9,7 @@ SRC = main.c \
 	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c srcs/vector_math.c srcs/camera.c\
 	srcs/hit.c srcs/cylinder_intersect.c srcs/intersect.c srcs/sphere_intersect.c srcs/plane_intersect.c\
 	srcs/lighting.c srcs/shadow.c srcs/disk_intersect.c srcs/triangle_intersect.c srcs/cone_intersect.c\
+	srcs/vector_math_2.c srcs/light_util.c\
 
 OBJ = $(SRC:.c=.o)
 
