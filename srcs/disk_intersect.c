@@ -16,7 +16,6 @@ int	intersect_disk(t_ray ray, t_disk *disk, t_hit *hit)
 {
 	t_vector3	normal;
 	t_variables	var;
-	t_vector3	to_disk;
 	t_vector3	p_to_center;
 
 	double (numer), denom, r;
@@ -27,8 +26,8 @@ int	intersect_disk(t_ray ray, t_disk *disk, t_hit *hit)
 		return (0);
 	if (denom > 0)
 		normal = vec_scale(normal, -1);
-	to_disk = vec_sub(disk->center, ray.origin);
-	numer = vec_dot(to_disk, normal);
+	var.oc = vec_sub(disk->center, ray.origin);
+	numer = vec_dot(var.oc, normal);
 	var.t = numer / denom;
 	if (var.t < EPSILON || var.t > var.hit->t)
 		return (0);
