@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:57:01 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 17:07:11 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:17:02 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	parse_plan(t_scene *scene, char **token)
 	int			c;
 
 	c = count_tokens(token);
-	printf("%d", c);
 	if (c < 4 || c > 6)
 	{
 		write(2, "Error: invalid plan\n", 20);

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 08:43:03 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 16:46:21 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:17:37 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@
 	N = normalize( (P - C) - (k * m) * V );
 */
 
-static int	check_cone_height(t_variables *var, t_ray ray, t_cone *cone, double tan2)
+static int	check_cone_height(t_variables *var, t_ray ray,
+				t_cone *cone, double tan2)
 {
 	t_vector3	normal;
 	t_vector3	pc;
 
-	double		(h), m, k;
+	double (h), m, k;
 	if (var->t < EPSILON || var->t > var->hit->t)
 		return (0);
 	h = vec_dot(vec_sub(vec_add(ray.origin, vec_scale(ray.direction, var->t)),
