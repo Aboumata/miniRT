@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 09:44:42 by aboumata          #+#    #+#             */
-/*   Updated: 2025/10/18 12:33:14 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/10 23:59:05 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
+	get_next_line(-1);
 	while (split[i])
 	{
 		free(split[i]);

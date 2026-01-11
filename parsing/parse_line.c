@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:08:02 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/10 21:01:08 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:59:16 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,21 @@ static void	dispatch_parser(t_scene *scene, char **token, char *key)
 	else if (ft_strcmp("di", key) == 0)
 		parse_disk(scene, token);
 	else
-		ft_perror("Error: invalid object", token);
+		ft_perror(token, scene, "Error: invalid object\n");
 }
 
 void	parse_line(t_scene *scene, char *line)
 {
 	char	**token;
 
+	printf("%s\n", line);
 	if (!line || line[0] == '\n' || line[0] == '\0' || line[0] == '#')
+	{
+		free(line);
 		return ;
+	}
 	token = change_whitespace_and_split(line);
+	free(line);
 	if (!token || !token[0])
 		return ;
 	dispatch_parser(scene, token, token[0]);

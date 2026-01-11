@@ -5,20 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/19 12:40:49 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/09 19:33:36 by abdahman         ###   ########.fr       */
+/*   Created: 2024/11/20 16:46:48 by aboumata          #+#    #+#             */
+/*   Updated: 2026/01/11 15:05:57 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# include <unistd.h>
+
+# include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include "../Libft/libft.h"
-# define BUFFER_SIZE 100
+# include <unistd.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *str, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *string, int c);
+char	*ft_substr2(const char *src, size_t start, size_t len);
+char	*ft_strdup(const char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/10 22:32:52 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:56:23 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,17 +205,27 @@ typedef struct s_hit
 	double			shininess;
 }					t_hit;
 
+typedef struct s_variables
+{
+	t_vector3	edgs[2];
+	t_vector3	oc;
+	t_vector3	hit_point;
+	double		t;
+	t_hit		*hit;
+	t_ray		ray;
+}				t_variables;
+
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);
 int					new_sphere(t_object **obj, char **token);
-t_vector3			parse_vec(char **token, int indx);
+t_vector3			parse_vec(char **token, int indx, t_scene *scene);
 int					count_tokens(char **token);
 void				ft_free_all(t_mem **mem);
 void				free_scene(t_scene *scene);
 void				cleanup_all(t_data *data);
 void				*ft_malloc(size_t size, t_mem **mem);
 double				ft_atof(char *str, int *check);
-t_color				parse_color(char **token, int indx);
+t_color				parse_color(char **token, int indx, t_scene *scene);
 void				add_obj(t_scene *scene, void *ptr, t_obj_types type);
 void				parse_line(t_scene *scene, char *line);
 void				parse_plan(t_scene *scene, char **token);
@@ -255,8 +265,8 @@ void				print_ray_info(t_ray ray, int x, int y);
 void				test_rays(t_data *data);
 void				init_hit(t_hit *hit);
 int					is_closer_hit(t_hit *current, double new_t);
-void				update_hit(t_hit *hit, double t, t_vector3 point,
-						t_vector3 normal, t_color color);
+void				update_hit(t_variables *var, t_vector3 normal,
+						t_color color);
 int					intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit);
 void				test_sphere_intersection(t_data *data);
 t_color				calculate_lighting(t_hit *hit, t_scene *scene);
@@ -273,6 +283,6 @@ t_color				color_multiply(t_color a, t_color b);
 t_color				color_scale(t_color color, double ratio);
 t_color				color_add(t_color a, t_color b);
 t_color				calculate_ambient(t_ambient ambient, t_color obj_color);
-void				ft_perror(char *mess, char **token);
+void				ft_perror(char **token, t_scene *scene, char *mes);
 
 #endif

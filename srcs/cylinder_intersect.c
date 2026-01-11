@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 19:24:07 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:49:24 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,15 @@ static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 				t_hit *hit)
 {
+	t_variables	var;
 	t_vector3	cap_center;
 	t_vector3	to_cap;
 	t_vector3	to_hit;
-	t_vector3	hit_point;
 	t_vector3	normal;
 
 	double (t), found_hit = 0.0, radius = cy->diameter / 2.0, dist_sq,
 	half_height = cy->height / 2.0, denom = vec_dot(ray.direction, cy->dir);
+	var.hit = hit;
 	if (fabs(denom) > EPSILON)
 	{
 		cap_center = vec_add(cy->center, vec_scale(cy->dir, half_height));
@@ -90,13 +91,13 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 		t = vec_dot(to_cap, cy->dir) / denom;
 		if (is_closer_hit(hit, t))
 		{
-			hit_point = ray_at(ray, t);
-			to_hit = vec_sub(hit_point, cap_center);
+			var.hit_point = ray_at(ray, t);
+			to_hit = vec_sub(var.hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
 			if (dist_sq <= radius * radius)
 			{
 				normal = cy->dir;
-				update_hit(hit, t, hit_point, normal, cy->color);
+				update_hit(&var, normal, cy->color);
 				hit->object = cy;
 				hit->type = CY;
 				hit->shininess = cy->shininess;
@@ -111,13 +112,13 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 		t = vec_dot(to_cap, cy->dir) / denom;
 		if (is_closer_hit(hit, t))
 		{
-			hit_point = ray_at(ray, t);
-			to_hit = vec_sub(hit_point, cap_center);
+			var.hit_point = ray_at(ray, t);
+			to_hit = vec_sub(var.hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
 			if (dist_sq <= radius * radius)
 			{
 				normal = vec_scale(cy->dir, -1.0);
-				update_hit(hit, t, hit_point, normal, cy->color);
+				update_hit(&var, normal, cy->color);
 				hit->object = cy;
 				hit->type = CY;
 				hit->shininess = cy->shininess;
@@ -131,19 +132,19 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 				t_hit *hit)
 {
-	t_vector3	oc;
+	t_variables	var;
 	t_vector3	oc_perp;
 	t_vector3	dir_perp;
-	t_vector3	hit_point;
 	t_vector3	to_hit;
 	t_vector3	normal;
 
-	double (a), radius = cylinder->diameter / 2.0, discriminant, t, b, c;
+	double (a), radius = cylinder->diameter / 2.0, discriminant, b, c;
 	double (half_height), height_on_dir, dir_dot_dir, oc_dot_dir;
-	oc = vec_sub(ray.origin, cylinder->center);
+	var.hit = hit;
+	var.oc = vec_sub(ray.origin, cylinder->center);
 	half_height = cylinder->height / 2.0;
-	oc_dot_dir = vec_dot(oc, cylinder->dir);
-	oc_perp = vec_sub(oc, vec_scale(cylinder->dir, oc_dot_dir));
+	oc_dot_dir = vec_dot(var.oc, cylinder->dir);
+	oc_perp = vec_sub(var.oc, vec_scale(cylinder->dir, oc_dot_dir));
 	dir_dot_dir = vec_dot(ray.direction, cylinder->dir);
 	dir_perp = vec_sub(ray.direction, vec_scale(cylinder->dir, dir_dot_dir));
 	a = vec_dot(dir_perp, dir_perp);
@@ -152,16 +153,16 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (0);
-	t = (-b - sqrt(discriminant)) / (2.0 * a);
-	if (!is_closer_hit(hit, t))
+	var.t = (-b - sqrt(discriminant)) / (2.0 * a);
+	if (!is_closer_hit(hit, var.t))
 		return (0);
-	hit_point = ray_at(ray, t);
-	to_hit = vec_sub(hit_point, cylinder->center);
+	var.hit_point = ray_at(ray, var.t);
+	to_hit = vec_sub(var.hit_point, cylinder->center);
 	height_on_dir = vec_dot(to_hit, cylinder->dir);
 	if (height_on_dir < -half_height || height_on_dir > half_height)
 		return (0);
-	normal = cylinder_body_normal(hit_point, cylinder);
-	update_hit(hit, t, hit_point, normal, cylinder->color);
+	normal = cylinder_body_normal(var.hit_point, cylinder);
+	update_hit(&var, normal, cylinder->color);
 	hit->object = cylinder;
 	hit->type = CY;
 	hit->shininess = cylinder->shininess;

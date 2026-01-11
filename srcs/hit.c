@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:56 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 18:20:52 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:47:17 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	is_closer_hit(t_hit *current, double new_t)
 	return (1);
 }
 
-void	update_hit(t_hit *hit, double t, t_vector3 point, t_vector3 normal,
+void	update_hit(t_variables *var, t_vector3 normal,
 		t_color color)
 {
-	hit->hit = 1;
-	hit->t = t;
-	hit->point = point;
-	hit->normal = normal;
-	hit->color = color;
+	var->hit->hit = 1;
+	var->hit->t = var->t;
+	var->hit->point = var->hit_point;
+	var->hit->normal = normal;
+	var->hit->color = color;
 }

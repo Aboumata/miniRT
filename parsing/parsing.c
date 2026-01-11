@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:30:37 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/10 21:07:50 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:10:33 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ static void	check_file_content(t_scene *scene, char *arg)
 
 	fd = open(arg, O_RDONLY);
 	if (fd < 0)
-		exit((perror("file not exist.\n"), 1));
+		ft_perror(NULL, scene, "file not exist.\n");
 	line = get_next_line(fd);
 	while (line)
 	{
 		parse_line(scene, line);
-		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -44,5 +43,8 @@ void	parsing(t_scene *scene, char *arg)
 	check_name(arg);
 	check_file_content(scene, arg);
 	if (!scene->has_ambient || !scene->has_camera)
-		exit((perror("Missing required elements\n"), 1));
+	{
+		ft_free_all(&scene->mem);
+		ft_perror(NULL, scene, "Missing required elements\n");
+	}
 }

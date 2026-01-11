@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:45:34 by abdahman          #+#    #+#             */
-/*   Updated: 2025/10/16 17:42:59 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 09:59:56 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_free_all(t_mem **mem)
 	if (!mem || !*mem)
 		return ;
 	tmp = *mem;
+	get_next_line(-1);
 	while (tmp)
 	{
 		node = tmp;

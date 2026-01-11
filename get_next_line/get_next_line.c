@@ -5,118 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 16:59:32 by abdahman          #+#    #+#             */
-/*   Updated: 2024/12/22 20:53:47 by abdahman         ###   ########.fr       */
+/*   Created: 2024/11/20 16:45:42 by aboumata          #+#    #+#             */
+/*   Updated: 2026/01/11 15:05:25 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_free(char *s1, char *s2)
+void	free_safe(char **ptr)
 {
-	free(s1);
-	free(s2);
-	return (NULL);
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
-static char	*ft_read_line(int fd, char *stored)
+char	*read_lines(int fd, char *buf, char **backup)
 {
-	char	*buffer;
-	char	*temp;
-	int		bytes_read;
+	ssize_t	read_line;
+	char	*char_temp;
 
-	if (!stored)
-		stored = ft_strdup("");
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	bytes_read = 1;
-	while (!ft_strchr(stored, '\n') && bytes_read > 0)
+	read_line = 1;
+	while (read_line > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			return (ft_free(buffer, stored));
-		buffer[bytes_read] = '\0';
-		temp = ft_strjoin(stored, buffer);
-		if (!temp)
-			return (ft_free(buffer, stored));
-		free(stored);
-		stored = temp;
+		read_line = read(fd, buf, BUFFER_SIZE);
+		if (read_line == -1)
+			return (NULL);
+		buf[read_line] = '\0';
+		if (*backup == NULL)
+			*backup = ft_strdup("");
+		if (*backup == NULL)
+			return (NULL);
+		char_temp = *backup;
+		*backup = ft_strjoin(char_temp, buf);
+		free_safe(&char_temp);
+		if (*backup == NULL)
+			return (NULL);
+		if (ft_strchr(buf, '\n'))
+			break ;
 	}
-	free(buffer);
-	return (stored);
+	if (*backup && **backup == '\0')
+		return (free_safe(backup), NULL);
+	return (*backup);
 }
 
-static char	*ft_get_line(char *stored)
+char	*extract(char *line)
 {
-	int		i;
-	char	*line;
+	size_t	i;
+	char	*backup;
 
 	i = 0;
-	if (!stored || !stored[0])
-		return (NULL);
-	while (stored[i] && stored[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	if (stored[i] == '\n')
-		i++;
-	line = malloc(sizeof(char) * (i + 1));
-	if (!line)
+	if (line[i] == '\0')
 		return (NULL);
-	i = 0;
-	while (stored[i] && stored[i] != '\n')
-	{
-		line[i] = stored[i];
-		i++;
-	}
-	if (stored[i] == '\n')
-		line[i++] = '\n';
-	line[i] = '\0';
-	return (line);
-}
-
-static char	*ft_store_remaining(char *stored)
-{
-	int		i;
-	int		j;
-	char	*remaining;
-
-	i = 0;
-	while (stored[i] && stored[i] != '\n')
-		i++;
-	if (!stored[i])
-	{
-		free(stored);
+	backup = ft_substr2(line, i + 1, ft_strlen(line) - i);
+	if (backup == NULL)
 		return (NULL);
-	}
-	remaining = malloc(sizeof(char) * (ft_strlen(stored) - i + 1));
-	if (!remaining)
-	{
-		free(stored);
-		return (NULL);
-	}
-	i++;
-	j = 0;
-	while (stored[i])
-		remaining[j++] = stored[i++];
-	remaining[j] = '\0';
-	free(stored);
-	return (remaining);
+	if (*backup == '\0')
+		free_safe(&backup);
+	line[i + 1] = '\0';
+	return (backup);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stored;
 	char		*line;
+	char		*buf;
+	static char	*backup;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (free_safe(&backup), NULL);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buf == NULL)
+		return (NULL);
+	line = read_lines(fd, buf, &backup);
+	free_safe(&buf);
+	if (line == NULL || *line == '\0')
 	{
-		free(stored);
+		free_safe(&backup);
 		return (NULL);
 	}
-	stored = ft_read_line(fd, stored);
-	if (!stored)
-		return (NULL);
-	line = ft_get_line(stored);
-	stored = ft_store_remaining(stored);
+	backup = extract(line);
 	return (line);
 }

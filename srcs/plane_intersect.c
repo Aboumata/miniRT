@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:36 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/09 18:34:46 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:53:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	checkerboard(t_vector3 hit_p, t_planes *pl)
 int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 {
 	t_vector3	to_plane;
-	t_vector3	hit_point;
+	t_variables	var;
 	t_vector3	normal;
 
-	double (denom), numer, t;
+	double (denom), numer;
 	normal = plane->normal;
+	var.hit = hit;
 	denom = vec_dot(ray.direction, normal);
 	if (fabs(denom) < EPSILON)
 		return (0);
@@ -68,12 +69,12 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 		normal = vec_scale(normal, -1);
 	to_plane = vec_sub(plane->point, ray.origin);
 	numer = vec_dot(to_plane, plane->normal);
-	t = numer / denom;
-	if (t < EPSILON || t > hit->t)
+	var.t = numer / denom;
+	if (var.t < EPSILON || var.t > var.hit->t)
 		return (0);
-	hit_point = ray_at(ray, t);
-	checkerboard(hit_point, plane);
-	update_hit(hit, t, hit_point, normal, plane->color);
+	var.hit_point = ray_at(ray, var.t);
+	checkerboard(var.hit_point, plane);
+	update_hit(&var, normal, plane->color);
 	hit->object = plane;
 	hit->type = PL;
 	hit->shininess = plane->shininess;

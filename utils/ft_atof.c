@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:50:19 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/10 22:39:58 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:43:30 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ static void	process_digit(char c, t_atof *data)
 double	ft_atof(char *str, int *check)
 {
 	t_atof	data;
-	int		i;
-	int		sig;
 
+	int (sig), i = 0;
 	data.res = 0;
 	data.frac = 0;
 	data.div = 10;
 	data.dot_count = 0;
-	i = 0;
 	sig = handle_sign(str, &i);
 	while (str[i])
 	{
@@ -57,9 +55,9 @@ double	ft_atof(char *str, int *check)
 			data.dot_count++;
 		else
 		{
-			perror("Error: invalid number");
+			write(2, "Error: invalid number\n", 23);
 			if (check)
-				check = 0;
+				*check = 0;
 			return (-1);
 		}
 		i++;

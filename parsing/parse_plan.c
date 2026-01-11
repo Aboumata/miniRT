@@ -6,13 +6,13 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:57:01 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/10 22:41:03 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 10:05:08 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static void	ft_continue(t_planes *plane, char **token, int c)
+static int	ft_continue(t_planes *plane, char **token, int c)
 {
 	if (c >= 5)
 	{
@@ -22,15 +22,16 @@ static void	ft_continue(t_planes *plane, char **token, int c)
 		{
 			plane->shininess = ft_atof(token[4], NULL);
 			if (plane->shininess < 0)
-				ft_perror("Error: shininess should be non-negative", token);
+				return (0);
 		}
 	}
 	if (c == 6)
 	{
 		if (ft_strcmp(token[5], "cb"))
-			ft_perror("Error: invalid flag", token);
+			return (0);
 		plane->checkerboard = 1;
 	}
+	return (1);
 }
 
 void	parse_plan(t_scene *scene, char **token)
@@ -45,16 +46,17 @@ void	parse_plan(t_scene *scene, char **token)
 		exit((free_split(token), 1));
 	}
 	plane = ft_malloc(sizeof(t_planes), &(scene->mem));
-	plane->point = parse_vec(token, 1);
-	plane->normal = parse_vec(token, 2);
-	plane->color = parse_color(token, 3);
+	plane->point = parse_vec(token, 1, scene);
+	plane->normal = parse_vec(token, 2, scene);
+	plane->color = parse_color(token, 3, scene);
 	if (!is_normalized(plane->normal))
 	{
 		write(2, "Error: plan not normalized\n", 27);
-		exit((free_split(token), 1));
+		ft_perror(token, scene, NULL);
 	}
 	plane->shininess = 0.0;
 	plane->checkerboard = 0;
-	ft_continue(plane, token, c);
+	if (!ft_continue(plane, token, c))
+		ft_perror(token, scene, "Error: invalid cylander\n");
 	add_obj(scene, plane, PL);
 }
