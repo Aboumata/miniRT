@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:56 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 14:47:17 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:43:05 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	init_hit(t_hit *hit)
 
 int	is_closer_hit(t_hit *current, double new_t)
 {
+	if (!current)
+		return (0);
 	if (new_t < EPSILON)
 		return (0);
 	if (new_t >= current->t)

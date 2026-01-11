@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 14:49:24 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:59:34 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,18 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 	t_vector3	to_hit;
 	t_vector3	normal;
 
-	double (t), found_hit = 0.0, radius = cy->diameter / 2.0, dist_sq,
+	double (dist_sq), found_hit = 0.0, radius = cy->diameter / 2.0,
 	half_height = cy->height / 2.0, denom = vec_dot(ray.direction, cy->dir);
+	ft_bzero(&var, sizeof(t_variables));
 	var.hit = hit;
 	if (fabs(denom) > EPSILON)
 	{
 		cap_center = vec_add(cy->center, vec_scale(cy->dir, half_height));
 		to_cap = vec_sub(cap_center, ray.origin);
-		t = vec_dot(to_cap, cy->dir) / denom;
-		if (is_closer_hit(hit, t))
+		var.t = vec_dot(to_cap, cy->dir) / denom;
+		if (is_closer_hit(hit, var.t))
 		{
-			var.hit_point = ray_at(ray, t);
+			var.hit_point = ray_at(ray, var.t);
 			to_hit = vec_sub(var.hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
 			if (dist_sq <= radius * radius)
@@ -109,10 +110,10 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 	{
 		cap_center = vec_sub(cy->center, vec_scale(cy->dir, half_height));
 		to_cap = vec_sub(cap_center, ray.origin);
-		t = vec_dot(to_cap, cy->dir) / denom;
-		if (is_closer_hit(hit, t))
+		var.t = vec_dot(to_cap, cy->dir) / denom;
+		if (is_closer_hit(hit, var.t))
 		{
-			var.hit_point = ray_at(ray, t);
+			var.hit_point = ray_at(ray, var.t);
 			to_hit = vec_sub(var.hit_point, cap_center);
 			dist_sq = vec_dot(to_hit, to_hit);
 			if (dist_sq <= radius * radius)
@@ -140,6 +141,7 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 
 	double (a), radius = cylinder->diameter / 2.0, discriminant, b, c;
 	double (half_height), height_on_dir, dir_dot_dir, oc_dot_dir;
+	ft_bzero(&var, sizeof(t_variables));
 	var.hit = hit;
 	var.oc = vec_sub(ray.origin, cylinder->center);
 	half_height = cylinder->height / 2.0;
