@@ -1,1 +1,4 @@
 .idea/
+Libft/libft.a
+miniRT
+*.o
