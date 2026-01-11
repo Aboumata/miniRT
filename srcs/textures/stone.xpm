@@ -1,0 +1,24 @@
+/* XPM */
+static char *stone_xpm[] = {
+"16 16 4 1",
+" 	c #808080",
+".	c #A0A0A0",
+"X	c #606060",
+"o	c #C0C0C0",
+"  ..XX  oo  ..XX",
+" .  .X o  o .X ",
+"..  XX oo   XXX",
+".  XX   o  XXX ",
+"XX   oo   XX   ",
+"X  o  o  X   ..",
+"  oo   .XX  ...",
+" o  o ..X  ... ",
+"oo   ...  ..  X",
+"o  ...  .. XX  ",
+"  ..  ..  X   o",
+" ..  ..  XX  oo",
+"..  XX  X   o  ",
+".  XX  XX  oo  ",
+" XX   X   o   .",
+"XX   XX  oo  .."
+};
