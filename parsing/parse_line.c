@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:08:02 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 14:59:16 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:46:52 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	parse_line(t_scene *scene, char *line)
 {
 	char	**token;
 
-	printf("%s\n", line);
 	if (!line || line[0] == '\n' || line[0] == '\0' || line[0] == '#')
 	{
 		free(line);

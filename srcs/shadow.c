@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 22:36:09 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/10 15:19:48 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:32:31 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	bonus(t_object *obj, t_ray shadow_ray, t_hit shadow_hti, double l_d)
 				return (1);
 		}
 	}
-	// else if (obj->type == CONE)
-	// {
-	// 	if (intersect_cone(shadow_ray, (t_cone *)obj->obj, &shadow_hti))
-	// 	{
-	// 		if (shadow_hti.t < l_d)
-	// 			return (1);
-	// 	}
-	// }
+	else if (obj->type == CONE)
+	{
+		if (intersect_cone(shadow_ray, (t_cone *)obj->obj, &shadow_hti))
+		{
+			if (shadow_hti.t < l_d)
+				return (1);
+		}
+	}
 	return (0);
 }
 
