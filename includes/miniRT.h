@@ -21,8 +21,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PI 3.14159265359
 # define EPSILON 0.0001
 
