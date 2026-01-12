@@ -26,6 +26,20 @@
 # define PI 3.14159265359
 # define EPSILON 0.0001
 
+typedef struct s_texture
+{
+	int			width;
+	int			height;
+	char		*data;
+	char		*path;
+}			t_texture;
+
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}			t_uv;
+
 typedef enum e_obj_types
 {
 	SP,
@@ -77,6 +91,7 @@ typedef struct s_spheres
 	double			diameter;
 	t_color			color;
 	double			shininess;
+	t_texture		*bump_map;
 }					t_spheres;
 
 typedef struct s_planes
@@ -86,6 +101,7 @@ typedef struct s_planes
 	t_color			color;
 	double			shininess;
 	int				checkerboard;
+	t_texture		*bump_map;
 }					t_planes;
 
 typedef struct s_cone
@@ -127,6 +143,7 @@ typedef struct s_cylinders
 	double			height;
 	t_color			color;
 	double			shininess;
+	t_texture		*bump_map;
 }					t_cylinders;
 
 typedef struct s_object
@@ -143,7 +160,7 @@ typedef struct s_scene
 	t_light			*light;
 	t_object		*object;
 	t_mem			*mem;
-
+	void			*mlx;
 	int				has_ambient;
 	int				has_camera;
 }					t_scene;
@@ -217,11 +234,9 @@ typedef struct s_variables
 
 void				parsing(t_scene *scene, char *arg);
 void				parse_sphere(t_scene *scene, char **token);
-int					new_sphere(t_object **obj, char **token);
 t_vector3			parse_vec(char **token, int indx, t_scene *scene);
 int					count_tokens(char **token);
 void				ft_free_all(t_mem **mem);
-void				free_scene(t_scene *scene);
 void				cleanup_all(t_data *data);
 void				*ft_malloc(size_t size, t_mem **mem);
 double				ft_atof(char *str, int *check);
@@ -246,7 +261,6 @@ void				put_pixel(t_data *data, int x, int y, int color);
 int					handle_key(int keycode, t_data *data);
 int					handle_close(t_data *data);
 void				setup_hooks(t_data *data);
-void				test_render(t_data *data);
 void				render(t_data *data);
 t_vector3			vec_add(t_vector3 a, t_vector3 b);
 t_vector3			vec_sub(t_vector3 a, t_vector3 b);
@@ -256,13 +270,9 @@ t_vector3			vec_normalize(t_vector3 v);
 double				vec_dot(t_vector3 a, t_vector3 b);
 t_vector3			vec_cross(t_vector3 a, t_vector3 b);
 t_vector3			vec_reflect(t_vector3 v, t_vector3 n);
-void				test_vectors(void);
 void				setup_camera(t_data *data);
-void				print_camera_info(t_data *data);
 t_ray				create_ray(t_data *data, int x, int y);
 t_vector3			ray_at(t_ray ray, double t);
-void				print_ray_info(t_ray ray, int x, int y);
-void				test_rays(t_data *data);
 void				init_hit(t_hit *hit);
 int					is_closer_hit(t_hit *current, double new_t);
 void				update_hit(t_variables *var, t_vector3 normal,

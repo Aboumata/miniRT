@@ -41,7 +41,6 @@ t_vector3	vec_cross(t_vector3 a, t_vector3 b)
 	return (result);
 }
 
-//formula: reflect = v - 2(v.n)n
 t_vector3	vec_reflect(t_vector3 v, t_vector3 n)
 {
 	t_vector3	reflection;
@@ -51,66 +50,3 @@ t_vector3	vec_reflect(t_vector3 v, t_vector3 n)
 	reflection = vec_sub(v, vec_scale(n, 2.0 * dot));
 	return (reflection);
 }
-
-// void test_vectors(void)
-// {
-//     t_vector3 a;
-//     t_vector3 b;
-//     t_vector3 result;
-//     double len;
-//     double dot;
-//
-//     a.x = 1; a.y = 2; a.z = 3;
-//     b.x = 4; b.y = 5; b.z = 6;
-//
-//     printf("\n=== Vector Math Tests ===\n\n");
-//
-//     printf("Test 1: Addition\n");
-//     printf("A = (1, 2, 3)\n");
-//     printf("B = (4, 5, 6)\n");
-//     result = vec_add(a, b);
-//     printf("A + B = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     printf("Expected: (5, 7, 9)\n\n");
-//
-//     printf("Test 2: Subtraction\n");
-//     result = vec_sub(a, b);
-//     printf("B - A = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     printf("Expected: (3, 3, 3)\n\n");
-//
-//     printf("Test 3: Scaling\n");
-//     result = vec_scale(a, 2.0);
-//     printf("A × 2 = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     printf("Expected: (2, 4, 6)\n\n");
-//
-//     printf("Test 4: Length\n");
-//     len = vec_length(a);
-//     printf("Length of A = %f\n", len);
-//     printf("Expected: 3.741657... (sqrt(14))\n\n");
-//
-//     printf("Test 5: Normalize\n");
-//     result = vec_normalize(a);
-//     printf("Normalized A = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     len = vec_length(result);
-//     printf("Length after normalize = %f\n", len);
-//     printf("Expected length: 1.0\n\n");
-//
-//     printf("Test 6: Dot Product\n");
-//     dot = vec_dot(a, b);
-//     printf("A · B = %f\n", dot);
-//     printf("Expected: 32 (1×4 + 2×5 + 3×6)\n\n");
-//
-//     printf("Test 7: Cross Product\n");
-//     t_vector3 x = {1, 0, 0};
-//     t_vector3 y = {0, 1, 0};
-//     result = vec_cross(x, y);
-//     printf("X × Y = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     printf("Expected: (0, 0, 1)\n\n");
-//
-//     printf("Test 8: Zero Vector Normalize\n");
-//     t_vector3 zero = {0, 0, 0};
-//     result = vec_normalize(zero);
-//     printf("Normalized zero = (%f, %f, %f)\n", result.x, result.y, result.z);
-//     printf("Expected: (0, 0, 0) - no crash!\n\n");
-//
-//     printf("=== All Tests Complete! ===\n\n");
-// }
