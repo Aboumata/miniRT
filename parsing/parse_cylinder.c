@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 12:44:58 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:00:49 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	ft_perror(char **token, t_scene *scene, char *mes)
 {
-	free_split(token);
-	ft_free_all(&scene->mem);
+	if (token)
+		free_split(token);
+	if (scene && scene->mem)
+		ft_free_all(&scene->mem);
 	get_next_line(-1);
 	printf("%s", mes);
 	exit(0);
