@@ -127,7 +127,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 			}
 		}
 	}
-	return (found_hit);
+	return ((int)found_hit);
 }
 
 static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
