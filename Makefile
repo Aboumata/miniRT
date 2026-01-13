@@ -5,7 +5,7 @@ SRC = main.c \
 	parsing/parse_colors_vectors.c parsing/parse_plan.c parsing/parse_ambient.c parsing/parse_light.c \
 	parsing/parse_cone.c parsing/parse_triangle.c parsing/parse_disk.c \
 	get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
-	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c \
+	utils/ft_atof.c utils/memory_utils.c utils/new_spher.c utils/helper_functions.c utils/tokenizer.c utils/texture_cleanup.c\
 	srcs/init.c srcs/draw.c srcs/hooks.c srcs/render.c srcs/ray.c srcs/vector_math.c srcs/camera.c\
 	srcs/hit.c srcs/cylinder_intersect.c srcs/intersect.c srcs/sphere_intersect.c srcs/plane_intersect.c\
 	srcs/lighting.c srcs/shadow.c srcs/disk_intersect.c srcs/triangle_intersect.c srcs/cone_intersect.c\

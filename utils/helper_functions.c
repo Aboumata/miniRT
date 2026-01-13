@@ -48,6 +48,10 @@ int	count_tokens(char **token)
 
 void	cleanup_mlx(t_data *data)
 {
+	if (!data)
+		exit(0);
+	if (data->scene)
+		destroy_scene_bump_maps(data->scene, data->mlx.mlx);
 	if (data->mlx.img != NULL)
 	{
 		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
@@ -64,5 +68,7 @@ void	cleanup_mlx(t_data *data)
 		free(data->mlx.mlx);
 		data->mlx.mlx = NULL;
 	}
+	if (data->scene)
+		ft_free_all(&data->scene->mem);
 	exit(0);
 }

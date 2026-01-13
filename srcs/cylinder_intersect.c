@@ -62,6 +62,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 			{
 				normal = cy->dir;
 				update_hit(&var, normal, cy->color);
+				hit->normal = normal;
 				hit->object = cy;
 				hit->type = CY;
 				hit->shininess = cy->shininess;
@@ -141,6 +142,8 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 		uv = cylinder_uv(var.hit_point, cylinder);
 		normal = perturb_normal(normal, cylinder->bump_map, uv);
 	}
+	if (vec_dot(normal, ray.direction) > 0)
+		normal = vec_scale(normal, -1);
 	update_hit(&var, normal, cylinder->color);
 	hit->object = cylinder;
 	hit->type = CY;

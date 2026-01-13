@@ -28,15 +28,15 @@
 
 typedef struct s_texture
 {
-	void		*img;
 	int			width;
 	int			height;
 	char		*data;
+	char		*path;
+	void		*img;
 	int			bpp;
 	int			line_len;
 	int			endian;
-	char		*path;
-}			t_texture;
+}				t_texture;
 
 typedef struct s_uv
 {
@@ -301,11 +301,11 @@ void				ft_perror(char **token, t_scene *scene, char *mes);
 t_texture			*load_texture(char *path, void *mlx, t_mem **mem);
 int					get_texture_color(t_texture *tex, int x, int y);
 double				get_bump_height(t_texture *bump, double u, double v);
-void				destroy_texture(void *mlx, t_texture *tex);
-void				destroy_scene_textures(t_scene *scene, void *mlx);
 t_uv				sphere_uv(t_vector3 point, t_vector3 center);
 t_uv				plane_uv(t_vector3 point, t_vector3 plane_point);
 t_uv				cylinder_uv(t_vector3 point, t_cylinders *cyl);
 t_vector3			perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv);
+void				destroy_texture(void *mlx, t_texture *tex);
+void				destroy_scene_bump_maps(t_scene *scene, void *mlx);
 
 #endif

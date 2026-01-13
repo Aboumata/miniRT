@@ -1,14 +1,22 @@
+# Bump Mapping Test Scene - CORRECTED
+
 A 0.15 255,255,255
 
-C 0,1,-10 0,0,1 80
+C 0,1,-15 0,0,1 70
 
-L 5,8,-6 0.9 255,255,255
+L 10,10,-8 0.9 255,255,255
 
-# Plane bump only (no cb first)
-pl 0,-2,0 0,1,0 200,200,200 10 textures/floor.xpm
+# Left sphere - WITH bump map (stone texture)
+sp -5,0,5 3 180,180,180 80 srcs/textures/stone.xpm
 
-# Sphere bump
-sp -3,0,6 3 255,0,0 50 textures/stone.xpm
+# Center sphere - smooth (no bump) for comparison
+sp 0,0,5 3 255,100,100 80
 
-# Cylinder bump
-cy 3,-2,6 0,1,0 1.5 5 100,100,255 30 textures/metal.xpm
+# Right sphere - WITH bump map (noise texture)
+sp 5,0,5 3 100,255,100 80 srcs/textures/noise.xpm
+
+# Back checkerboard plane
+pl 0,0,20 0,0,-1 150,150,150 10 cb
+
+# Floor plane - WITH bump map (brick texture)
+pl 0,-2,0 0,1,0 200,200,200 10 srcs/textures/brick.xpm

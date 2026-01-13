@@ -47,6 +47,6 @@ void	update_hit(t_variables *var, t_vector3 normal,
 	var->hit->hit = 1;
 	var->hit->t = var->t;
 	var->hit->point = var->hit_point;
-	var->hit->normal = normal;
+	var->hit->normal = vec_normalize(normal);
 	var->hit->color = color;
 }

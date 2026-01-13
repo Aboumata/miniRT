@@ -66,7 +66,10 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 		uv = sphere_uv(var.hit_point, sphere->center);
 		normal = perturb_normal(normal, sphere->bump_map, uv);
 	}
+	if (vec_dot(normal, ray.direction) > 0)
+		normal = vec_scale(normal, -1);
 	update_hit(&var, normal, sphere->color);
+	hit->normal = normal;
 	hit->object = sphere;
 	hit->type = SP;
 	hit->shininess = sphere->shininess;

@@ -5,78 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/13 00:00:00 by abdahman         ###   ########.fr       */
+/*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
+/*   Updated: 2026/01/13 00:00:01 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static double	wrap01(double u)
+static void	copy_path(t_texture *tex, char *path, t_mem **mem)
 {
-	u = u - floor(u);
-	if (u < 0.0)
-		u += 1.0;
-	return (u);
-}
+	size_t	len;
 
-static double	clamp01(double v)
-{
-	if (v < 0.0)
-		return (0.0);
-	if (v > 1.0)
-		return (1.0);
-	return (v);
+	if (!tex || !path || !mem)
+		return ;
+	len = ft_strlen(path);
+	tex->path = ft_malloc(len + 1, mem);
+	ft_strlcpy(tex->path, path, len + 1);
 }
 
 t_texture	*load_texture(char *path, void *mlx, t_mem **mem)
 {
-	t_texture	*texture;
-	size_t		len;
+	t_texture	*tex;
 
 	if (!path || !mlx)
+	{
+		printf("DEBUG: load_texture - path or mlx is NULL\n");
 		return (NULL);
-	texture = ft_malloc(sizeof(t_texture), mem);
-	ft_bzero(texture, sizeof(t_texture));
-	texture->img = mlx_xpm_file_to_image(mlx, path,
-			&texture->width, &texture->height);
-	if (!texture->img)
+	}
+	printf("DEBUG: Attempting to load texture: %s\n", path);
+	tex = ft_malloc(sizeof(t_texture), mem);
+	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
+	if (!tex->img)
+	{
+		printf("DEBUG: Failed to load XPM file: %s\n", path);
 		return (NULL);
-	texture->data = mlx_get_data_addr(texture->img,
-			&texture->bpp, &texture->line_len, &texture->endian);
-	if (!texture->data)
+	}
+	tex->data = mlx_get_data_addr(tex->img, &tex->bpp,
+			&tex->line_len, &tex->endian);
+	if (!tex->data)
+	{
+		printf("DEBUG: Failed to get image data for: %s\n", path);
 		return (NULL);
-	len = ft_strlen(path);
-	texture->path = ft_malloc(len + 1, mem);
-	ft_strlcpy(texture->path, path, len + 1);
-	return (texture);
-}
-
-void	destroy_texture(void *mlx, t_texture *tex)
-{
-	if (!mlx || !tex || !tex->img)
-		return ;
-	mlx_destroy_image(mlx, tex->img);
-	tex->img = NULL;
-	tex->data = NULL;
+	}
+	printf("DEBUG: Successfully loaded: %s (%dx%d, bpp=%d, line_len=%d)\n",
+		path, tex->width, tex->height, tex->bpp, tex->line_len);
+	copy_path(tex, path, mem);
+	return (tex);
 }
 
 int	get_texture_color(t_texture *tex, int x, int y)
 {
-	unsigned char	*p;
-	int				bytes;
+	int	*pixel;
+	int	offset;
 
-	if (!tex || !tex->data || tex->bpp <= 0)
+	if (!tex || !tex->data)
 		return (0);
 	if (x < 0 || x >= tex->width || y < 0 || y >= tex->height)
 		return (0);
-	bytes = tex->bpp / 8;
-	p = (unsigned char *)(tex->data + (y * tex->line_len) + (x * bytes));
-	if (bytes == 4)
-		return (*(unsigned int *)p);
-	if (bytes == 3)
-		return ((p[2] << 16) | (p[1] << 8) | p[0]);
-	return (0);
+	offset = y * (tex->line_len / 4) + x;
+	pixel = (int *)tex->data;
+	return (pixel[offset]);
 }
 
 double	get_bump_height(t_texture *bump, double u, double v)
@@ -84,19 +72,28 @@ double	get_bump_height(t_texture *bump, double u, double v)
 	int		x;
 	int		y;
 	int		color;
-	int		r;
+	int		gray;
 
 	if (!bump || !bump->data || bump->width <= 0 || bump->height <= 0)
 		return (0.0);
-	u = wrap01(u);
-	v = clamp01(v);
-	x = (int)(u * (double)bump->width);
-	y = (int)(v * (double)bump->height);
+	u = u - floor(u);
+	if (u < 0.0)
+		u += 1.0;
+	v = v - floor(v);
+	if (v < 0.0)
+		v += 1.0;
+	x = (int)(u * (double)(bump->width - 1));
+	y = (int)(v * (double)(bump->height - 1));
+	if (x < 0)
+		x = 0;
 	if (x >= bump->width)
 		x = bump->width - 1;
+	if (y < 0)
+		y = 0;
 	if (y >= bump->height)
 		y = bump->height - 1;
 	color = get_texture_color(bump, x, y);
-	r = (color >> 16) & 0xFF;
-	return ((r / 255.0 - 0.5) * 2.0);
+	gray = ((color >> 16) & 0xFF) + ((color >> 8) & 0xFF) + (color & 0xFF);
+	gray /= 3;
+	return ((gray / 255.0 - 0.5) * 2.0);
 }

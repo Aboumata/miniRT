@@ -67,7 +67,10 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 		uv = plane_uv(var.hit_point, plane->point);
 		normal = perturb_normal(normal, plane->bump_map, uv);
 	}
+	if (vec_dot(normal, ray.direction) > 0)
+		normal = vec_scale(normal, -1);
 	update_hit(&var, normal, plane->color);
+	hit->normal = normal;
 	hit->object = plane;
 	hit->type = PL;
 	hit->shininess = plane->shininess;
