@@ -12,50 +12,6 @@
 
 #include "../includes/miniRT.h"
 
-// PART1
-/*
- *Ray: P(t) = ray.origin + t × ray.direction
- *
- *We want: distance from P(t) to axis = radius
- *
- *Let:
- *  oc = ray.origin - cylinder.center
- *  axis = cylinder.axis (normalized)
- *
- *Step 1: Project oc onto asxi
- *  oc_proj = (oc · axis) × axis
- *
- *Step 2: Get perpendicular component
- *  oc_perp = oc - oc_proj
- *
- *Step 3: Do same for ray direction
- *  dir_proj = (ray.direction · axis) × axis
- *  dir_perp = ray.direction - dir_proj
- *
- *Step 4: Perpendicular distance equation becomes:
- *  |oc_perp + t × dir_perp|² = radius²
- *
- *Step 5: Expand (this is a quadratic equation!):
- *  a = dir_perp · dir_perp
- *  b = 2 × (oc_perp · dir_perp)
- *  c = oc_perp · oc_perp - radius²
- *
- *Step 6: Solve using quadratic formula
- *  discriminant = b² - 4ac
- *  t = (-b ± √discriminant) / 2a
- */
-
-// PART2
-/*
- *1. Calculate hit point: P = ray.origin + t × ray.direction
- *2. Project hit point onto axis: h = (P - center) · axis
- *3. Check if h is within bounds:
- *   - Top limit: h <= height / 2
- *   - Bottom limit: h >= -height / 2
- *
- *If outside bounds: reject this hit, try caps instead
- */
-
 static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 		t_cylinders *cylinder)
 {
@@ -80,9 +36,16 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 	t_vector3	to_cap;
 	t_vector3	to_hit;
 	t_vector3	normal;
+	double		dist_sq;
+	double		found_hit;
+	double		radius;
+	double		half_height;
+	double		denom;
 
-	double (dist_sq), found_hit = 0.0, radius = cy->diameter / 2.0,
-	half_height = cy->height / 2.0, denom = vec_dot(ray.direction, cy->dir);
+	found_hit = 0.0;
+	radius = cy->diameter / 2.0;
+	half_height = cy->height / 2.0;
+	denom = vec_dot(ray.direction, cy->dir);
 	ft_bzero(&var, sizeof(t_variables));
 	var.hit = hit;
 	if (fabs(denom) > EPSILON)
@@ -138,12 +101,21 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	t_vector3	dir_perp;
 	t_vector3	to_hit;
 	t_vector3	normal;
+	t_uv		uv;
+	double		a;
+	double		radius;
+	double		discriminant;
+	double		b;
+	double		c;
+	double		half_height;
+	double		height_on_dir;
+	double		dir_dot_dir;
+	double		oc_dot_dir;
 
-	double (a), radius = cylinder->diameter / 2.0, discriminant, b, c;
-	double (half_height), height_on_dir, dir_dot_dir, oc_dot_dir;
 	ft_bzero(&var, sizeof(t_variables));
 	var.hit = hit;
 	var.oc = vec_sub(ray.origin, cylinder->center);
+	radius = cylinder->diameter / 2.0;
 	half_height = cylinder->height / 2.0;
 	oc_dot_dir = vec_dot(var.oc, cylinder->dir);
 	oc_perp = vec_sub(var.oc, vec_scale(cylinder->dir, oc_dot_dir));
@@ -164,6 +136,11 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	if (height_on_dir < -half_height || height_on_dir > half_height)
 		return (0);
 	normal = cylinder_body_normal(var.hit_point, cylinder);
+	if (cylinder->bump_map)
+	{
+		uv = cylinder_uv(var.hit_point, cylinder);
+		normal = perturb_normal(normal, cylinder->bump_map, uv);
+	}
 	update_hit(&var, normal, cylinder->color);
 	hit->object = cylinder;
 	hit->type = CY;

@@ -35,8 +35,16 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 {
 	t_variables	var;
 	t_vector3	normal;
+	t_uv		uv;
+	double		a;
+	double		sqrt_d;
+	double		radius;
+	double		t;
+	double		half_b;
+	double		c;
+	double		discriminant;
 
-	double (a), sqrt_d, radius, t = 0.0, half_b, c, discriminant;
+	t = 0.0;
 	var.hit = hit;
 	var.oc = vec_sub(ray.origin, sphere->center);
 	a = vec_dot(ray.direction, ray.direction);
@@ -53,51 +61,14 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	var.hit_point = ray_at(ray, t);
 	var.t = t;
 	normal = sphere_normal(var.hit_point, sphere->center);
+	if (sphere->bump_map)
+	{
+		uv = sphere_uv(var.hit_point, sphere->center);
+		normal = perturb_normal(normal, sphere->bump_map, uv);
+	}
 	update_hit(&var, normal, sphere->color);
 	hit->object = sphere;
 	hit->type = SP;
 	hit->shininess = sphere->shininess;
 	return (1);
 }
-
-//printf("Sphere shininess stored: %f\n", sphere->shininess);
-// void	test_sphere_intersection(t_data *data)
-// just test the function if they are working
-// {
-// 	t_ray		ray;
-// 	t_hit		hit;
-// 	t_object	*obj;
-// 	t_spheres	*sp;
-//
-// 	printf("\n=== Testing Sphere Intersection ===\n\n");
-// 	ray = create_ray(data, WIDTH / 2, HEIGHT / 2);
-// 	printf("Testing center pixel ray:\n");
-// 	printf("  Origin: (%.2f, %.2f, %.2f)\n", ray.origin.x, ray.origin.y,
-// 		ray.origin.z);
-// 	printf("  Direction: (%.2f, %.2f, %.2f)\n\n", ray.direction.x,
-// 		ray.direction.y, ray.direction.z);
-// 	obj = data->scene->object;
-// 	while (obj)
-// 	{
-// 		if (obj->type == SP)
-// 		{
-// 			sp = (t_spheres *)obj->obj;
-// 			printf("Testing sphere:\n");
-// 			printf("  Center: (%.2f, %.2f, %.2f)\n", sp->center.x, sp->center.y,
-// 				sp->center.z);
-// 			printf("  Radius: %.2f\n", sp->diameter / 2.0);
-// 			init_hit(&hit);
-// 			if (intersect_sphere(ray, sp, &hit))
-// 			{
-// 				printf("  ✓ HIT! Distance: %.2f\n", hit.t);
-// 				printf("  Hit point: (%.2f, %.2f, %.2f)\n", hit.point.x,
-// 					hit.point.y, hit.point.z);
-// 				printf("  Normal: (%.2f, %.2f, %.2f)\n\n", hit.normal.x,
-// 					hit.normal.y, hit.normal.z);
-// 			}
-// 			else
-// 				printf("  ✗ MISS\n\n");
-// 		}
-// 		obj = obj->next;
-// 	}
-// }

@@ -12,20 +12,6 @@
 
 #include "../includes/miniRT.h"
 
-/*
- * Ray: p(t) = origin + t * direction
- * Plane: (P - plane_point) * normal = 0
- *
- * SOLVE!
- *
- * (origin + t * direction - plane_point) * normal = 0;
- * normal * origin + t * (direction * normal) - plane_point * normal = 0
- * t * (direction * normal) = plane_point * normal - normal * origin
- * t * (direction * normal) = normal * (plane_point - origin)
- * t = normal * (plane_point - origin) / (direction * normal)
- *
- */
-
 t_color	update_color(int r, int g, int b, t_color color)
 {
 	color.r = r;
@@ -58,8 +44,10 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	t_vector3	to_plane;
 	t_variables	var;
 	t_vector3	normal;
+	t_uv		uv;
+	double		denom;
+	double		numer;
 
-	double (denom), numer;
 	normal = plane->normal;
 	var.hit = hit;
 	denom = vec_dot(ray.direction, normal);
@@ -74,6 +62,11 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 		return (0);
 	var.hit_point = ray_at(ray, var.t);
 	checkerboard(var.hit_point, plane);
+	if (plane->bump_map)
+	{
+		uv = plane_uv(var.hit_point, plane->point);
+		normal = perturb_normal(normal, plane->bump_map, uv);
+	}
 	update_hit(&var, normal, plane->color);
 	hit->object = plane;
 	hit->type = PL;

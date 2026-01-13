@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/12 16:00:49 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:45:00 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ void	ft_perror(char **token, t_scene *scene, char *mes)
 	if (scene && scene->mem)
 		ft_free_all(&scene->mem);
 	get_next_line(-1);
-	printf("%s", mes);
+	if (mes)
+		printf("%s", mes);
 	exit(0);
 }
 
 void	parse_cylinder(t_scene *scene, char **token)
 {
 	t_cylinders	*cylinder;
+	int			count;
 
-	if (count_tokens(token) != 6 && count_tokens(token) != 7)
+	count = count_tokens(token);
+	if (count < 6 || count > 8)
 		ft_perror(token, scene, "invalid cylinder\n");
 	cylinder = ft_malloc(sizeof(t_cylinders), &(scene->mem));
 	cylinder->center = parse_vec(token, 1, scene);
@@ -40,13 +43,15 @@ void	parse_cylinder(t_scene *scene, char **token)
 	cylinder->dir = parse_vec(token, 2, scene);
 	if (!is_normalized(cylinder->dir))
 		ft_perror(token, scene, "Error: cylinder direction not normalized\n");
-	if (count_tokens(token) == 7)
+	cylinder->shininess = 0.0;
+	cylinder->bump_map = NULL;
+	if (count >= 7)
 	{
 		cylinder->shininess = ft_atof(token[6], NULL);
 		if (cylinder->shininess < 0)
 			ft_perror(token, scene, "Error: invalid shininess");
 	}
-	else
-		cylinder->shininess = 0.0;
+	if (count == 8)
+		cylinder->bump_map = load_texture(token[7], scene->mlx, &scene->mem);
 	add_obj(scene, cylinder, CY);
 }

@@ -28,9 +28,13 @@
 
 typedef struct s_texture
 {
+	void		*img;
 	int			width;
 	int			height;
 	char		*data;
+	int			bpp;
+	int			line_len;
+	int			endian;
 	char		*path;
 }			t_texture;
 
@@ -294,5 +298,14 @@ t_color				color_scale(t_color color, double ratio);
 t_color				color_add(t_color a, t_color b);
 t_color				calculate_ambient(t_ambient ambient, t_color obj_color);
 void				ft_perror(char **token, t_scene *scene, char *mes);
+t_texture			*load_texture(char *path, void *mlx, t_mem **mem);
+int					get_texture_color(t_texture *tex, int x, int y);
+double				get_bump_height(t_texture *bump, double u, double v);
+void				destroy_texture(void *mlx, t_texture *tex);
+void				destroy_scene_textures(t_scene *scene, void *mlx);
+t_uv				sphere_uv(t_vector3 point, t_vector3 center);
+t_uv				plane_uv(t_vector3 point, t_vector3 plane_point);
+t_uv				cylinder_uv(t_vector3 point, t_cylinders *cyl);
+t_vector3			perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv);
 
 #endif

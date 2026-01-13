@@ -31,14 +31,50 @@ void	ft_free_all(t_mem **mem)
 	*mem = NULL;
 }
 
+static t_texture	*get_obj_bump_map(t_object *obj)
+{
+	if (!obj || !obj->obj)
+		return (NULL);
+	if (obj->type == SP)
+		return (((t_spheres *)obj->obj)->bump_map);
+	if (obj->type == PL)
+		return (((t_planes *)obj->obj)->bump_map);
+	if (obj->type == CY)
+		return (((t_cylinders *)obj->obj)->bump_map);
+	return (NULL);
+}
+
+void	destroy_scene_textures(t_scene *scene, void *mlx)
+{
+	t_object	*obj;
+	t_texture	*tex;
+
+	if (!scene || !mlx)
+		return ;
+	obj = scene->object;
+	while (obj)
+	{
+		tex = get_obj_bump_map(obj);
+		if (tex)
+			destroy_texture(mlx, tex);
+		obj = obj->next;
+	}
+}
+
 void	cleanup_all(t_data *data)
 {
 	if (!data)
 		return ;
-	cleanup_mlx(data);
 	if (data->scene)
+		destroy_scene_textures(data->scene, data->mlx.mlx);
+	if (data->scene)
+	{
 		ft_free_all(&data->scene->mem);
+		data->scene = NULL;
+	}
+	cleanup_mlx(data);
 }
+
 
 void	*ft_malloc(size_t size, t_mem **mem)
 {

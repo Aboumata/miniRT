@@ -64,4 +64,5 @@ void	cleanup_mlx(t_data *data)
 		free(data->mlx.mlx);
 		data->mlx.mlx = NULL;
 	}
+	exit(0);
 }
