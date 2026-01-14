@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/13 00:00:01 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/14 10:00:00 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,15 @@ t_texture	*load_texture(char *path, void *mlx, t_mem **mem)
 	t_texture	*tex;
 
 	if (!path || !mlx)
-	{
-		printf("DEBUG: load_texture - path or mlx is NULL\n");
 		return (NULL);
-	}
-	printf("DEBUG: Attempting to load texture: %s\n", path);
 	tex = ft_malloc(sizeof(t_texture), mem);
 	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
-	{
-		printf("DEBUG: Failed to load XPM file: %s\n", path);
 		return (NULL);
-	}
 	tex->data = mlx_get_data_addr(tex->img, &tex->bpp,
 			&tex->line_len, &tex->endian);
 	if (!tex->data)
-	{
-		printf("DEBUG: Failed to get image data for: %s\n", path);
 		return (NULL);
-	}
-	printf("DEBUG: Successfully loaded: %s (%dx%d, bpp=%d, line_len=%d)\n",
-		path, tex->width, tex->height, tex->bpp, tex->line_len);
 	copy_path(tex, path, mem);
 	return (tex);
 }

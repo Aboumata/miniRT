@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   bump_mapping.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: miniRT                                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/13 00:00:00 by abdahman         ###   ########.fr       */
+/*   Created: 2026/01/14                                   #+#    #+#             */
+/*   Updated: 2026/01/14                                   ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-/*
-** Why your spheres look "bad":
-** - Your old tangent basis had a hard switch when |normal.y| > 0.9.
-**   That creates visible rings / seams on spheres.
-** - Your sampling step was fixed (0.01). With 8x8 / 16x16 bump maps,
-**   u +/- 0.01 often hits the SAME texel => h_u/h_v ~= 0 => weak/patchy bump.
-**
-** This version fixes both:
-** 1) Stable orthonormal basis from the normal (Frisvad).
-** 2) du/dv based on texture resolution + centered difference slope.
-** 3) Wrap u, clamp v for neighbor sampling.
-*/
 
 static double	wrap01(double x)
 {
@@ -42,10 +29,17 @@ static double	clamp01(double x)
 	return (x);
 }
 
+static double	clamp(double x, double a, double b)
+{
+	if (x < a)
+		return (a);
+	if (x > b)
+		return (b);
+	return (x);
+}
+
 /*
-** Frisvad 2012 - Building an Orthonormal Basis, Revisited
-** Given a unit normal n, compute tangent t and bitangent b.
-** This avoids the "ring" artifact you got from switching reference axes.
+** Frisvad basis (stable, no "ring seam" from axis switching)
 */
 static void	build_basis(t_vector3 n, t_vector3 *t, t_vector3 *b)
 {
@@ -78,37 +72,59 @@ t_vector3	perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv)
 {
 	t_vector3	t;
 	t_vector3	b;
-	t_vector3	perturbed;
+	t_vector3	p;
 	double		du;
 	double		dv;
-	double		h_r;
-	double		h_l;
-	double		h_u;
-	double		h_d;
+	double		hr;
+	double		hl;
+	double		hu;
+	double		hd;
 	double		dhdu;
 	double		dhdv;
 	double		strength;
+	double		pole;
 
 	if (!bump || bump->width < 2 || bump->height < 2)
 		return (normal);
 	normal = vec_normalize(normal);
 	uv.u = wrap01(uv.u);
 	uv.v = clamp01(uv.v);
+
 	du = 1.0 / (double)bump->width;
 	dv = 1.0 / (double)bump->height;
-	h_r = get_bump_height(bump, wrap01(uv.u + du), uv.v);
-	h_l = get_bump_height(bump, wrap01(uv.u - du), uv.v);
-	h_u = get_bump_height(bump, uv.u, clamp01(uv.v + dv));
-	h_d = get_bump_height(bump, uv.u, clamp01(uv.v - dv));
-	dhdu = (h_r - h_l) / (2.0 * du);
-	dhdv = (h_u - h_d) / (2.0 * dv);
+
+	hr = get_bump_height(bump, wrap01(uv.u + du), uv.v);
+	hl = get_bump_height(bump, wrap01(uv.u - du), uv.v);
+	hu = get_bump_height(bump, uv.u, clamp01(uv.v + dv));
+	hd = get_bump_height(bump, uv.u, clamp01(uv.v - dv));
+
+	/* centered differences (no crazy scaling) */
+	dhdu = 0.5 * (hr - hl);
+	dhdv = 0.5 * (hu - hd);
+
+	/* clamp slope to prevent flipped normals / shadow acne */
+	dhdu = clamp(dhdu, -0.6, 0.6);
+	dhdv = clamp(dhdv, -0.6, 0.6);
+
+	/* reduce bump near poles (UV compression on spheres) */
+	pole = sin(PI * uv.v);
+	pole = clamp01(pole);
+
 	build_basis(normal, &t, &b);
-	/*
-	** Start small; for 8x8 maps slopes are big.
-	** If you want stronger bump: try 0.10 -> 0.20
-	*/
-	strength = 0.08;
-	perturbed = vec_add(normal, vec_scale(t, dhdu * strength));
-	perturbed = vec_add(perturbed, vec_scale(b, dhdv * strength));
-	return (vec_normalize(perturbed));
+
+	/* start small; raise slowly if you want more */
+	strength = 0.18 * (0.3 + 0.7 * pole);
+
+	p = normal;
+	p = vec_add(p, vec_scale(t, dhdu * strength));
+	p = vec_add(p, vec_scale(b, dhdv * strength));
+	p = vec_normalize(p);
+
+	/* keep same hemisphere as geometric normal */
+	if (vec_dot(p, normal) < 0.0)
+		p = vec_scale(p, -1.0);
+	/* if still too far, fall back (prevents extreme artifacts) */
+	if (vec_dot(p, normal) < 0.2)
+		return (normal);
+	return (p);
 }
