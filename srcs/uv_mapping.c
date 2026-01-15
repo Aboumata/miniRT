@@ -23,8 +23,8 @@ t_uv	sphere_uv(t_vector3 point, t_vector3 center)
     p = vec_normalize(p);
     theta = atan2(p.z, p.x);
     phi = asin(p.y);
-    uv.u = (theta + PI) / (2.0 * PI);
-    uv.v = (phi + PI / 2.0) / PI;
+    uv.u = -(theta + PI) / (2.0 * PI);
+    uv.v = -(phi + PI / 2.0) / PI;
     return (uv);
 }
 
