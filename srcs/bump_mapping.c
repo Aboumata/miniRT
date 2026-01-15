@@ -113,7 +113,7 @@ t_vector3	perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv)
 	build_basis(normal, &t, &b);
 
 	/* start small; raise slowly if you want more */
-	strength = 0.18 * (0.3 + 0.7 * pole);
+	strength = 1.5 * (0.3 + 0.7 * pole);  // Very pronounced bumps
 
 	p = normal;
 	p = vec_add(p, vec_scale(t, dhdu * strength));

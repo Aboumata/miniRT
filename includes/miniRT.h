@@ -36,7 +36,7 @@ typedef struct s_texture
 	int			bpp;
 	int			line_len;
 	int			endian;
-}				t_texture;
+} 			t_texture;
 
 typedef struct s_uv
 {
@@ -95,6 +95,7 @@ typedef struct s_spheres
 	double			diameter;
 	t_color			color;
 	double			shininess;
+	t_texture		*albedo_map;
 	t_texture		*bump_map;
 }					t_spheres;
 
