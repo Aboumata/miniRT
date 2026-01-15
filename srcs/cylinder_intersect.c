@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 21:59:34 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:25:07 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	t_vector3	to_hit;
 	t_vector3	normal;
 	t_uv		uv;
+	t_color		final_color;
 	double		a;
 	double		radius;
 	double		discriminant;
@@ -137,14 +138,20 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 	if (height_on_dir < -half_height || height_on_dir > half_height)
 		return (0);
 	normal = cylinder_body_normal(var.hit_point, cylinder);
-	if (cylinder->bump_map)
+	final_color = cylinder->color;
+	if (cylinder->bump_map || cylinder->albedo_map)
 	{
 		uv = cylinder_uv(var.hit_point, cylinder);
-		normal = perturb_normal(normal, cylinder->bump_map, uv);
+		if (cylinder->bump_map)
+			normal = perturb_normal(normal, cylinder->bump_map, uv);
+		if (cylinder->albedo_map)
+			final_color = sample_texture_color(cylinder->albedo_map, uv);
+		else if (cylinder->bump_map)
+			final_color = sample_texture_color(cylinder->bump_map, uv);
 	}
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
-	update_hit(&var, normal, cylinder->color);
+	update_hit(&var, normal, final_color);
 	hit->object = cylinder;
 	hit->type = CY;
 	hit->shininess = cylinder->shininess;

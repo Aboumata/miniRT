@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bump_mapping.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miniRT                                         +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/14                                   #+#    #+#             */
-/*   Updated: 2026/01/14                                   ###   ########.fr       */
+/*   Created: 2026/01/15 13:35:47 by abdahman          #+#    #+#             */
+/*   Updated: 2026/01/15 13:35:50 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_vector3	perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv)
 	normal = vec_normalize(normal);
 	uv.u = wrap01(uv.u);
 	uv.v = clamp01(uv.v);
+	uv.v = wrap01(uv.v);
 
 	du = 1.0 / (double)bump->width;
 	dv = 1.0 / (double)bump->height;
@@ -97,6 +98,8 @@ t_vector3	perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv)
 	hl = get_bump_height(bump, wrap01(uv.u - du), uv.v);
 	hu = get_bump_height(bump, uv.u, clamp01(uv.v + dv));
 	hd = get_bump_height(bump, uv.u, clamp01(uv.v - dv));
+	hu = get_bump_height(bump, uv.u, wrap01(uv.v + dv));
+	hd = get_bump_height(bump, uv.u, wrap01(uv.v - dv));
 
 	/* centered differences (no crazy scaling) */
 	dhdu = 0.5 * (hr - hl);

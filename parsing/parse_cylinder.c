@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 22:45:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:12:10 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	parse_cylinder(t_scene *scene, char **token)
 	if (!is_normalized(cylinder->dir))
 		ft_perror(token, scene, "Error: cylinder direction not normalized\n");
 	cylinder->shininess = 0.0;
+	cylinder->albedo_map = NULL;
 	cylinder->bump_map = NULL;
 	if (count >= 7)
 	{

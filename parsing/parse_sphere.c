@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:46:20 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 22:45:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 13:59:11 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	parse_sphere(t_scene *scene, char **token)
 	sphere->color = parse_color(token, 3, scene);
 	sphere->shininess = 0.0;
 	sphere->bump_map = NULL;
+	sphere->albedo_map = NULL;
 	if (count >= 5)
 	{
 		sphere->shininess = ft_atof(token[4], NULL);

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/11 16:04:47 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:57:51 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	t_variables	var;
 	t_vector3	normal;
 	t_uv		uv;
+	t_color		final_color;
 	double		a;
 	double		sqrt_d;
 	double		radius;
@@ -61,14 +62,20 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	var.hit_point = ray_at(ray, t);
 	var.t = t;
 	normal = sphere_normal(var.hit_point, sphere->center);
-	if (sphere->bump_map)
+	final_color = sphere->color;
+	if (sphere->bump_map || sphere->albedo_map)
 	{
 		uv = sphere_uv(var.hit_point, sphere->center);
-		normal = perturb_normal(normal, sphere->bump_map, uv);
+		if (sphere->bump_map)
+			normal = perturb_normal(normal, sphere->bump_map, uv);
+		if (sphere->albedo_map)
+			final_color = sample_texture_color(sphere->albedo_map, uv);
+		else if (sphere->bump_map)
+			final_color = sample_texture_color(sphere->bump_map, uv);
 	}
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
-	update_hit(&var, normal, sphere->color);
+	update_hit(&var, normal, final_color);
 	hit->normal = normal;
 	hit->object = sphere;
 	hit->type = SP;

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/14 10:00:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 13:59:11 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,28 @@ double	get_bump_height(t_texture *bump, double u, double v)
 	gray = ((color >> 16) & 0xFF) + ((color >> 8) & 0xFF) + (color & 0xFF);
 	gray /= 3;
 	return ((gray / 255.0 - 0.5) * 2.0);
+}
+
+t_color	sample_texture_color(t_texture *tex, t_uv uv)
+{
+	int		x;
+	int		y;
+	int		color_val;
+	t_color	color;
+
+	if (!tex || !tex->data)
+		return ((t_color){255, 255, 255});
+	uv.u = uv.u - floor(uv.u);
+	if (uv.u < 0.0)
+		uv.u += 1.0;
+	uv.v = uv.v - floor(uv.v);
+	if (uv.v < 0.0)
+		uv.v += 1.0;
+	x = (int)(uv.u * (double)(tex->width - 1));
+	y = (int)(uv.v * (double)(tex->height - 1));
+	color_val = get_texture_color(tex, x, y);
+	color.r = (color_val >> 16) & 0xFF;
+	color.g = (color_val >> 8) & 0xFF;
+	color.b = color_val & 0xFF;
+	return (color);
 }

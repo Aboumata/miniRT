@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 14:56:23 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:01:09 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_planes
 	t_color			color;
 	double			shininess;
 	int				checkerboard;
+	t_texture		*albedo_map;
 	t_texture		*bump_map;
 }					t_planes;
 
@@ -148,6 +149,7 @@ typedef struct s_cylinders
 	double			height;
 	t_color			color;
 	double			shininess;
+	t_texture		*albedo_map;
 	t_texture		*bump_map;
 }					t_cylinders;
 
@@ -302,6 +304,7 @@ void				ft_perror(char **token, t_scene *scene, char *mes);
 t_texture			*load_texture(char *path, void *mlx, t_mem **mem);
 int					get_texture_color(t_texture *tex, int x, int y);
 double				get_bump_height(t_texture *bump, double u, double v);
+t_color				sample_texture_color(t_texture *tex, t_uv uv);
 t_uv				sphere_uv(t_vector3 point, t_vector3 center);
 t_uv				plane_uv(t_vector3 point, t_vector3 plane_point);
 t_uv				cylinder_uv(t_vector3 point, t_cylinders *cyl);

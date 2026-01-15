@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:57:01 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 22:45:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:16:42 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	ft_continue(t_planes *plane, char **token, int c, t_scene *scene)
 		if (!ft_strcmp(token[5], "cb"))
 			plane->checkerboard = 1;
 		else if (c == 6 && token[5][0] != '\0')
-			plane->bump_map = load_texture(token[5], scene->mlx, &scene->mem);
+			// plane->bump_map = load_texture(token[5], scene->mlx, &scene->mem);
+			plane->albedo_map = load_texture(token[5], scene->mlx, &scene->mem);
 	}
 	if (c == 7)
 	{
@@ -62,6 +63,7 @@ void	parse_plan(t_scene *scene, char **token)
 	}
 	plane->shininess = 0.0;
 	plane->checkerboard = 0;
+	plane->albedo_map = NULL;
 	plane->bump_map = NULL;
 	if (!ft_continue(plane, token, c, scene))
 		ft_perror(token, scene, "Error: invalid plan\n");
