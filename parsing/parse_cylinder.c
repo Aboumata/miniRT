@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 10:46:07 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:32:10 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	check_cylinder_token_count(t_scene *scene, char **token, int count)
 static void	set_cylinder_defaults(t_cylinders *cylinder)
 {
 	cylinder->shininess = 0.0;
+	cylinder->checkerboard = 0;
 	cylinder->albedo_map = NULL;
 	cylinder->bump_map = NULL;
 }
@@ -47,15 +48,24 @@ static void	parse_cylinder_extras(t_scene *scene, char **token,
 {
 	if (count >= 7)
 	{
-		cylinder->shininess = ft_atof(token[6], NULL);
-		if (cylinder->shininess < 0)
-			ft_perror(token, scene, "Error: invalid shininess\n");
+		if (!ft_strcmp(token[6], "cb"))
+			cylinder->checkerboard = 1;
+		else
+		{
+			cylinder->shininess = ft_atof(token[6], NULL);
+			if (cylinder->shininess < 0)
+				ft_perror(token, scene, "Error: invalid shininess\n");
+		}
 	}
-	if (count == 8) {
-		cylinder->bump_map = load_texture(token[7], scene->mlx, &scene->mem);
-		if (!cylinder->bump_map) {
-            ft_perror(token, scene, NULL);
-
+	if (count == 8)
+	{
+		if (!ft_strcmp(token[7], "cb"))
+			cylinder->checkerboard = 1;
+		else
+		{
+			cylinder->bump_map = load_texture(token[7], scene->mlx, &scene->mem);
+			if (!cylinder->bump_map)
+				ft_perror(token, scene, NULL);
 		}
 	}
 }

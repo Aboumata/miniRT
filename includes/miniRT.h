@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 19:12:36 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:29:54 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_spheres
 	double			diameter;
 	t_color			color;
 	double			shininess;
+	int				checkerboard;
 	t_texture		*albedo_map;
 	t_texture		*bump_map;
 }					t_spheres;
@@ -149,6 +150,7 @@ typedef struct s_cylinders
 	double			height;
 	t_color			color;
 	double			shininess;
+	int				checkerboard;
 	t_texture		*albedo_map;
 	t_texture		*bump_map;
 }					t_cylinders;
@@ -289,6 +291,7 @@ t_color				calculate_lighting(t_hit *hit, t_scene *scene);
 int					is_in_shadow(t_vector3 point, t_vector3 normal,
 						t_vector3 light_pos, t_scene *scene);
 int					intersect_plane(t_ray ray, t_planes *plane, t_hit *hit);
+t_color				get_checkerboard_color(t_vector3 hit_p);
 int					intersect_cylinder(t_ray ray, t_cylinders *cylinder,
 						t_hit *hit);
 int					intersect_disk(t_ray ray, t_disk *disk, t_hit *hit);

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/15 15:25:07 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:29:56 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 	return (normal);
 }
 
+static t_color	get_cylinder_checkerboard(t_uv uv)
+{
+	int	u;
+	int	v;
+
+	u = floor(uv.u * 10);
+	v = floor(uv.v * 10);
+	if ((u + v) % 2 == 0)
+		return ((t_color){255, 255, 255});
+	return ((t_color){0, 0, 0});
+}
+
 static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 				t_hit *hit)
 {
@@ -36,6 +48,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 	t_vector3	to_cap;
 	t_vector3	to_hit;
 	t_vector3	normal;
+	t_color		final_color;
 	double		dist_sq;
 	double		found_hit;
 	double		radius;
@@ -61,7 +74,10 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 			if (dist_sq <= radius * radius)
 			{
 				normal = cy->dir;
-				update_hit(&var, normal, cy->color);
+				final_color = cy->color;
+				if (cy->checkerboard)
+					final_color = get_checkerboard_color(var.hit_point);
+				update_hit(&var, normal, final_color);
 				hit->normal = normal;
 				hit->object = cy;
 				hit->type = CY;
@@ -83,7 +99,10 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 			if (dist_sq <= radius * radius)
 			{
 				normal = vec_scale(cy->dir, -1.0);
-				update_hit(&var, normal, cy->color);
+				final_color = cy->color;
+				if (cy->checkerboard)
+					final_color = get_checkerboard_color(var.hit_point);
+				update_hit(&var, normal, final_color);
 				hit->object = cy;
 				hit->type = CY;
 				hit->shininess = cy->shininess;
@@ -139,11 +158,13 @@ static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
 		return (0);
 	normal = cylinder_body_normal(var.hit_point, cylinder);
 	final_color = cylinder->color;
-	if (cylinder->bump_map || cylinder->albedo_map)
+	if (cylinder->bump_map || cylinder->albedo_map || cylinder->checkerboard)
 	{
 		uv = cylinder_uv(var.hit_point, cylinder);
 		if (cylinder->bump_map)
 			normal = perturb_normal(normal, cylinder->bump_map, uv);
+		if (cylinder->checkerboard)
+			final_color = get_cylinder_checkerboard(uv);
 		if (cylinder->albedo_map)
 			final_color = sample_texture_color(cylinder->albedo_map, uv);
 		else if (cylinder->bump_map)

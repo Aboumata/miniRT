@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/15 15:57:51 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:20:42 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ double	help(double t, double sqrt_d, double half_b, double a)
 	if (t < EPSILON)
 		t = (-half_b + sqrt_d) / a;
 	return (t);
+}
+
+static t_color	get_sphere_checkerboard(t_uv uv)
+{
+	int	u;
+	int	v;
+
+	u = floor(uv.u * 10);
+	v = floor(uv.v * 10);
+	if ((u + v) % 2 == 0)
+		return ((t_color){255, 255, 255});
+	return ((t_color){0, 0, 0});
 }
 
 int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
@@ -63,11 +75,13 @@ int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 	var.t = t;
 	normal = sphere_normal(var.hit_point, sphere->center);
 	final_color = sphere->color;
-	if (sphere->bump_map || sphere->albedo_map)
+	if (sphere->bump_map || sphere->albedo_map || sphere->checkerboard)
 	{
 		uv = sphere_uv(var.hit_point, sphere->center);
 		if (sphere->bump_map)
 			normal = perturb_normal(normal, sphere->bump_map, uv);
+		if (sphere->checkerboard)
+			final_color = get_sphere_checkerboard(uv);
 		if (sphere->albedo_map)
 			final_color = sample_texture_color(sphere->albedo_map, uv);
 		else if (sphere->bump_map)
