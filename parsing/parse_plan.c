@@ -30,7 +30,6 @@ static int	ft_continue(t_planes *plane, char **token, int c, t_scene *scene)
 		if (!ft_strcmp(token[5], "cb"))
 			plane->checkerboard = 1;
 		else if (c == 6 && token[5][0] != '\0')
-			// plane->bump_map = load_texture(token[5], scene->mlx, &scene->mem);
 			plane->albedo_map = load_texture(token[5], scene->mlx, &scene->mem);
 	}
 	if (c == 7)
