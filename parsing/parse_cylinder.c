@@ -21,6 +21,7 @@ void	ft_perror(char **token, t_scene *scene, char *mes)
 	if (scene->mlx)
 	{
 		mlx_destroy_display(scene->mlx);
+		free(scene->mlx);
 		scene->mlx = NULL;
 	}
 	get_next_line(-1);
