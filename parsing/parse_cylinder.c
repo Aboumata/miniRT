@@ -64,7 +64,8 @@ static void	parse_cylinder_extras(t_scene *scene, char **token,
 			cylinder->checkerboard = 1;
 		else
 		{
-			cylinder->bump_map = load_texture(token[7], scene->mlx, &scene->mem);
+			cylinder->bump_map = load_texture(token[7],
+					scene->mlx, &scene->mem);
 			if (!cylinder->bump_map)
 				ft_perror(token, scene, NULL);
 		}
