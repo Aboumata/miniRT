@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:46:20 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 13:59:11 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/16 11:20:00 by aboumata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	parse_sphere_extras(t_scene *scene, char **token,
 			ft_perror(token, scene,
 				"Error: shininess should be non-negative\n");
 	}
-	if (count == 6)
+	if (count == 6 && token[5][0] != '\0')
 	{
 		sphere->bump_map = load_texture(token[5], scene->mlx, &scene->mem);
 		if (!sphere->bump_map)
