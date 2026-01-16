@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 09:44:42 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/10 23:59:05 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:12:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,4 @@ int	count_tokens(char **token)
 	while (token[len])
 		len++;
 	return (len);
-}
-
-void	cleanup_mlx(t_data *data)
-{
-	if (!data)
-		exit(0);
-	if (data->scene)
-		destroy_scene_bump_maps(data->scene, data->mlx.mlx);
-	if (data->mlx.img != NULL)
-	{
-		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
-		data->mlx.img = NULL;
-	}
-	if (data->mlx.win != NULL)
-	{
-		mlx_destroy_window(data->mlx.mlx, data->mlx.win);
-		data->mlx.win = NULL;
-	}
-	if (data->mlx.mlx != NULL)
-	{
-		mlx_destroy_display(data->mlx.mlx);
-		free(data->mlx.mlx);
-		data->mlx.mlx = NULL;
-	}
-	if (data->scene)
-		ft_free_all(&data->scene->mem);
-	exit(0);
 }

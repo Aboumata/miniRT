@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 13:59:11 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:35:18 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ t_texture	*load_texture(char *path, void *mlx, t_mem **mem)
 	tex = ft_malloc(sizeof(t_texture), mem);
 	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
+	{
+		printf("Error: Failed to load texture: %s\n", path);
 		return (NULL);
+	}
 	tex->data = mlx_get_data_addr(tex->img, &tex->bpp,
 			&tex->line_len, &tex->endian);
 	if (!tex->data)

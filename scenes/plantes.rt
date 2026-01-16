@@ -1,8 +1,8 @@
 C   0,0,20   0,0,-1   70
 A   0.3     255,255,255
 
-# t world colored /home/aboumata/CLionProjects/MiniRT/textures/world_map.xpm
+# t world colored /home/abdahman/Desktop/MiniRT/textures/world_map.xpm
 
 l   10,10,19  0.8   255,255,255
-pl   0,5,-10 0,0,1 255,0,255  0.0 /home/aboumata/CLionProjects/MiniRT/textures/brick_wall.xpm
- sp  0,0,0    5     255,255,255 0.0  /home/aboumata/CLionProjects/MiniRT/textures/world_map.xpm
+pl   0,5,-10 0,0,1 255,0,255  0.0 textures/brick_wall.xpm
+sp  0,0,0    5     255,255,255 0.0  textures/world_map.xpm
