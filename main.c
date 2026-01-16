@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:24 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 18:52:22 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 10:49:09 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ int	main(int ac, char **av)
 	}
 	ft_bzero(&scene, sizeof(t_scene));
 	ft_bzero(&data, sizeof(t_data));
-	scene.mlx = mlx_init();
-	if (!scene.mlx)
-	{
-		write(2, "Error: MLX initialization failed\n", 33);
-		return (1);
-	}
 	parsing(&scene, av[1]);
 	data.scene = &scene;
 	data.mlx.mlx = scene.mlx;

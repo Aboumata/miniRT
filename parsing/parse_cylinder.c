@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/15 15:12:10 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 10:46:07 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	ft_perror(char **token, t_scene *scene, char *mes)
 		free_split(token);
 	if (scene && scene->mem)
 		ft_free_all(&scene->mem);
+	if (scene->mlx)
+	{
+		mlx_destroy_display(scene->mlx);
+		scene->mlx = NULL;
+	}
 	get_next_line(-1);
 	if (mes)
 		printf("%s", mes);

@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:30:37 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/12 16:01:40 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 10:50:17 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void	check_file_content(t_scene *scene, char *arg)
 	fd = open(arg, O_RDONLY);
 	if (fd < 0)
 		ft_perror(NULL, scene, "file not exist.\n");
+	scene->mlx = mlx_init();
+	if (!scene->mlx)
+		ft_perror(NULL, scene, "Error: MLX initialization failed\n");
 	line = get_next_line(fd);
 	while (line)
 	{

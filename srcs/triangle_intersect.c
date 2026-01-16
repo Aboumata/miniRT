@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 15:04:46 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/11 14:55:43 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:30:24 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_continue(t_variables *var, t_triangle *triangle)
 
 	if (var->t < EPSILON || var->t > var->hit->t)
 		return (0);
+	ft_bzero(&normal, sizeof(t_vector3));
 	hit_point = ray_at(var->ray, var->t);
 	normal = vec_cross(var->edgs[0], var->edgs[1]);
 	normal = vec_normalize(normal);
@@ -36,6 +37,7 @@ int	intersect_triangle(t_ray ray, t_triangle *triangle, t_hit *hit)
 	t_vector3	q;
 
 	double (u), v, det, inv_det;
+	ft_bzero(&var, sizeof(t_variables));
 	var.hit = hit;
 	var.edgs[0] = vec_sub(triangle->p2, triangle->p1);
 	var.edgs[1] = vec_sub(triangle->p3, triangle->p1);
