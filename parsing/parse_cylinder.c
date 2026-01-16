@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 18:32:10 by abdahman         ###   ########.fr       */
+/*   Created: 2026/01/16 18:37:04 by abdahman          #+#    #+#             */
+/*   Updated: 2026/01/16 18:37:20 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_perror(char **token, t_scene *scene, char *mes)
 	if (scene->mlx)
 	{
 		mlx_destroy_display(scene->mlx);
+		free(scene->mlx);
 		scene->mlx = NULL;
 	}
 	get_next_line(-1);

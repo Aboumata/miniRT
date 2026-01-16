@@ -18,7 +18,7 @@ static void	check_name(char *arg)
 
 	len = strlen(arg) - 3;
 	if (strcmp(".rt", arg + len) != 0)
-		exit((perror("invalid file name.\n"), 1));
+		exit((perror("Error: invalid file name.\n"), 1));
 }
 
 static void	check_file_content(t_scene *scene, char *arg)
@@ -28,7 +28,7 @@ static void	check_file_content(t_scene *scene, char *arg)
 
 	fd = open(arg, O_RDONLY);
 	if (fd < 0)
-		ft_perror(NULL, scene, "file not exist.\n");
+		ft_perror(NULL, scene, "Error: file not exist.\n");
 	scene->mlx = mlx_init();
 	if (!scene->mlx)
 		ft_perror(NULL, scene, "Error: MLX initialization failed\n");
@@ -48,6 +48,6 @@ void	parsing(t_scene *scene, char *arg)
 	if (!scene->has_ambient || !scene->has_camera)
 	{
 		ft_free_all(&scene->mem);
-		ft_perror(NULL, scene, "Missing required elements\n");
+		ft_perror(NULL, scene, "Error: Missing required elements\n");
 	}
 }
