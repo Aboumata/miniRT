@@ -15,7 +15,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O2 -I/usr/local/include
+CFLAGS = -Wall -Wextra -Werror -O3 -I/usr/local/include
 
 LIBFT = Libft/libft.a
 MLX_FLAGS = -L/usr/local/lib -lmlx_Linux -lXext -lX11 -lm -lz
