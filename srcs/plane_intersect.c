@@ -27,10 +27,11 @@ t_color	get_checkerboard_color(t_vector3 hit_p)
 	int		y;
 	int		z;
 
-	size = 1 / 20.0;
-	x = floor(hit_p.x * size);
-	z = floor(hit_p.z * size);
-	y = floor(hit_p.y * size);
+	size = 1 / 10.0;
+	x = floor(hit_p.x) * size;
+	z = floor(hit_p.z) * size;
+	y = floor(hit_p.y) * size;
+
 	if ((x + y + z) % 2 == 0)
 		return ((t_color){255, 255, 255});
 	else
