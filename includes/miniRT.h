@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 16:01:09 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:12:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,6 @@ void				parse_sphere(t_scene *scene, char **token);
 t_vector3			parse_vec(char **token, int indx, t_scene *scene);
 int					count_tokens(char **token);
 void				ft_free_all(t_mem **mem);
-void				cleanup_all(t_data *data);
 void				*ft_malloc(size_t size, t_mem **mem);
 double				ft_atof(char *str, int *check);
 t_color				parse_color(char **token, int indx, t_scene *scene);
@@ -310,6 +309,6 @@ t_uv				plane_uv(t_vector3 point, t_vector3 plane_point);
 t_uv				cylinder_uv(t_vector3 point, t_cylinders *cyl);
 t_vector3			perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv);
 void				destroy_texture(void *mlx, t_texture *tex);
-void				destroy_scene_bump_maps(t_scene *scene, void *mlx);
+void				destroy_scene_textures(t_scene *scene, void *mlx);
 
 #endif

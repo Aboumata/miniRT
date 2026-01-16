@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:36 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/15 16:39:27 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:43:07 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ t_color	get_checkerboard_color(t_vector3 hit_p)
 	x = floor(hit_p.x) * size;
 	z = floor(hit_p.z) * size;
 	y = floor(hit_p.y) * size;
+	x = floor(hit_p.x * size);
+	z = floor(hit_p.z * size);
+	y = floor(hit_p.y * size);
 	if ((x + y + z) % 2 == 0)
 		return ((t_color){255, 255, 255});
 	else

@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:04:44 by aboumata          #+#    #+#             */
-/*   Updated: 2025/10/31 16:04:46 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:25:58 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-static int	init_mlx(t_data *data)
-{
-	data->mlx.mlx = mlx_init();
-	if (data->mlx.mlx == NULL)
-	{
-		write(2, "Error: MLX init failed\n", 24);
-		cleanup_mlx(data);
-		return (-1);
-	}
-	return (0);
-}
 
 static int	create_window(t_data *data)
 {
@@ -63,8 +51,6 @@ static int	get_address(t_data *data)
 
 int	initialize_mlx(t_data *data)
 {
-	if (init_mlx(data) == -1)
-		return (-1);
 	if (create_image(data) == -1)
 		return (-1);
 	if (create_window(data) == -1)

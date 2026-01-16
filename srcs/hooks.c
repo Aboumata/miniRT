@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 02:58:14 by aboumata          #+#    #+#             */
-/*   Updated: 2025/11/05 02:58:15 by aboumata         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:12:35 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 int	handle_key(int keycode, t_data *data)
 {
 	if (keycode == 65307 || keycode == 53)
-	{
-		cleanup_all(data);
-		exit(0);
-	}
+		mlx_loop_end(data->mlx.mlx);
 	return (0);
 }
 
 int	handle_close(t_data *data)
 {
-	cleanup_all(data);
-	exit(0);
+	mlx_loop_end(data->mlx.mlx);
+	return (0);
 }
 
 void	setup_hooks(t_data *data)
