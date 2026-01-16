@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:41:29 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 10:46:07 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 10:46:07 by aboumata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ static void	parse_cylinder_extras(t_scene *scene, char **token,
 		if (cylinder->shininess < 0)
 			ft_perror(token, scene, "Error: invalid shininess\n");
 	}
-	if (count == 8) {
+	if (count == 8)
+	{
 		cylinder->bump_map = load_texture(token[7], scene->mlx, &scene->mem);
-		if (!cylinder->bump_map) {
-            ft_perror(token, scene, NULL);
-
-		}
+		if (!cylinder->bump_map)
+			ft_perror(token, scene, NULL);
 	}
 }
 
