@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:36 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 17:30:23 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:38:11 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
 	update_hit(&var, normal, final_color);
-	hit->normal = normal;
 	hit->object = plane;
 	hit->type = PL;
 	hit->shininess = plane->shininess;
