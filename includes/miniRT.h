@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/17 10:02:26 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:38:15 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_texture
 	int			bpp;
 	int			line_len;
 	int			endian;
-} 			t_texture;
+}				t_texture;
 
 typedef struct s_uv
 {
@@ -316,5 +316,10 @@ void				destroy_scene_textures(t_scene *scene, void *mlx);
 double				clamp(double x, double a, double b);
 double				clamp01(double x);
 double				wrap01(double x);
+t_vector3			cylinder_body_normal(t_vector3 hit_point,
+						t_cylinders *cylinder);
+t_color				get_cylinder_checkerboard(t_uv uv);
+int					check_one_cap(t_ray ray, t_cylinders *cy, t_hit *hit,
+						double sign);
 
 #endif

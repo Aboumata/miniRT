@@ -6,22 +6,19 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 18:38:43 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/17 10:12:00 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:54:04 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/miniRT.h"
 
 t_color	get_checkerboard_color(t_uv uv)
 {
-	double	size;
 	int		u;
 	int		v;
 
-	size = 1.0;
-	u = floor(uv.u * size);
-	v = floor(uv.v * size);
+	u = floor(uv.u * 10.0);
+	v = floor(uv.v * 10.0);
 	if ((u + v) % 2 == 0)
 		return ((t_color){255, 255, 255});
 	return ((t_color){0, 0, 0});
@@ -45,40 +42,43 @@ static t_uv	get_plane_uv(t_vector3 p, t_planes *plane)
 	return (uv);
 }
 
-int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
+static void	apply_plane_material(t_planes *plane, t_vector3 *normal,
+		t_color *final_color, t_vector3 hit_point)
 {
-	t_vector3	to_plane;
-	t_variables	var;
-	t_vector3	normal;
-	t_uv		uv;
-	t_color		final_color;
+	t_uv	uv;
 
-	double (numer), denom = vec_dot(ray.direction, plane->normal);
-	normal = plane->normal;
-	var.hit = hit;
-	if (fabs(denom) < EPSILON)
-		return (0);
-	if (denom > 0)
-		normal = vec_scale(normal, -1);
-	to_plane = vec_sub(plane->point, ray.origin);
-	numer = vec_dot(to_plane, plane->normal);
-	var.t = numer / denom;
-	if (var.t < EPSILON || var.t > var.hit->t)
-		return (0);
-	var.hit_point = ray_at(ray, var.t);
-	final_color = plane->color;
 	if (plane->albedo_map || plane->bump_map || plane->checkerboard)
 	{
-		uv = get_plane_uv(var.hit_point, plane);
+		uv = get_plane_uv(hit_point, plane);
 		if (plane->checkerboard)
-			final_color = get_checkerboard_color(uv);
+			*final_color = get_checkerboard_color(uv);
 		if (plane->albedo_map)
-			final_color = sample_texture_color(plane->albedo_map, uv);
+			*final_color = sample_texture_color(plane->albedo_map, uv);
 		if (plane->bump_map)
-			normal = perturb_normal(normal, plane->bump_map, uv);
+			*normal = perturb_normal(*normal, plane->bump_map, uv);
 	}
+}
+
+int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
+{
+	t_variables	var;
+	t_vector3	normal;
+	t_color		final_color;
+	double		denom;
+
+	denom = vec_dot(ray.direction, plane->normal);
+	if (fabs(denom) < EPSILON)
+		return (0);
+	var.t = vec_dot(vec_sub(plane->point, ray.origin), plane->normal) / denom;
+	if (!is_closer_hit(hit, var.t))
+		return (0);
+	var.hit_point = ray_at(ray, var.t);
+	normal = plane->normal;
+	final_color = plane->color;
+	apply_plane_material(plane, &normal, &final_color, var.hit_point);
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
+	var.hit = hit;
 	update_hit(&var, normal, final_color);
 	hit->object = plane;
 	hit->type = PL;
