@@ -6,199 +6,87 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/17 10:11:22 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:34:25 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static t_vector3	cylinder_body_normal(t_vector3 hit_point,
-		t_cylinders *cylinder)
+static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy, t_hit *hit)
 {
-	t_vector3	v;
-	t_vector3	projection;
-	t_vector3	normal;
-	double		proj_length;
+	int	hit_top;
+	int	hit_bot;
 
-	v = vec_sub(hit_point, cylinder->center);
-	proj_length = vec_dot(v, cylinder->dir);
-	projection = vec_scale(cylinder->dir, proj_length);
-	normal = vec_sub(v, projection);
-	normal = vec_normalize(normal);
-	return (normal);
+	hit_top = check_one_cap(ray, cy, hit, 1.0);
+	hit_bot = check_one_cap(ray, cy, hit, -1.0);
+	return (hit_top || hit_bot);
 }
 
-static t_uv	get_cap_uv(t_vector3 p, t_vector3 center, t_vector3 normal)
+static int	solve_cylinder_quadratic(t_ray ray, t_cylinders *cy, double *t)
 {
-	t_uv		uv;
-	t_vector3	u_axis;
-	t_vector3	v_axis;
+	t_vector3	oc;
+	t_vector3	perp[2];
+	double		coeff[3];
+	double		disc;
 
-	if (fabs(normal.y) > 0.9)
-		u_axis = (t_vector3){1, 0, 0};
-	else
-		u_axis = vec_normalize(vec_cross((t_vector3){0, 1, 0}, normal));
-	v_axis = vec_normalize(vec_cross(normal, u_axis));
-	uv.u = vec_dot(vec_sub(p, center), u_axis);
-	uv.v = vec_dot(vec_sub(p, center), v_axis);
-	return (uv);
-}
-
-static t_color	get_cylinder_checkerboard(t_uv uv)
-{
-	int	u;
-	int	v;
-
-	u = floor(uv.u * 10);
-	v = floor(uv.v * 10);
-	if ((u + v) % 2 == 0)
-		return ((t_color){255, 255, 255});
-	return ((t_color){0, 0, 0});
-}
-
-static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
-				t_hit *hit)
-{
-	t_variables	var;
-	t_vector3	cap_center;
-	t_vector3	to_cap;
-	t_vector3	to_hit;
-	t_vector3	normal;
-	t_color		final_color;
-	t_uv		uv;
-	double		dist_sq;
-	double		found_hit;
-	double		radius;
-	double		half_height;
-	double		denom;
-
-	found_hit = 0.0;
-	radius = cy->diameter / 2.0;
-	half_height = cy->height / 2.0;
-	denom = vec_dot(ray.direction, cy->dir);
-	ft_bzero(&var, sizeof(t_variables));
-	var.hit = hit;
-	if (fabs(denom) > EPSILON)
-	{
-		cap_center = vec_add(cy->center, vec_scale(cy->dir, half_height));
-		to_cap = vec_sub(cap_center, ray.origin);
-		var.t = vec_dot(to_cap, cy->dir) / denom;
-		if (is_closer_hit(hit, var.t))
-		{
-			var.hit_point = ray_at(ray, var.t);
-			to_hit = vec_sub(var.hit_point, cap_center);
-			dist_sq = vec_dot(to_hit, to_hit);
-			if (dist_sq <= radius * radius)
-			{
-				normal = cy->dir;
-				final_color = cy->color;
-				if (cy->checkerboard)
-				{
-					uv = get_cap_uv(var.hit_point, cap_center, cy->dir);
-					final_color = get_cylinder_checkerboard(uv);
-				}
-				update_hit(&var, normal, final_color);
-				hit->normal = normal;
-				hit->object = cy;
-				hit->type = CY;
-				hit->shininess = cy->shininess;
-				found_hit = 1;
-			}
-		}
-	}
-	if (fabs(denom) > EPSILON)
-	{
-		cap_center = vec_sub(cy->center, vec_scale(cy->dir, half_height));
-		to_cap = vec_sub(cap_center, ray.origin);
-		var.t = vec_dot(to_cap, cy->dir) / denom;
-		if (is_closer_hit(hit, var.t))
-		{
-			var.hit_point = ray_at(ray, var.t);
-			to_hit = vec_sub(var.hit_point, cap_center);
-			dist_sq = vec_dot(to_hit, to_hit);
-			if (dist_sq <= radius * radius)
-			{
-				normal = vec_scale(cy->dir, -1.0);
-				final_color = cy->color;
-				if (cy->checkerboard)
-				{
-					uv = get_cap_uv(var.hit_point, cap_center, normal);
-					final_color = get_cylinder_checkerboard(uv);
-				}
-				update_hit(&var, normal, final_color);
-				hit->object = cy;
-				hit->type = CY;
-				hit->shininess = cy->shininess;
-				found_hit = 1;
-			}
-		}
-	}
-	return ((int)found_hit);
-}
-
-static int	intersect_cylinder_body(t_ray ray, t_cylinders *cylinder,
-				t_hit *hit)
-{
-	t_variables	var;
-	t_vector3	oc_perp;
-	t_vector3	dir_perp;
-	t_vector3	to_hit;
-	t_vector3	normal;
-	t_uv		uv;
-	t_color		final_color;
-	double		a;
-	double		radius;
-	double		discriminant;
-	double		b;
-	double		c;
-	double		half_height;
-	double		height_on_dir;
-	double		dir_dot_dir;
-	double		oc_dot_dir;
-
-	ft_bzero(&var, sizeof(t_variables));
-	var.hit = hit;
-	var.oc = vec_sub(ray.origin, cylinder->center);
-	radius = cylinder->diameter / 2.0;
-	half_height = cylinder->height / 2.0;
-	oc_dot_dir = vec_dot(var.oc, cylinder->dir);
-	oc_perp = vec_sub(var.oc, vec_scale(cylinder->dir, oc_dot_dir));
-	dir_dot_dir = vec_dot(ray.direction, cylinder->dir);
-	dir_perp = vec_sub(ray.direction, vec_scale(cylinder->dir, dir_dot_dir));
-	a = vec_dot(dir_perp, dir_perp);
-	b = 2.0 * vec_dot(oc_perp, dir_perp);
-	c = vec_dot(oc_perp, oc_perp) - (radius * radius);
-	discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
+	oc = vec_sub(ray.origin, cy->center);
+	perp[0] = vec_sub(oc, vec_scale(cy->dir, vec_dot(oc, cy->dir)));
+	perp[1] = vec_sub(ray.direction,
+			vec_scale(cy->dir, vec_dot(ray.direction, cy->dir)));
+	coeff[0] = vec_dot(perp[1], perp[1]);
+	coeff[1] = 2.0 * vec_dot(perp[0], perp[1]);
+	coeff[2] = vec_dot(perp[0], perp[0]) - pow(cy->diameter / 2.0, 2);
+	disc = coeff[1] * coeff[1] - 4 * coeff[0] * coeff[2];
+	if (disc < 0)
 		return (0);
-	var.t = (-b - sqrt(discriminant)) / (2.0 * a);
+	*t = (-coeff[1] - sqrt(disc)) / (2.0 * coeff[0]);
+	return (1);
+}
+
+static void	apply_cylinder_texture(t_cylinders *cy, t_variables *var,
+		t_vector3 *normal, t_color *color)
+{
+	t_uv	uv;
+
+	if (cy->bump_map || cy->albedo_map || cy->checkerboard)
+	{
+		uv = cylinder_uv(var->hit_point, cy);
+		if (cy->bump_map)
+			*normal = perturb_normal(*normal, cy->bump_map, uv);
+		if (cy->checkerboard)
+			*color = get_cylinder_checkerboard(uv);
+		if (cy->albedo_map)
+			*color = sample_texture_color(cy->albedo_map, uv);
+		else if (cy->bump_map)
+			*color = sample_texture_color(cy->bump_map, uv);
+	}
+}
+
+static int	intersect_cylinder_body(t_ray ray, t_cylinders *cy, t_hit *hit)
+{
+	t_variables	var;
+	t_vector3	normal;
+	t_color		col;
+	double		h;
+
+	if (!solve_cylinder_quadratic(ray, cy, &var.t))
+		return (0);
 	if (!is_closer_hit(hit, var.t))
 		return (0);
 	var.hit_point = ray_at(ray, var.t);
-	to_hit = vec_sub(var.hit_point, cylinder->center);
-	height_on_dir = vec_dot(to_hit, cylinder->dir);
-	if (height_on_dir < -half_height || height_on_dir > half_height)
+	h = vec_dot(vec_sub(var.hit_point, cy->center), cy->dir);
+	if (fabs(h) > cy->height / 2.0)
 		return (0);
-	normal = cylinder_body_normal(var.hit_point, cylinder);
-	final_color = cylinder->color;
-	if (cylinder->bump_map || cylinder->albedo_map || cylinder->checkerboard)
-	{
-		uv = cylinder_uv(var.hit_point, cylinder);
-		if (cylinder->bump_map)
-			normal = perturb_normal(normal, cylinder->bump_map, uv);
-		if (cylinder->checkerboard)
-			final_color = get_cylinder_checkerboard(uv);
-		if (cylinder->albedo_map)
-			final_color = sample_texture_color(cylinder->albedo_map, uv);
-		else if (cylinder->bump_map)
-			final_color = sample_texture_color(cylinder->bump_map, uv);
-	}
+	normal = cylinder_body_normal(var.hit_point, cy);
+	col = cy->color;
+	apply_cylinder_texture(cy, &var, &normal, &col);
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
-	update_hit(&var, normal, final_color);
-	hit->object = cylinder;
+	var.hit = hit;
+	update_hit(&var, normal, col);
+	hit->object = cy;
 	hit->type = CY;
-	hit->shininess = cylinder->shininess;
+	hit->shininess = cy->shininess;
 	return (1);
 }
 
