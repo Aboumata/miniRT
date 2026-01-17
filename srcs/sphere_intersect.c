@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/17 09:59:12 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 11:40:50 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,78 +21,76 @@ static t_vector3	sphere_normal(t_vector3 hit_point, t_vector3 center)
 	return (normal);
 }
 
-double	help(double t, double sqrt_d, double half_b, double a)
+static int	solve_sphere_quadratic(t_ray ray, t_spheres *sp, double *t)
 {
-	if (a < EPSILON)
+	t_vector3	oc;
+	double		a;
+	double		half_b;
+	double		c;
+	double		disc;
+
+	oc = vec_sub(ray.origin, sp->center);
+	a = vec_dot(ray.direction, ray.direction);
+	half_b = vec_dot(oc, ray.direction);
+	c = vec_dot(oc, oc) - (sp->diameter / 2.0) * (sp->diameter / 2.0);
+	disc = half_b * half_b - a * c;
+	if (disc < 0)
 		return (0);
-	t = (-half_b - sqrt_d) / a;
-	if (t < EPSILON)
-		t = (-half_b + sqrt_d) / a;
-	return (t);
+	*t = (-half_b - sqrt(disc)) / a;
+	if (*t < EPSILON)
+		*t = (-half_b + sqrt(disc)) / a;
+	return (*t >= EPSILON);
 }
 
 static t_color	get_sphere_checkerboard(t_uv uv)
 {
-	double	size;
 	int		u;
 	int		v;
 
-	size = 10.0;
-	u = floor(uv.u * size);
-	v = floor(uv.v * size);
+	u = floor(uv.u * 10.0);
+	v = floor(uv.v * 10.0);
 	if ((u + v) % 2 == 0)
 		return ((t_color){255, 255, 255});
 	return ((t_color){0, 0, 0});
+}
+
+static void	apply_sphere_texture(t_spheres *sp, t_vector3 *normal,
+		t_color *color, t_vector3 p)
+{
+	t_uv	uv;
+
+	if (sp->bump_map || sp->albedo_map || sp->checkerboard)
+	{
+		uv = sphere_uv(p, sp->center);
+		if (sp->bump_map)
+			*normal = perturb_normal(*normal, sp->bump_map, uv);
+		if (sp->checkerboard)
+			*color = get_sphere_checkerboard(uv);
+		if (sp->albedo_map)
+			*color = sample_texture_color(sp->albedo_map, uv);
+		else if (sp->bump_map)
+			*color = sample_texture_color(sp->bump_map, uv);
+	}
 }
 
 int	intersect_sphere(t_ray ray, t_spheres *sphere, t_hit *hit)
 {
 	t_variables	var;
 	t_vector3	normal;
-	t_uv		uv;
 	t_color		final_color;
-	double		a;
-	double		sqrt_d;
-	double		radius;
-	double		t;
-	double		half_b;
-	double		c;
-	double		discriminant;
 
-	t = 0.0;
-	var.hit = hit;
-	var.oc = vec_sub(ray.origin, sphere->center);
-	a = vec_dot(ray.direction, ray.direction);
-	half_b = vec_dot(var.oc, ray.direction);
-	radius = sphere->diameter / 2.0;
-	c = vec_dot(var.oc, var.oc) - (radius * radius);
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+	if (!solve_sphere_quadratic(ray, sphere, &var.t))
 		return (0);
-	sqrt_d = sqrt(discriminant);
-	t = help(t, sqrt_d, half_b, a);
-	if (t < EPSILON || t > hit->t)
+	if (!is_closer_hit(hit, var.t))
 		return (0);
-	var.hit_point = ray_at(ray, t);
-	var.t = t;
+	var.hit_point = ray_at(ray, var.t);
 	normal = sphere_normal(var.hit_point, sphere->center);
 	final_color = sphere->color;
-	if (sphere->bump_map || sphere->albedo_map || sphere->checkerboard)
-	{
-		uv = sphere_uv(var.hit_point, sphere->center);
-		if (sphere->bump_map)
-			normal = perturb_normal(normal, sphere->bump_map, uv);
-		if (sphere->checkerboard)
-			final_color = get_sphere_checkerboard(uv);
-		if (sphere->albedo_map)
-			final_color = sample_texture_color(sphere->albedo_map, uv);
-		else if (sphere->bump_map)
-			final_color = sample_texture_color(sphere->bump_map, uv);
-	}
+	apply_sphere_texture(sphere, &normal, &final_color, var.hit_point);
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
+	var.hit = hit;
 	update_hit(&var, normal, final_color);
-	hit->normal = normal;
 	hit->object = sphere;
 	hit->type = SP;
 	hit->shininess = sphere->shininess;

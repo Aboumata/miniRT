@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 00:00:00 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/16 17:32:49 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 11:32:49 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,7 @@ int	get_texture_color(t_texture *tex, int x, int y)
 
 double	get_bump_height(t_texture *bump, double u, double v)
 {
-	int		x;
-	int		y;
-	int		color;
-	int		gray;
-
+	int (x), y, color, gray;
 	if (!bump || !bump->data || bump->width <= 0 || bump->height <= 0)
 		return (0.0);
 	u = u - floor(u);
