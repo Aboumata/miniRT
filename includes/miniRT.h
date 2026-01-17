@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:28:40 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/16 18:29:54 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:02:26 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ t_color				calculate_lighting(t_hit *hit, t_scene *scene);
 int					is_in_shadow(t_vector3 point, t_vector3 normal,
 						t_vector3 light_pos, t_scene *scene);
 int					intersect_plane(t_ray ray, t_planes *plane, t_hit *hit);
-t_color				get_checkerboard_color(t_vector3 hit_p);
+t_color				get_checkerboard_color(t_uv uv);
 int					intersect_cylinder(t_ray ray, t_cylinders *cylinder,
 						t_hit *hit);
 int					intersect_disk(t_ray ray, t_disk *disk, t_hit *hit);
@@ -313,5 +313,8 @@ t_uv				cylinder_uv(t_vector3 point, t_cylinders *cyl);
 t_vector3			perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv);
 void				destroy_texture(void *mlx, t_texture *tex);
 void				destroy_scene_textures(t_scene *scene, void *mlx);
+double				clamp(double x, double a, double b);
+double				clamp01(double x);
+double				wrap01(double x);
 
 #endif

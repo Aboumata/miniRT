@@ -6,11 +6,17 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:24 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/16 10:49:09 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 09:43:31 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/miniRT.h"
+
+static void	help(t_data *data, t_scene *scene)
+{
+	cleanup_mlx(data);
+	ft_free_all(&scene->mem);
+}
 
 int	main(int ac, char **av)
 {
@@ -29,15 +35,10 @@ int	main(int ac, char **av)
 	data.mlx.mlx = scene.mlx;
 	setup_camera(&data);
 	if (initialize_mlx(&data) == -1)
-	{
-		cleanup_mlx(&data);
-		ft_free_all(&scene.mem);
-		return (1);
-	}
+		return (help(&data, &scene), 1);
 	render(&data);
 	setup_hooks(&data);
 	mlx_loop(data.mlx.mlx);
-	cleanup_mlx(&data);
-	ft_free_all(&scene.mem);
+	help(&data, &scene);
 	return (0);
 }

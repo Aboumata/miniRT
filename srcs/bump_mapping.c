@@ -6,41 +6,12 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 13:35:47 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 13:35:50 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 09:39:57 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static double	wrap01(double x)
-{
-	x = x - floor(x);
-	if (x < 0.0)
-		x += 1.0;
-	return (x);
-}
-
-static double	clamp01(double x)
-{
-	if (x < 0.0)
-		return (0.0);
-	if (x > 1.0)
-		return (1.0);
-	return (x);
-}
-
-static double	clamp(double x, double a, double b)
-{
-	if (x < a)
-		return (a);
-	if (x > b)
-		return (b);
-	return (x);
-}
-
-/*
-** Frisvad basis (stable, no "ring seam" from axis switching)
-*/
 static void	build_basis(t_vector3 n, t_vector3 *t, t_vector3 *b)
 {
 	double	a;
@@ -68,65 +39,38 @@ static void	build_basis(t_vector3 n, t_vector3 *t, t_vector3 *b)
 	*b = vec_normalize(*b);
 }
 
+t_uv	adapt_uv(t_uv uv)
+{
+	uv.u = wrap01(uv.u);
+	uv.v = clamp01(uv.v);
+	uv.v = wrap01(uv.v);
+	return (uv);
+}
+
 t_vector3	perturb_normal(t_vector3 normal, t_texture *bump, t_uv uv)
 {
 	t_vector3	t;
 	t_vector3	b;
 	t_vector3	p;
-	double		du;
-	double		dv;
-	double		hr;
-	double		hl;
-	double		hu;
-	double		hd;
-	double		dhdu;
-	double		dhdv;
-	double		strength;
-	double		pole;
 
 	if (!bump || bump->width < 2 || bump->height < 2)
 		return (normal);
+	uv = adapt_uv(uv);
+	double (dhdv), hr, hl, hu, hd, dhdu, pole = clamp01(sin(PI * uv.v)),
+	dv = 1.0 / (double)bump->height, du = 1.0 / (double)bump->width,
+	strength = 1.5 * (0.3 + 0.7 * pole);
 	normal = vec_normalize(normal);
-	uv.u = wrap01(uv.u);
-	uv.v = clamp01(uv.v);
-	uv.v = wrap01(uv.v);
-
-	du = 1.0 / (double)bump->width;
-	dv = 1.0 / (double)bump->height;
-
 	hr = get_bump_height(bump, wrap01(uv.u + du), uv.v);
 	hl = get_bump_height(bump, wrap01(uv.u - du), uv.v);
-	hu = get_bump_height(bump, uv.u, clamp01(uv.v + dv));
-	hd = get_bump_height(bump, uv.u, clamp01(uv.v - dv));
 	hu = get_bump_height(bump, uv.u, wrap01(uv.v + dv));
 	hd = get_bump_height(bump, uv.u, wrap01(uv.v - dv));
-
-	/* centered differences (no crazy scaling) */
-	dhdu = 0.5 * (hr - hl);
-	dhdv = 0.5 * (hu - hd);
-
-	/* clamp slope to prevent flipped normals / shadow acne */
-	dhdu = clamp(dhdu, -0.6, 0.6);
-	dhdv = clamp(dhdv, -0.6, 0.6);
-
-	/* reduce bump near poles (UV compression on spheres) */
-	pole = sin(PI * uv.v);
-	pole = clamp01(pole);
-
+	dhdu = clamp(0.5 * (hr - hl), -0.6, 0.6);
+	dhdv = clamp(0.5 * (hu - hd), -0.6, 0.6);
 	build_basis(normal, &t, &b);
-
-	/* start small; raise slowly if you want more */
-	strength = 1.5 * (0.3 + 0.7 * pole);  // Very pronounced bumps
-
-	p = normal;
-	p = vec_add(p, vec_scale(t, dhdu * strength));
-	p = vec_add(p, vec_scale(b, dhdv * strength));
-	p = vec_normalize(p);
-
-	/* keep same hemisphere as geometric normal */
+	p = vec_add(normal, vec_scale(t, dhdu * strength));
+	p = vec_normalize(vec_add(p, vec_scale(b, dhdv * strength)));
 	if (vec_dot(p, normal) < 0.0)
 		p = vec_scale(p, -1.0);
-	/* if still too far, fall back (prevents extreme artifacts) */
 	if (vec_dot(p, normal) < 0.2)
 		return (normal);
 	return (p);

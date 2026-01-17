@@ -6,35 +6,25 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 18:38:43 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/16 18:38:44 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:12:00 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes/miniRT.h"
 
-t_color	update_color(int r, int g, int b, t_color color)
+t_color	get_checkerboard_color(t_uv uv)
 {
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	return (color);
-}
+	double	size;
+	int		u;
+	int		v;
 
-t_color	get_checkerboard_color(t_vector3 hit_p)
-{
-	float	size;
-	int		x;
-	int		y;
-	int		z;
-
-	size = 1 / 10.0;
-	x = floor(hit_p.x) * size;
-	z = floor(hit_p.z) * size;
-	y = floor(hit_p.y) * size;
-	if ((x + y + z) % 2 == 0)
+	size = 1.0;
+	u = floor(uv.u * size);
+	v = floor(uv.v * size);
+	if ((u + v) % 2 == 0)
 		return ((t_color){255, 255, 255});
-	else
-		return ((t_color){0, 0, 0});
+	return ((t_color){0, 0, 0});
 }
 
 static t_uv	get_plane_uv(t_vector3 p, t_planes *plane)
@@ -62,12 +52,10 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	t_vector3	normal;
 	t_uv		uv;
 	t_color		final_color;
-	double		denom;
-	double		numer;
 
+	double (numer), denom = vec_dot(ray.direction, plane->normal);
 	normal = plane->normal;
 	var.hit = hit;
-	denom = vec_dot(ray.direction, normal);
 	if (fabs(denom) < EPSILON)
 		return (0);
 	if (denom > 0)
@@ -79,11 +67,11 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 		return (0);
 	var.hit_point = ray_at(ray, var.t);
 	final_color = plane->color;
-	if (plane->checkerboard)
-		final_color = get_checkerboard_color(var.hit_point);
-	if (plane->albedo_map || plane->bump_map)
+	if (plane->albedo_map || plane->bump_map || plane->checkerboard)
 	{
 		uv = get_plane_uv(var.hit_point, plane);
+		if (plane->checkerboard)
+			final_color = get_checkerboard_color(uv);
 		if (plane->albedo_map)
 			final_color = sample_texture_color(plane->albedo_map, uv);
 		if (plane->bump_map)
@@ -92,7 +80,6 @@ int	intersect_plane(t_ray ray, t_planes *plane, t_hit *hit)
 	if (vec_dot(normal, ray.direction) > 0)
 		normal = vec_scale(normal, -1);
 	update_hit(&var, normal, final_color);
-	hit->normal = normal;
 	hit->object = plane;
 	hit->type = PL;
 	hit->shininess = plane->shininess;

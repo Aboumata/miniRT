@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:33:14 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 18:29:56 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:11:22 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ static t_vector3	cylinder_body_normal(t_vector3 hit_point,
 	normal = vec_sub(v, projection);
 	normal = vec_normalize(normal);
 	return (normal);
+}
+
+static t_uv	get_cap_uv(t_vector3 p, t_vector3 center, t_vector3 normal)
+{
+	t_uv		uv;
+	t_vector3	u_axis;
+	t_vector3	v_axis;
+
+	if (fabs(normal.y) > 0.9)
+		u_axis = (t_vector3){1, 0, 0};
+	else
+		u_axis = vec_normalize(vec_cross((t_vector3){0, 1, 0}, normal));
+	v_axis = vec_normalize(vec_cross(normal, u_axis));
+	uv.u = vec_dot(vec_sub(p, center), u_axis);
+	uv.v = vec_dot(vec_sub(p, center), v_axis);
+	return (uv);
 }
 
 static t_color	get_cylinder_checkerboard(t_uv uv)
@@ -49,6 +65,7 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 	t_vector3	to_hit;
 	t_vector3	normal;
 	t_color		final_color;
+	t_uv		uv;
 	double		dist_sq;
 	double		found_hit;
 	double		radius;
@@ -76,7 +93,10 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 				normal = cy->dir;
 				final_color = cy->color;
 				if (cy->checkerboard)
-					final_color = get_checkerboard_color(var.hit_point);
+				{
+					uv = get_cap_uv(var.hit_point, cap_center, cy->dir);
+					final_color = get_cylinder_checkerboard(uv);
+				}
 				update_hit(&var, normal, final_color);
 				hit->normal = normal;
 				hit->object = cy;
@@ -101,7 +121,10 @@ static int	intersect_cylinder_caps(t_ray ray, t_cylinders *cy,
 				normal = vec_scale(cy->dir, -1.0);
 				final_color = cy->color;
 				if (cy->checkerboard)
-					final_color = get_checkerboard_color(var.hit_point);
+				{
+					uv = get_cap_uv(var.hit_point, cap_center, normal);
+					final_color = get_cylinder_checkerboard(uv);
+				}
 				update_hit(&var, normal, final_color);
 				hit->object = cy;
 				hit->type = CY;

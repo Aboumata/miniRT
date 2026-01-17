@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 21:32:47 by aboumata          #+#    #+#             */
-/*   Updated: 2026/01/16 18:20:42 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 09:59:12 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ double	help(double t, double sqrt_d, double half_b, double a)
 
 static t_color	get_sphere_checkerboard(t_uv uv)
 {
-	int	u;
-	int	v;
+	double	size;
+	int		u;
+	int		v;
 
-	u = floor(uv.u * 10);
-	v = floor(uv.v * 10);
+	size = 10.0;
+	u = floor(uv.u * size);
+	v = floor(uv.v * size);
 	if ((u + v) % 2 == 0)
 		return ((t_color){255, 255, 255});
 	return ((t_color){0, 0, 0});

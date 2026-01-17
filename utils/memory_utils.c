@@ -6,7 +6,7 @@
 /*   By: abdahman <abdahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:45:34 by abdahman          #+#    #+#             */
-/*   Updated: 2026/01/15 19:19:32 by abdahman         ###   ########.fr       */
+/*   Updated: 2026/01/17 09:10:36 by abdahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_free_all(t_mem **mem)
 	}
 	*mem = NULL;
 }
-
 
 void	*ft_malloc(size_t size, t_mem **mem)
 {
